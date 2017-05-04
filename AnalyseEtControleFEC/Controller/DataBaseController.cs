@@ -102,8 +102,8 @@ namespace AnalyseEtControleFEC.Controller
             dbConnection.Open();
             new SQLiteCommand("DROP TABLE IF EXISTS Column", dbConnection).ExecuteNonQuery();
             new SQLiteCommand("DROP TABLE IF EXISTS Content", dbConnection).ExecuteNonQuery();
-            new SQLiteCommand("CREATE TABLE Column (Position INT, Name VARCHAR(20))", dbConnection).ExecuteNonQuery();
-            new SQLiteCommand("CREATE TABLE Content (Line INT, Column INT, Content VARCHAR(100))", dbConnection).ExecuteNonQuery();
+            new SQLiteCommand("CREATE TEMP TABLE Column (Position INT, Name VARCHAR(20))", dbConnection).ExecuteNonQuery();
+            new SQLiteCommand("CREATE TEMP TABLE Content (Line INT, Column INT, Content VARCHAR(100))", dbConnection).ExecuteNonQuery();
             new SQLiteCommand("CREATE TEMP VIEW FinalFilter AS Select * FROM Content",dbConnection).ExecuteNonQuery();
             SQLiteFunction.RegisterFunction(typeof(IsStrictlySuperiorSQLiteFunction));
             SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
@@ -235,13 +235,13 @@ namespace AnalyseEtControleFEC.Controller
             {
                 columnNum = new SQLiteCommand("CREATE TEMP VIEW ColumnNum" + FilterNumber + " AS SELECT DISTINCT Line FROM Content base " + restriction, dbConnection);
                 columnNum.ExecuteNonQuery();
-                filter = new SQLiteCommand("CREATE TEMP VIEW Filter" + FilterNumber + " AS SELECT Line, Column, Content FROM Content base WHERE Line IN (SELECT Line FROM ColumnNum" + FilterNumber + ")",dbConnection);
+                filter = new SQLiteCommand("CREATE TEMP TABLE Filter" + FilterNumber + " AS SELECT Line, Column, Content FROM Content base WHERE Line IN (SELECT Line FROM ColumnNum" + FilterNumber + ")",dbConnection);
             }
             else
             {
                 columnNum = new SQLiteCommand("CREATE TEMP VIEW ColumnNum" + FilterNumber + " AS SELECT DISTINCT Line FROM Content base " + restriction, dbConnection);
                 columnNum.ExecuteNonQuery();
-                filter = new SQLiteCommand("CREATE TEMP VIEW Filter" + FilterNumber + " AS SELECT Line, Column, Content FROM Filter" + lastFilterId + " base WHERE Line IN (SELECT Line FROM ColumnNum" + FilterNumber + ")", dbConnection);
+                filter = new SQLiteCommand("CREATE TEMP TABLE Filter" + FilterNumber + " AS SELECT Line, Column, Content FROM Filter" + lastFilterId + " base WHERE Line IN (SELECT Line FROM ColumnNum" + FilterNumber + ")", dbConnection);
             }
             filter.ExecuteNonQuery();
             new SQLiteCommand("DROP VIEW FinalFilter", dbConnection).ExecuteNonQuery();
