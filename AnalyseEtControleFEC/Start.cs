@@ -70,11 +70,11 @@ namespace AnalyseEtControleFEC
             MainController controller = MainController.get();
             if(sender is DataGridViewBDD)
             {
-                e.Value = controller.dataBaseController.getContentFromFilter(e.ColumnIndex, e.RowIndex, ((DataGridViewBDD)sender).numGridView);
+                e.Value = controller.dataBaseController.getContentFromFilter(e.ColumnIndex, e.RowIndex+1, ((DataGridViewBDD)sender).numGridView);
             }
             else
             {
-                e.Value = controller.dataBaseController.getContent(e.ColumnIndex, e.RowIndex);
+                e.Value = controller.dataBaseController.getContent(e.ColumnIndex, e.RowIndex+1);
             }       
         }
 
