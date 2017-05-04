@@ -209,15 +209,16 @@ namespace AnalyseEtControleFEC.Controller
 
         }
 
-        internal void openFilter(DataGridView gridView)
+        internal void openFilter(DataGridView gridView, int filterNumber)
         {
             String[] Columns = dataBaseController.getColumnNames();
-            int size = dataBaseController.getNumberOfLinesInFilter();
+            int size = dataBaseController.getNumberOfLinesInFilter(filterNumber);
             gridView.ColumnCount = Columns.Length;
             for (int i = 0; i < Columns.Length; i++)
             {
                 gridView.Columns[i].Name = Columns[i];
             }
+            size++;
             gridView.RowCount = size;
         }
     }

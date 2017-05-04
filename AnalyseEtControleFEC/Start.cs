@@ -224,7 +224,7 @@ namespace AnalyseEtControleFEC
             }
             else
             {
-                controller.dataBaseController.AddFilterAdd(finalWhereClause);
+                controller.dataBaseController.AddFilterAdd(finalWhereClause, lastTabId);
             }
         }
 
@@ -253,11 +253,20 @@ namespace AnalyseEtControleFEC
         private void button1_Click(object sender, EventArgs e)
         {
             MainController controller = MainController.get();
-            int filterIdOfLastTab = controller.getDataBaseController().getLastFilterId();
+            DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[0];
+            int filterIdOfLastTab;
+            if (lastTabView is DataGridViewBDD)
+            {
+                filterIdOfLastTab = ((DataGridViewBDD)tabControl1.SelectedTab.Controls[0]).numGridView;
+            }
+            else
+            {
+                filterIdOfLastTab = -1;
+            }
             addFilter(filterIdOfLastTab, false, field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
             if (andRadioButton1.Checked)
             {
-                addFilter(filterIdOfLastTab, false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+                addFilter(controller.getDataBaseController().getLastFilterId(), false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
             }
             else if (orRadioButton1.Checked)
             {
@@ -265,7 +274,7 @@ namespace AnalyseEtControleFEC
             }
             if (andRadioButton2.Checked)
             {
-                addFilter(filterIdOfLastTab, false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                addFilter(controller.getDataBaseController().getLastFilterId(), false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
             }
             else if (orRadioButton2.Checked)
             {
@@ -273,7 +282,7 @@ namespace AnalyseEtControleFEC
             }
             if (andRadioButton3.Checked)
             {
-                addFilter(filterIdOfLastTab, false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                addFilter(controller.getDataBaseController().getLastFilterId(), false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
             }
             else if (orRadioButton3.Checked)
             {
@@ -285,7 +294,7 @@ namespace AnalyseEtControleFEC
             DataGridViewBDD newDataGridView = new DataGridViewBDD(controller.getDataBaseController().getLastFilterId());
             newDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
             newDataGridView.Size = dataGridView1.Size;
-            MainController.get().openFilter(newDataGridView);
+            MainController.get().openFilter(newDataGridView, newDataGridView.numGridView);
             myTabPage.Controls.Add(newDataGridView);
             tabControl1.TabPages.Add(myTabPage);
             tabControl1.SelectedTab = myTabPage;

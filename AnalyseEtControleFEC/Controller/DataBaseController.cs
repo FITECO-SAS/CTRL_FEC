@@ -16,6 +16,60 @@ namespace AnalyseEtControleFEC.Controller
         }
     }
 
+    [SQLiteFunction(Name = "ISSTRICTLYSUPERIOR", Arguments = 2, FuncType = FunctionType.Scalar)]
+    public class IsStrictlySuperiorSQLiteFunction : SQLiteFunction
+    {
+        public override object Invoke(object[] args)
+        {
+            bool result;
+            try
+            {
+                result = Double.Parse(Convert.ToString(args[0])) > Double.Parse(Convert.ToString(args[1]));
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+            return result;
+        }
+    }
+
+    [SQLiteFunction(Name = "ISSUPERIOR", Arguments = 2, FuncType = FunctionType.Scalar)]
+    public class IsSuperiorSQLiteFunction : SQLiteFunction
+    {
+        public override object Invoke(object[] args)
+        {
+            bool result;
+            try
+            {
+                result = Double.Parse(Convert.ToString(args[0])) >= Double.Parse(Convert.ToString(args[1]));
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return result;
+        }
+    }
+
+    [SQLiteFunction(Name = "ISEQUAL", Arguments = 2, FuncType = FunctionType.Scalar)]
+    public class IsEqualSQLiteFunction : SQLiteFunction
+    {
+        public override object Invoke(object[] args)
+        {
+            bool result;
+            try
+            {
+                result = Double.Parse(Convert.ToString(args[0])) == Double.Parse(Convert.ToString(args[1]));
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return result;
+        }
+    }
+
     /// <summary>
     /// This Class is the controller for database reading and writing
     /// </summary>
@@ -51,6 +105,9 @@ namespace AnalyseEtControleFEC.Controller
             new SQLiteCommand("CREATE TABLE Column (Position INT, Name VARCHAR(20))", dbConnection).ExecuteNonQuery();
             new SQLiteCommand("CREATE TABLE Content (Line INT, Column INT, Content VARCHAR(100))", dbConnection).ExecuteNonQuery();
             new SQLiteCommand("CREATE TEMP VIEW FinalFilter AS Select * FROM Content",dbConnection).ExecuteNonQuery();
+            SQLiteFunction.RegisterFunction(typeof(IsStrictlySuperiorSQLiteFunction));
+            SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
+            SQLiteFunction.RegisterFunction(typeof(IsEqualSQLiteFunction));
             FilterNumber = 0;
             //dbConnection.Close();
         }
@@ -170,11 +227,11 @@ namespace AnalyseEtControleFEC.Controller
         /// Add a filter using the restriction parameter for adding ORDER BY or WHERE clause
         /// </summary>
         /// <param name="restriction">String representing the clauses for the filter, must contains ORDER BY and/or WHERE clause</param>
-        public void AddFilterAdd (String restriction)
+        public void AddFilterAdd (String restriction, int lastFilterId)
         {
             SQLiteCommand filter;
             SQLiteCommand columnNum;
-            if (FilterNumber == 0)
+            if (lastFilterId == -1)
             {
                 columnNum = new SQLiteCommand("CREATE TEMP VIEW ColumnNum" + FilterNumber + " AS SELECT DISTINCT Line FROM Content base " + restriction, dbConnection);
                 columnNum.ExecuteNonQuery();
@@ -184,7 +241,7 @@ namespace AnalyseEtControleFEC.Controller
             {
                 columnNum = new SQLiteCommand("CREATE TEMP VIEW ColumnNum" + FilterNumber + " AS SELECT DISTINCT Line FROM Content base " + restriction, dbConnection);
                 columnNum.ExecuteNonQuery();
-                filter = new SQLiteCommand("CREATE TEMP VIEW Filter" + FilterNumber + " AS SELECT Line, Column, Content FROM Filter" + (FilterNumber - 1) + " base WHERE Line IN (SELECT Line FROM ColumnNum" + FilterNumber + ")", dbConnection);
+                filter = new SQLiteCommand("CREATE TEMP VIEW Filter" + FilterNumber + " AS SELECT Line, Column, Content FROM Filter" + lastFilterId + " base WHERE Line IN (SELECT Line FROM ColumnNum" + FilterNumber + ")", dbConnection);
             }
             filter.ExecuteNonQuery();
             new SQLiteCommand("DROP VIEW FinalFilter", dbConnection).ExecuteNonQuery();
@@ -271,6 +328,14 @@ namespace AnalyseEtControleFEC.Controller
         {
             //dbConnection.Open();
             int result = Convert.ToInt32(new SQLiteCommand("SELECT count(*) FROM FinalFilter GROUP BY Column", dbConnection).ExecuteScalar());
+            //dbConnection.Close();
+            return result;
+        }
+
+        public int getNumberOfLinesInFilter(int FilterNumber)
+        {
+            //dbConnection.Open();
+            int result = Convert.ToInt32(new SQLiteCommand("SELECT count(*) FROM Filter"+FilterNumber+" GROUP BY Column", dbConnection).ExecuteScalar());
             //dbConnection.Close();
             return result;
         }
