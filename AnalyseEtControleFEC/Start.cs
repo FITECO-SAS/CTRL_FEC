@@ -90,6 +90,18 @@ namespace AnalyseEtControleFEC
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            panel1.Visible = false;
+            field1ComboBox.Items.Clear();
+            field2ComboBox.Items.Clear();
+            field3ComboBox.Items.Clear();
+            field4ComboBox.Items.Clear();
+            for (int i = 0; i < dataGridView1.ColumnCount; i++)
+            {
+                field1ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field2ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field3ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field4ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+            }
             if (treeView1.SelectedNode.Text == "Simple")
             {
                 panel1.Visible = true;
@@ -111,19 +123,20 @@ namespace AnalyseEtControleFEC
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (field1ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field1ComboBox.SelectedItem.ToString().ToUpper().Contains("NUM") ||
+            if (field1ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field1ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
                 field1ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field1ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
             {
                 condition1ComboBox.Items.Clear();
                 condition1ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
                     "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
-
+                condition1ComboBox.SelectedItem = condition1ComboBox.Items[0];
             }
             else
             {
                 condition1ComboBox.Items.Clear();
                 condition1ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition1ComboBox.SelectedItem = condition1ComboBox.Items[0];
             }
         }
 
@@ -143,13 +156,14 @@ namespace AnalyseEtControleFEC
                 condition2ComboBox.Items.Clear();
                 condition2ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
                     "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
-
+                condition2ComboBox.SelectedItem = condition2ComboBox.Items[0];
             }
             else
             {
                 condition2ComboBox.Items.Clear();
                 condition2ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition2ComboBox.SelectedItem = condition2ComboBox.Items[0];
             }
         }
 
@@ -161,13 +175,14 @@ namespace AnalyseEtControleFEC
                 condition3ComboBox.Items.Clear();
                 condition3ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
                     "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
-
+                condition3ComboBox.SelectedItem = condition3ComboBox.Items[0];
             }
             else
             {
                 condition3ComboBox.Items.Clear();
                 condition3ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition3ComboBox.SelectedItem = condition3ComboBox.Items[0];
             }
         }
 
@@ -179,37 +194,22 @@ namespace AnalyseEtControleFEC
                 condition4ComboBox.Items.Clear();
                 condition4ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
                     "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
-
+                condition4ComboBox.SelectedItem = condition4ComboBox.Items[0];
             }
             else
             {
                 condition4ComboBox.Items.Clear();
                 condition4ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition4ComboBox.SelectedItem = condition4ComboBox.Items[0];
             }
         }
-
-        /*String radioButtonString(RadioButton andRadioButton, RadioButton orRadioButton)
-        {
-            if (andRadioButton.Checked)
-            {
-                return "AND";
-            }
-            else
-            {
-                if (orRadioButton.Checked)
-                {
-                    return "OR";
-                }
-                else return "";
-            }
-        }*/
 
         private void addFilter(int lastTabId, bool isOr, String field, String condition, String value)
         {
             MainController controller = MainController.get();
             string finalWhereClause = "";
-            if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("NUM") ||
+            if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("MONTANT") ||
                 field.ToUpper().Contains("DEBIT") || field.ToUpper().Contains("CREDIT"))
             {
                 finalWhereClause = controller.simpleFilterController.NumericOrDateSimpleFilter(field, condition, value);

@@ -162,6 +162,7 @@ namespace AnalyseEtControleFEC.Controller
 
         internal void openFile(string filePath, string fileName)
         {
+            dataBaseController.close();
             ErrorLogger logger = new ErrorLogger(config, dataBaseController, "BIC", "PCG");
             dataBaseController.init();
             dataBaseController.fillDatabaseFromFile(filePath);
@@ -170,18 +171,16 @@ namespace AnalyseEtControleFEC.Controller
             //logger.checkLines();
             //logger.checkLinesWithAll();
             logger.checkLinesInDatabase();
-            //logger.check_Dates();
             //Console.WriteLine(logger.check_CompAuxNum_CompAuxLib());
             Console.WriteLine(logger.createLog());
-            logger.check_CompAuxNum_CompAuxLib();
+            /*logger.check_CompAuxNum_CompAuxLib();
             logger.check_EcritureLet_DateLet();
             logger.check_Montantdevise_Idevise();
             logger.check_PieceDate_EcritureDate();
             logger.check_PieceDate_ValidDate();
             logger.check_EcritureDate_ValidDate();
             logger.check_DateLet_PieceDate();
-            logger.check_DateLet_EcritureDate();
-            //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+            logger.check_DateLet_EcritureDate();*/
             DataGridView gridView = mainWindow.getDataGridView();
             //List<string[]> content = new List<String[]>();
             //String[][] content = dataBaseController.getAllLines();

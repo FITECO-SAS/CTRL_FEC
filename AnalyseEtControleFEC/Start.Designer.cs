@@ -220,7 +220,7 @@ namespace AnalyseEtControleFEC
             // filtrerToolStripMenuItem
             // 
             this.filtrerToolStripMenuItem.Name = "filtrerToolStripMenuItem";
-            this.filtrerToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.filtrerToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.filtrerToolStripMenuItem.Text = "Filtrer";
             // 
             // trierToolStripMenuItem
@@ -229,7 +229,7 @@ namespace AnalyseEtControleFEC
             this.mesFiltresSimplesToolStripMenuItem,
             this.mesFiltresÉlaborésToolStripMenuItem});
             this.trierToolStripMenuItem.Name = "trierToolStripMenuItem";
-            this.trierToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.trierToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.trierToolStripMenuItem.Text = "Trier";
             // 
             // mesFiltresSimplesToolStripMenuItem
@@ -247,13 +247,13 @@ namespace AnalyseEtControleFEC
             // sélectionnerToolStripMenuItem
             // 
             this.sélectionnerToolStripMenuItem.Name = "sélectionnerToolStripMenuItem";
-            this.sélectionnerToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.sélectionnerToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.sélectionnerToolStripMenuItem.Text = "Sélectionner";
             // 
             // analyserToolStripMenuItem
             // 
             this.analyserToolStripMenuItem.Name = "analyserToolStripMenuItem";
-            this.analyserToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.analyserToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.analyserToolStripMenuItem.Text = "Analyser";
             this.analyserToolStripMenuItem.Click += new System.EventHandler(this.analyserToolStripMenuItem_Click_1);
             // 
@@ -634,26 +634,6 @@ namespace AnalyseEtControleFEC
             // field1ComboBox
             // 
             this.field1ComboBox.FormattingEnabled = true;
-            this.field1ComboBox.Items.AddRange(new object[] {
-            "",
-            "JournalCode",
-            "JournalLib",
-            "EcritureNum",
-            "EcritureDate",
-            "CompteNum",
-            "CompteLib",
-            "CompAuxNum",
-            "CompAuxLib",
-            "PieceRef",
-            "PieceDate",
-            "EcritureLib",
-            "Debit",
-            "Credit",
-            "EcritureLet",
-            "DateLet",
-            "ValidDate",
-            "Montantdevise",
-            "Idevise"});
             this.field1ComboBox.Location = new System.Drawing.Point(142, 93);
             this.field1ComboBox.Name = "field1ComboBox";
             this.field1ComboBox.Size = new System.Drawing.Size(138, 24);

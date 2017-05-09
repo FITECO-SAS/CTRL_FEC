@@ -113,6 +113,11 @@ namespace AnalyseEtControleFEC.Controller
             //dbConnection.Close();
         }
 
+        public void close()
+        {
+            dbConnection.Close();
+        }
+
         internal object getContentFromFilter(int column, int line, int filterNumber)
         {
             SQLiteCommand command = new SQLiteCommand("SELECT Content FROM Filter"+filterNumber+" WHERE Column = @column AND Line = @line", dbConnection);

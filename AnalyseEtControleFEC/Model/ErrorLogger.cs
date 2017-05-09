@@ -230,6 +230,29 @@ namespace AnalyseEtControleFEC.Model
         }
 
         /// <summary>
+        /// Check if the columns names correspond to one of the columns sets in configuration for specified regime and plan
+        /// </summary>
+        /// <returns>true if the column set exists and false if it's not</returns>
+        public List<string> getErrorColumns()
+        {
+            String[] columns = dataBaseAccess.getColumnNames();
+            List<String> listErrorColumns = new List<String>();
+            foreach (List<String> set in configuration.getColumnSets(regime, plan))
+            {
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    if (!set[i].Equals(columns[i]))
+                    {
+                        listErrorColumns.Add(set[i]);
+                    }
+                }
+            }
+            isFileCorrect = false;
+            AreColumnsCorrect = false;
+            return listErrorColumns;
+        }
+
+        /// <summary>
         /// Check if each line in the file verify the regex in the configuration
         /// </summary>
         /// <returns>false if at least one content is not correct or true if not</returns>
@@ -349,10 +372,22 @@ namespace AnalyseEtControleFEC.Model
                 if (!AreColumnsCorrect)
                 {
                     log += "\t - Les entêtes de colonnes ne correspondent à aucun ensemble possible pour le régime et le plan indiqués. Voici les ensembles possibles :\n";
-                    foreach (List<String> set in configuration.getColumnSets(regime, plan))
+                    /*foreach (List<String> set in configuration.getColumnSets(regime, plan))
                     {
                         log += "\t\t - " + set.ToString();
+                    }*/
+                    List<String> errorColumns = getErrorColumns();
+                    for (int j=0;j<errorColumns.Count;j++)
+                    {
+                        log += "\t\t -"+ errorColumns[j].ToString();
                     }
+                /* List<String>[] set= configuration.getColumnSets(regime, plan);
+                    for (int i=0; i<set.Length ; i++)
+                    {
+                        List<String> setTest = set[i];
+                        for(int j = 0; j < setTest.Count; j++)
+                        log += "\t\t" + setTest[j].ToString();
+                    }*/
                 }
 
             }
