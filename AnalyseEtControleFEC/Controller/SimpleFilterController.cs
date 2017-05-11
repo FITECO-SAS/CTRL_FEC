@@ -33,7 +33,7 @@ namespace AnalyseEtControleFEC.Controller
             - Est différent de
          */
 
-        public void SimpleFilterStatementController(string[] colums, string[] whereClause, bool[] isOr)
+        /*public void SimpleFilterStatementController(string[] colums, string[] whereClause, bool[] isOr)
         {
             string finalWhereClause = " WHERE ";
             for (int i = 0; i < whereClause.Length; i++)
@@ -48,7 +48,8 @@ namespace AnalyseEtControleFEC.Controller
                 }
             }
             dataBaseController.AddFilterAdd(finalWhereClause);
-        }
+        }*/
+
         public string NumericOrDateSimpleFilter(string column, string typeFilter, string value)
         {
             
@@ -64,17 +65,17 @@ namespace AnalyseEtControleFEC.Controller
             switch (typeFilter)
             {
                 case "Est supérieur à":
-                    return result+" AND Content > " + value;
+                    return result+" AND ISSTRICTLYSUPERIOR(Content, '" + value + "')";
                 case "Est supérieur ou égal à":
-                    return result + " AND Content >= " + value;
+                    return result + " AND ISSUPERIOR(Content, '" + value + "')";
                 case "Est inférieur à":
-                    return result + " AND Content < " + value;
+                    return result + " AND NOT ISSUPERIOR(Content, '" + value + "')";
                 case "Est inférieur ou égal à":
-                    return result + " AND Content <= " + value;
+                    return result + " AND NOT ISSTRICTLYSUPERIOR(Content, '" + value + "')";
                 case "Est égal à":
-                    return result + " AND Content = " + value;
+                    return result + " AND ISEQUAL(Content, '" + value + "')";
                 case "Est différent de":
-                    return result + " AND Content <> " + value;
+                    return result + " AND NOT ISEQUAL(Content, '" + value + "')";
                 default:
                     return result + "";
 

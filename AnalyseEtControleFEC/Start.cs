@@ -70,11 +70,11 @@ namespace AnalyseEtControleFEC
             MainController controller = MainController.get();
             if(sender is DataGridViewBDD)
             {
-                e.Value = controller.dataBaseController.getContentFromFilter(e.ColumnIndex, e.RowIndex, ((DataGridViewBDD)sender).numGridView);
+                e.Value = controller.dataBaseController.getContentFromFilter(e.ColumnIndex, e.RowIndex+1, ((DataGridViewBDD)sender).numGridView);
             }
             else
             {
-                e.Value = controller.dataBaseController.getContent(e.ColumnIndex, e.RowIndex);
+                e.Value = controller.dataBaseController.getContent(e.ColumnIndex, e.RowIndex+1);
             }       
         }
 
@@ -90,6 +90,18 @@ namespace AnalyseEtControleFEC
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            panel1.Visible = false;
+            field1ComboBox.Items.Clear();
+            field2ComboBox.Items.Clear();
+            field3ComboBox.Items.Clear();
+            field4ComboBox.Items.Clear();
+            for (int i = 0; i < dataGridView1.ColumnCount; i++)
+            {
+                field1ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field2ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field3ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field4ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+            }
             if (treeView1.SelectedNode.Text == "Simple")
             {
                 panel1.Visible = true;
@@ -111,19 +123,20 @@ namespace AnalyseEtControleFEC
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (field1ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field1ComboBox.SelectedItem.ToString().ToUpper().Contains("NUM") ||
+            if (field1ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field1ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
                 field1ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field1ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
             {
                 condition1ComboBox.Items.Clear();
                 condition1ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
                     "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
-
+                condition1ComboBox.SelectedItem = condition1ComboBox.Items[0];
             }
             else
             {
                 condition1ComboBox.Items.Clear();
                 condition1ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition1ComboBox.SelectedItem = condition1ComboBox.Items[0];
             }
         }
 
@@ -143,13 +156,14 @@ namespace AnalyseEtControleFEC
                 condition2ComboBox.Items.Clear();
                 condition2ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
                     "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
-
+                condition2ComboBox.SelectedItem = condition2ComboBox.Items[0];
             }
             else
             {
                 condition2ComboBox.Items.Clear();
                 condition2ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition2ComboBox.SelectedItem = condition2ComboBox.Items[0];
             }
         }
 
@@ -161,13 +175,14 @@ namespace AnalyseEtControleFEC
                 condition3ComboBox.Items.Clear();
                 condition3ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
                     "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
-
+                condition3ComboBox.SelectedItem = condition3ComboBox.Items[0];
             }
             else
             {
                 condition3ComboBox.Items.Clear();
                 condition3ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition3ComboBox.SelectedItem = condition3ComboBox.Items[0];
             }
         }
 
@@ -179,37 +194,22 @@ namespace AnalyseEtControleFEC
                 condition4ComboBox.Items.Clear();
                 condition4ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
                     "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
-
+                condition4ComboBox.SelectedItem = condition4ComboBox.Items[0];
             }
             else
             {
                 condition4ComboBox.Items.Clear();
                 condition4ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition4ComboBox.SelectedItem = condition4ComboBox.Items[0];
             }
         }
-
-        /*String radioButtonString(RadioButton andRadioButton, RadioButton orRadioButton)
-        {
-            if (andRadioButton.Checked)
-            {
-                return "AND";
-            }
-            else
-            {
-                if (orRadioButton.Checked)
-                {
-                    return "OR";
-                }
-                else return "";
-            }
-        }*/
 
         private void addFilter(int lastTabId, bool isOr, String field, String condition, String value)
         {
             MainController controller = MainController.get();
             string finalWhereClause = "";
-            if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("NUM") ||
+            if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("MONTANT") ||
                 field.ToUpper().Contains("DEBIT") || field.ToUpper().Contains("CREDIT"))
             {
                 finalWhereClause = controller.simpleFilterController.NumericOrDateSimpleFilter(field, condition, value);
@@ -224,7 +224,7 @@ namespace AnalyseEtControleFEC
             }
             else
             {
-                controller.dataBaseController.AddFilterAdd(finalWhereClause);
+                controller.dataBaseController.AddFilterAdd(finalWhereClause, lastTabId);
             }
         }
 
@@ -253,11 +253,20 @@ namespace AnalyseEtControleFEC
         private void button1_Click(object sender, EventArgs e)
         {
             MainController controller = MainController.get();
-            int filterIdOfLastTab = controller.getDataBaseController().getLastFilterId();
+            DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[0];
+            int filterIdOfLastTab;
+            if (lastTabView is DataGridViewBDD)
+            {
+                filterIdOfLastTab = ((DataGridViewBDD)tabControl1.SelectedTab.Controls[0]).numGridView;
+            }
+            else
+            {
+                filterIdOfLastTab = -1;
+            }
             addFilter(filterIdOfLastTab, false, field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
             if (andRadioButton1.Checked)
             {
-                addFilter(filterIdOfLastTab, false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+                addFilter(controller.getDataBaseController().getLastFilterId(), false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
             }
             else if (orRadioButton1.Checked)
             {
@@ -265,7 +274,7 @@ namespace AnalyseEtControleFEC
             }
             if (andRadioButton2.Checked)
             {
-                addFilter(filterIdOfLastTab, false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                addFilter(controller.getDataBaseController().getLastFilterId(), false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
             }
             else if (orRadioButton2.Checked)
             {
@@ -273,7 +282,7 @@ namespace AnalyseEtControleFEC
             }
             if (andRadioButton3.Checked)
             {
-                addFilter(filterIdOfLastTab, false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                addFilter(controller.getDataBaseController().getLastFilterId(), false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
             }
             else if (orRadioButton3.Checked)
             {
@@ -285,7 +294,7 @@ namespace AnalyseEtControleFEC
             DataGridViewBDD newDataGridView = new DataGridViewBDD(controller.getDataBaseController().getLastFilterId());
             newDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
             newDataGridView.Size = dataGridView1.Size;
-            MainController.get().openFilter(newDataGridView);
+            MainController.get().openFilter(newDataGridView, newDataGridView.numGridView);
             myTabPage.Controls.Add(newDataGridView);
             tabControl1.TabPages.Add(myTabPage);
             tabControl1.SelectedTab = myTabPage;
