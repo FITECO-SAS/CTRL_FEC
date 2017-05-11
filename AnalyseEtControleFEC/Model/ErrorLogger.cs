@@ -183,6 +183,95 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
         }
+
+        public void check_Debit_Credit_EcritureNum()
+        {
+            List<String> list = dataBaseAccess.EcritureNum_Debit_Credit();
+            if (list.Count != 0)
+            {
+                foreach (String str in list)
+                {
+                    LogHelper.WriteToFile("\t\t"+str,"EcritureNum");
+                }
+            }
+        }
+
+        public void check_Debit_Credit_JournalCode()
+        {
+            List<String> list = dataBaseAccess.JournalCode_Debit_Credit();
+            if (list.Count != 0)
+            {
+                foreach (String str in list)
+                {
+                    //Console.WriteLine("\t\t JournalCode :" + str);
+                    LogHelper.WriteToFile("\t\t"+str, "JournalCode :");
+                }
+            }
+        }
+
+        public void check_Debit_Credit_AllLines()
+        {
+            bool list = dataBaseAccess.AllLines_Debit_Credit();
+            if (list == true)
+            {
+                Console.WriteLine("Erreur Debit Credit\n");
+                LogHelper.WriteToFile("Erreur Debit Credit\n", "ErrorLogger");
+            }
+        }
+
+        public void check_Montant_Sens_AllLines()
+        {
+            bool list = dataBaseAccess.AllLines_Montant_Sens();
+            if (list == true)
+            {
+                //Console.WriteLine("Erreur Montant Sens \n");
+                LogHelper.WriteToFile("Erreur Montant Sens \n", "ErrorLogger");
+            }
+        }
+
+        public void check_Montant_Sens_JournalCode()
+        {
+            List<String> list = dataBaseAccess.JournalCode_Montant_Sens();
+            if (list.Count != 0)
+            {
+                foreach (String str in list)
+                {
+                    //Console.WriteLine("\t\t JournalCode :" + str);
+                    LogHelper.WriteToFile("\t\t"+str, "JournalCode :");
+                }
+            }
+        }
+
+        public void check_Montant_Sens_EcritureNum()
+        {
+            List<String> list = dataBaseAccess.EcritureNum_Montant_Sens();
+            if (list.Count != 0)
+            {
+                foreach (String str in list)
+                {
+                    //Console.WriteLine("\t\t EcritureNum :" + str);
+                     LogHelper.WriteToFile("\t\t"+str,"EcritureNum :");
+                }
+            }
+        }
+
+        public void check_Is_Montant_Sens()
+        {
+            bool is_Montant = dataBaseAccess.Is_Montant_Sens();
+            if (is_Montant)
+            {
+
+                check_Montant_Sens_AllLines();
+                check_Montant_Sens_JournalCode();
+                check_Montant_Sens_EcritureNum();
+            }
+            else
+            {
+                check_Debit_Credit_EcritureNum();
+                check_Debit_Credit_JournalCode();
+                check_Debit_Credit_AllLines();
+            }
+        }
         /// <summary>
         /// Check if a name is correct for the regex in configuration 
         /// </summary>
@@ -227,6 +316,40 @@ namespace AnalyseEtControleFEC.Model
             isFileCorrect = false;
             AreColumnsCorrect = false;
             return false;
+        }
+
+        /// <summary>
+        /// Check if the columns names correspond to one of the columns sets in configuration for specified regime and plan
+        /// </summary>
+        /// <returns>true if the column set exists and false if it's not</returns>
+        public String getErrorColumns()
+        {
+            String[] columns = dataBaseAccess.getColumnNames();
+            String listErrorColumns = "";
+            bool checkColumns = true;
+            int line = 0;
+            foreach (List<String> set in configuration.getColumnSets(regime, plan))
+            {
+                bool found = true;
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    if (!set[i].Equals(columns[i]))
+                    {
+                        checkColumns = false;
+                        listErrorColumns += " " + set[i];
+                    }
+                }
+                if (checkColumns)
+                {
+                    AreColumnsCorrect = true;
+                    return "";
+                }
+                if (line == 0) listErrorColumns += " OU ";
+                line++;
+            }
+            isFileCorrect = false;
+            AreColumnsCorrect = false;
+            return listErrorColumns;
         }
 
         /// <summary>
@@ -328,6 +451,8 @@ namespace AnalyseEtControleFEC.Model
             return valid;
         }
 
+
+
         /// <summary>
         /// Create a String that log the encountered errors
         /// </summary>
@@ -349,17 +474,21 @@ namespace AnalyseEtControleFEC.Model
                 if (!AreColumnsCorrect)
                 {
                     log += "\t - Les entêtes de colonnes ne correspondent à aucun ensemble possible pour le régime et le plan indiqués. Voici les ensembles possibles :\n";
-                    foreach (List<String> set in configuration.getColumnSets(regime, plan))
-                    {
-                        log += "\t\t - " + set.ToString();
-                    }
+                    log += "\t\t -" + getErrorColumns() + "\n";
                 }
 
             }
-            /* if (!check_CompAuxNum_CompAuxLib())
-             {
-                 log += "\t - Les champs CompAuxNum et CompAuxLib sont pas conforment \n";
-             }*/
+
+            foreach (Tuple<String, List<int>> col in lineRegexErrors)
+            {
+                log += "\n Le champs : " + col.Item1 + " est pas valide"; LogHelper.WriteToFile("\n Le champs : " + col.Item1 + " est pas valide", "Class ErrorLogger");
+                foreach (int i in col.Item2)
+                {
+                    log += "\n erreur en ligne : " + i;
+                    LogHelper.WriteToFile("\n erreur en ligne: " + i, "erreur en ligne");
+                }
+            }
+
             return log;
         }
     }
