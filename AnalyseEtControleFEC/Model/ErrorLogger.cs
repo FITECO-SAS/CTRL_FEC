@@ -76,7 +76,7 @@ namespace AnalyseEtControleFEC.Model
             List<int> list = dataBaseAccess.CompareContent_CompAuxNum_CompAuxLib();
             if (list.Count != 0)
             {
-                LogHelper.WriteToFile("Les champs CompAuxNum et CompAuxLib sont pas conforment ligne :\n", "Class ErrorLogger");
+                LogHelper.WriteToFile("L'un des champs CompAuxNum ou CompAuxLib est vide ligne :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t - Les champs CompAuxNum et CompAuxLib sont pas conforment ligne :");
                 foreach (int i in list)
                 {
@@ -90,7 +90,7 @@ namespace AnalyseEtControleFEC.Model
             List<int> list = dataBaseAccess.CompareContent_EcritureLet_DateLet();
             if (list.Count != 0)
             {
-                LogHelper.WriteToFile("Les champs EcritureLet et DateLet sont pas conforment ligne :\n", "Class ErrorLogger");
+                LogHelper.WriteToFile("L'un des champs EcritureLet ou DateLet est vide ligne :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs EcritureLet et DateLet sont pas conforment ligne :");
                 foreach (int i in list)
                 {
@@ -104,7 +104,7 @@ namespace AnalyseEtControleFEC.Model
             List<int> list = dataBaseAccess.CompareContent_Montantdevise_Idevise();
             if (list.Count != 0)
             {
-                LogHelper.WriteToFile("Les champs Montantdevise et Idevise sont pas conforment ligne :\n", "Class ErrorLogger");
+                LogHelper.WriteToFile("L'un des champs Montantdevise ou Idevise est vide ligne :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs Montantdevise et Idevise sont pas conforment ligne :");
                 foreach (int i in list)
                 {
@@ -118,7 +118,7 @@ namespace AnalyseEtControleFEC.Model
             List<int> list = dataBaseAccess.CompareContent_DateLet_EcritureDate();
             if (list.Count != 0)
             {
-                LogHelper.WriteToFile("Les champs DateLet et EcritureDate sont pas conforment ligne :\n", "Class ErrorLogger");
+                LogHelper.WriteToFile("Le champs DateLet < EcritureDate sur les lignes :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs DateLet et EcritureDate sont pas conforment ligne :");
                 foreach (int i in list)
                 {
@@ -132,7 +132,7 @@ namespace AnalyseEtControleFEC.Model
             List<int> list = dataBaseAccess.CompareContent_PieceDate_EcritureDate();
             if (list.Count != 0)
             {
-                LogHelper.WriteToFile("Les champs PieceDate et EcritureDate sont pas conforment ligne :\n", "Class ErrorLogger");
+                LogHelper.WriteToFile("Le champ PieceDate > EcritureDate sur les lignes :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs PieceDate et EcritureDate sont pas conforment ligne :");
                 foreach (int i in list)
                 {
@@ -146,7 +146,7 @@ namespace AnalyseEtControleFEC.Model
             List<int> list = dataBaseAccess.CompareContent_PieceDate_ValidDate();
             if (list.Count != 0)
             {
-                LogHelper.WriteToFile("Les champs PieceDate et ValidDate sont pas conforment ligne :\n", "Class ErrorLogger");
+                LogHelper.WriteToFile("Le champ PieceDate > ValidDate sur les lignes :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs PieceDate et ValidDate sont pas conforment ligne :");
                 foreach (int i in list)
                 {
@@ -160,7 +160,7 @@ namespace AnalyseEtControleFEC.Model
             List<int> list = dataBaseAccess.CompareContent_EcritureDate_ValidDate();
             if (list.Count != 0)
             {
-                LogHelper.WriteToFile("Les champs EcritureDate et ValidDate sont pas conforment ligne :\n", "Class ErrorLogger");
+                LogHelper.WriteToFile("Le champ EcritureDate > ValidDate sur les lignes :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs EcritureDate et ValidDate sont pas conforment ligne :");
                 foreach (int i in list)
                 {
@@ -174,7 +174,7 @@ namespace AnalyseEtControleFEC.Model
             List<int> list = dataBaseAccess.CompareContent_DateLet_PieceDate();
             if (list.Count != 0)
             {
-                LogHelper.WriteToFile("Les champs DateLet et PieceDate sont pas conforment ligne :\n", "Class ErrorLogger");
+                LogHelper.WriteToFile("Le champs DateLet < PieceDate sur les lignes :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs DateLet et PieceDate sont pas conforment ligne :");
                 foreach (int i in list)
                 {
@@ -189,6 +189,7 @@ namespace AnalyseEtControleFEC.Model
             List<String> list = dataBaseAccess.EcritureNum_Debit_Credit();
             if (list.Count != 0)
             {
+                LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur les EcritureNum :", "ErrorLogger");
                 foreach (String str in list)
                 {
                     LogHelper.WriteToFile("\t\t"+str,"EcritureNum");
@@ -201,6 +202,7 @@ namespace AnalyseEtControleFEC.Model
             List<String> list = dataBaseAccess.JournalCode_Debit_Credit();
             if (list.Count != 0)
             {
+                LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur les JournalCode :", "ErrorLogger");
                 foreach (String str in list)
                 {
                     //Console.WriteLine("\t\t JournalCode :" + str);
@@ -215,7 +217,7 @@ namespace AnalyseEtControleFEC.Model
             if (list == true)
             {
                 Console.WriteLine("Erreur Debit Credit\n");
-                LogHelper.WriteToFile("Erreur Debit Credit\n", "ErrorLogger");
+                LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur l'ensemble du fichier\n", "ErrorLogger");
             }
         }
 
@@ -225,7 +227,7 @@ namespace AnalyseEtControleFEC.Model
             if (list == true)
             {
                 //Console.WriteLine("Erreur Montant Sens \n");
-                LogHelper.WriteToFile("Erreur Montant Sens \n", "ErrorLogger");
+                LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur l'ensemble du fichier\n", "ErrorLogger");
             }
         }
 
@@ -234,6 +236,7 @@ namespace AnalyseEtControleFEC.Model
             List<String> list = dataBaseAccess.JournalCode_Montant_Sens();
             if (list.Count != 0)
             {
+                LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur les JournalCode :", "ErrorLogger");
                 foreach (String str in list)
                 {
                     //Console.WriteLine("\t\t JournalCode :" + str);
@@ -247,6 +250,7 @@ namespace AnalyseEtControleFEC.Model
             List<String> list = dataBaseAccess.EcritureNum_Montant_Sens();
             if (list.Count != 0)
             {
+                LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur les EcritureNum :", "ErrorLogger");
                 foreach (String str in list)
                 {
                     //Console.WriteLine("\t\t EcritureNum :" + str);
