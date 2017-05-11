@@ -372,29 +372,20 @@ namespace AnalyseEtControleFEC.Model
                 if (!AreColumnsCorrect)
                 {
                     log += "\t - Les entêtes de colonnes ne correspondent à aucun ensemble possible pour le régime et le plan indiqués. Voici les ensembles possibles :\n";
-                    /*foreach (List<String> set in configuration.getColumnSets(regime, plan))
-                    {
-                        log += "\t\t - " + set.ToString();
-                    }*/
-                    List<String> errorColumns = getErrorColumns();
-                    for (int j=0;j<errorColumns.Count;j++)
-                    {
-                        log += "\t\t -"+ errorColumns[j].ToString();
-                    }
-                /* List<String>[] set= configuration.getColumnSets(regime, plan);
-                    for (int i=0; i<set.Length ; i++)
-                    {
-                        List<String> setTest = set[i];
-                        for(int j = 0; j < setTest.Count; j++)
-                        log += "\t\t" + setTest[j].ToString();
-                    }*/
                 }
 
             }
-            /* if (!check_CompAuxNum_CompAuxLib())
-             {
-                 log += "\t - Les champs CompAuxNum et CompAuxLib sont pas conforment \n";
-             }*/
+            foreach (Tuple<String, List<int>> col in lineRegexErrors)
+            {
+
+                log += "\n Le champs : " + col.Item1 + " n'est pas valide";
+
+                foreach (int i in col.Item2)
+                {
+                    log += "\n erreur en ligne : " + i;
+                }
+            }
+            
             return log;
         }
     }
