@@ -98,7 +98,7 @@ namespace AnalyseEtControleFEC.Model
         {
             foreach (Tuple<String,String> cregex in columnRegex)
             {
-                if (cregex.Item1 == columnName) ;
+                if (cregex.Item1 == columnName) 
                 return cregex.Item2;
             }
             return null;

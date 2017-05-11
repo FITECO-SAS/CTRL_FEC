@@ -349,17 +349,21 @@ namespace AnalyseEtControleFEC.Model
                 if (!AreColumnsCorrect)
                 {
                     log += "\t - Les entêtes de colonnes ne correspondent à aucun ensemble possible pour le régime et le plan indiqués. Voici les ensembles possibles :\n";
-                    foreach (List<String> set in configuration.getColumnSets(regime, plan))
-                    {
-                        log += "\t\t - " + set.ToString();
-                    }
+                   
                 }
 
             }
-            /* if (!check_CompAuxNum_CompAuxLib())
-             {
-                 log += "\t - Les champs CompAuxNum et CompAuxLib sont pas conforment \n";
-             }*/
+            foreach (Tuple<String, List<int>> col in lineRegexErrors)
+            {
+
+                log += "\n Le champs : " + col.Item1 + " est pas valide";
+
+                foreach (int i in col.Item2)
+                {
+                    log += "\n erreur en ligne : " + i;
+                }
+            }
+            
             return log;
         }
     }
