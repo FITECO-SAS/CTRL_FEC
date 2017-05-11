@@ -500,7 +500,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     validDate = Convert.ToInt32(reader_validDate.GetValue(0));
                 }
-                if (PieceDate <= validDate)
+                if (PieceDate <= validDate || PieceDate == 0 || validDate == 0)
                 {
                     boolien = true;
                 }
@@ -543,7 +543,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     PieceDate = Convert.ToInt32(reader_PieceDate.GetValue(0));
                 }
-                if (PieceDate <= ecritureDate)
+                if (PieceDate <= ecritureDate || PieceDate == 0 || ecritureDate == 0)
                 {
                     boolien = true;
                 }
@@ -584,7 +584,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     validDate = Convert.ToInt32(reader_validDate.GetValue(0));
                 }
-                if (ecritureDate <= validDate)
+                if (ecritureDate <= validDate || ecritureDate == 0 || validDate == 0)
                 {
                     boolien = true;
                 }
@@ -627,7 +627,7 @@ namespace AnalyseEtControleFEC.Controller
                     DateLet = Convert.ToInt32(reader_DateLet.GetValue(0));
                 }
 
-                if (DateLet >= PieceDate)
+                if (DateLet >= PieceDate || PieceDate == 0 || DateLet == 0)
                 {
                     boolien = true;
                 }
@@ -673,7 +673,7 @@ namespace AnalyseEtControleFEC.Controller
                     DateLet = Convert.ToInt32(reader_DateLet.GetValue(0));
                 }
 
-                if (DateLet >= ecritureDate)
+                if (DateLet >= ecritureDate || DateLet == 0 || ecritureDate == 0)
                 {
                     boolien = true;
                 }
@@ -687,6 +687,212 @@ namespace AnalyseEtControleFEC.Controller
                 }
             }
             return Line;
+        }
+
+        public List<String> EcritureNum_Debit_Credit()
+        {
+            double debit = 0.0;
+            double credit = 0.0;
+            List<String> List_Temp = new List<string>();
+            SQLiteDataReader reader_EcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", dbConnection).ExecuteReader();
+            while (reader_EcritureNum.Read())
+            {
+                SQLiteDataReader reader_Debit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='2' and content='" + reader_EcritureNum["Content"] + "')", dbConnection).ExecuteReader();
+                SQLiteDataReader reader_Credit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' and Line in (SELECT Line from Content where column='2' and content='" + reader_EcritureNum["Content"] + "')", dbConnection).ExecuteReader();
+                while (reader_Debit.Read() && reader_Credit.Read())
+                {
+                    debit += Convert.ToDouble(reader_Debit.GetValue(0));
+                    // Console.WriteLine(debit);
+                    credit += Convert.ToDouble(reader_Credit.GetValue(0));
+                    //Console.WriteLine(reader_Credit.GetValue(0));
+                }
+                if (Math.Round(debit - credit, 4) != 0)
+                {
+                    //Console.WriteLine(debit - credit);
+                    List_Temp.Add(reader_EcritureNum["Content"].ToString());
+                }
+                debit = 0;
+                credit = 0;
+            }
+            return List_Temp;
+        }
+
+        public List<String> JournalCode_Debit_Credit()
+        {
+            double debit = 0.0;
+            double credit = 0.0;
+            List<String> List_Temp = new List<string>();
+            SQLiteDataReader reader_JournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", dbConnection).ExecuteReader();
+            while (reader_JournalCode.Read())
+            {
+                SQLiteDataReader reader_Debit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "')", dbConnection).ExecuteReader();
+                SQLiteDataReader reader_Credit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "')", dbConnection).ExecuteReader();
+                while (reader_Debit.Read() && reader_Credit.Read())
+                {
+                    debit += Convert.ToDouble(reader_Debit.GetValue(0));
+                    // Console.WriteLine(debit);
+                    credit += Convert.ToDouble(reader_Credit.GetValue(0));
+                    //Console.WriteLine(reader_Credit.GetValue(0));
+                }
+                if (Math.Round(debit - credit, 4) != 0)
+                {
+                    //Console.WriteLine(debit - credit);
+                    List_Temp.Add(reader_JournalCode["Content"].ToString());
+                }
+                debit = 0;
+                credit = 0;
+            }
+            return List_Temp;
+        }
+
+        public bool AllLines_Debit_Credit()
+        {
+            double debit = 0.0;
+            double credit = 0.0;
+            bool check = false;
+            SQLiteDataReader reader_Debit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' ", dbConnection).ExecuteReader();
+            SQLiteDataReader reader_Credit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' ", dbConnection).ExecuteReader();
+            while (reader_Debit.Read() && reader_Credit.Read())
+            {
+                debit += Convert.ToDouble(reader_Debit.GetValue(0));
+                // Console.WriteLine(debit);
+                credit += Convert.ToDouble(reader_Credit.GetValue(0));
+                //Console.WriteLine(reader_Credit.GetValue(0));
+            }
+            if (Math.Round(debit - credit, 4) != 0)
+            {
+                //Console.WriteLine(debit - credit);
+                check = true;
+            }
+            return check;
+        }
+
+        public bool AllLines_Montant_Sens()
+        {
+            double debit = 0.0;
+            double credit = 0.0;
+            bool check = false;
+            SQLiteDataReader reader_Montant = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='11' ", dbConnection).ExecuteReader();
+            SQLiteDataReader reader_Sens = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='12' ", dbConnection).ExecuteReader();
+            while (reader_Montant.Read() && reader_Sens.Read())
+            {
+                if (reader_Sens.GetValue(0).ToString().Equals("D"))
+                {
+                    debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                }
+                else if (reader_Sens.GetValue(0).ToString().Equals("C"))
+                {
+                    credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                }
+                else if (reader_Sens.GetValue(0).ToString().Equals("+1"))
+                {
+                    debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                }
+                else if (reader_Sens.GetValue(0).ToString().Equals("-1"))
+                {
+                    credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                }
+            }
+            if (Math.Round(debit - credit, 4) != 0)
+            {
+                check = true;
+            }
+            return check;
+        }
+
+        public List<String> JournalCode_Montant_Sens()
+        {
+            double debit = 0.0;
+            double credit = 0.0;
+            List<String> List_Temp = new List<string>();
+            SQLiteDataReader reader_JournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", dbConnection).ExecuteReader();
+            while (reader_JournalCode.Read())
+            {
+                SQLiteDataReader reader_Montant = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "')", dbConnection).ExecuteReader();
+                SQLiteDataReader reader_Sens = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' ", dbConnection).ExecuteReader();
+                while (reader_Montant.Read() && reader_Sens.Read())
+                {
+                    if (reader_Sens.GetValue(0).ToString().Equals("D"))
+                    {
+                        debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                    }
+                    else if (reader_Sens.GetValue(0).ToString().Equals("C"))
+                    {
+                        credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                    }
+                    else if (reader_Sens.GetValue(0).ToString().Equals("+1"))
+                    {
+                        debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                    }
+                    else if (reader_Sens.GetValue(0).ToString().Equals("-1"))
+                    {
+                        credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                    }
+                }
+
+                if (Math.Round(debit - credit, 4) != 0)
+                {
+                    List_Temp.Add(reader_JournalCode["Content"].ToString());
+                }
+                debit = 0;
+                credit = 0;
+            }
+            return List_Temp;
+        }
+
+        public List<String> EcritureNum_Montant_Sens()
+        {
+            double debit = 0.0;
+            double credit = 0.0;
+            List<String> List_Temp = new List<string>();
+            SQLiteDataReader reader_EcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", dbConnection).ExecuteReader();
+            while (reader_EcritureNum.Read())
+            {
+                SQLiteDataReader reader_Montant = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='2' and content='" + reader_EcritureNum["Content"] + "')", dbConnection).ExecuteReader();
+                SQLiteDataReader reader_Sens = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' ", dbConnection).ExecuteReader();
+                while (reader_Montant.Read() && reader_Sens.Read())
+                {
+                    if (reader_Sens.GetValue(0).ToString().Equals("D"))
+                    {
+                        debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                    }
+                    else if (reader_Sens.GetValue(0).ToString().Equals("C"))
+                    {
+                        credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                    }
+                    else if (reader_Sens.GetValue(0).ToString().Equals("+1"))
+                    {
+                        debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                    }
+                    else if (reader_Sens.GetValue(0).ToString().Equals("-1"))
+                    {
+                        credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                    }
+
+                }
+
+                if (Math.Round(debit - credit, 4) != 0)
+                {
+                    //Console.WriteLine(debit - credit);
+                    List_Temp.Add(reader_EcritureNum["Content"].ToString());
+                }
+                debit = 0;
+                credit = 0;
+            }
+            return List_Temp;
+        }
+
+        public bool Is_Montant_Sens()
+        {
+            SQLiteDataReader reader_ColumnName = new SQLiteCommand("SELECT DISTINCT Name FROM Column", dbConnection).ExecuteReader();
+            while (reader_ColumnName.Read())
+            {
+                if (reader_ColumnName.GetValue(0).ToString().Equals("Montant"))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

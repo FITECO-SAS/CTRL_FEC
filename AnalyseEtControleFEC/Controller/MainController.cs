@@ -22,7 +22,7 @@ namespace AnalyseEtControleFEC.Controller
             instance.getDataBaseController().fillDatabaseFromFile(threadPath);
             logger.checkName(threadFileName);
             logger.checkColumns();
-            logger.checkLinesInDatabase();
+            //logger.checkLinesInDatabase();
             instance.finalizeOpenFileFromThread();
             //logger.check_Dates();
             //Console.WriteLine(logger.check_CompAuxNum_CompAuxLib());
@@ -35,6 +35,7 @@ namespace AnalyseEtControleFEC.Controller
             logger.check_EcritureDate_ValidDate();
             logger.check_DateLet_PieceDate();
             logger.check_DateLet_EcritureDate();
+            logger.check_Is_Montant_Sens();
             //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
         }
 
