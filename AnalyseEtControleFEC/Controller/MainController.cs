@@ -7,19 +7,45 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace AnalyseEtControleFEC.Controller
 {
     public class MainController
     {
+        //Static Thread stuff
+        static String threadPath;
+        static String threadFileName;
+        static public void threadedLoadFromFile()
+        {
+            ErrorLogger logger = new ErrorLogger(config, instance.getDataBaseController(), "BIC", "PCG");
+            instance.getDataBaseController().fillDatabaseFromFile(threadPath);
+            logger.checkName(threadFileName);
+            logger.checkColumns();
+            logger.checkLinesInDatabase();
+            instance.finalizeOpenFileFromThread();
+            //logger.check_Dates();
+            //Console.WriteLine(logger.check_CompAuxNum_CompAuxLib());
+            Console.WriteLine(logger.createLog());
+            logger.check_CompAuxNum_CompAuxLib();
+            logger.check_EcritureLet_DateLet();
+            logger.check_Montantdevise_Idevise();
+            logger.check_PieceDate_EcritureDate();
+            logger.check_PieceDate_ValidDate();
+            logger.check_EcritureDate_ValidDate();
+            logger.check_DateLet_PieceDate();
+            logger.check_DateLet_EcritureDate();
+            //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+        }
+
         //Constants
         static String dataBaseFile = "data.SQLite";
         static String configuration = "Configuration.json";
+        static Configuration config;
         static MainController instance;
 
         public DataBaseController dataBaseController { get; set; }
         public SimpleFilterController simpleFilterController { get; set; }
-        Configuration config;
         Start mainWindow;
 
         static public MainController get()
@@ -162,51 +188,28 @@ namespace AnalyseEtControleFEC.Controller
 
         internal void openFile(string filePath, string fileName)
         {
-            ErrorLogger logger = new ErrorLogger(config, dataBaseController, "BIC", "PCG");
             dataBaseController.init();
-            dataBaseController.fillDatabaseFromFile(filePath);
-            logger.checkName(fileName);
-            logger.checkColumns();
-            //logger.checkLines();
-            //logger.checkLinesWithAll();
-            logger.checkLinesInDatabase();
-            //logger.check_Dates();
-            //Console.WriteLine(logger.check_CompAuxNum_CompAuxLib());
-            Console.WriteLine(logger.createLog());
-            logger.check_CompAuxNum_CompAuxLib();
-            logger.check_EcritureLet_DateLet();
-            logger.check_Montantdevise_Idevise();
-            logger.check_PieceDate_EcritureDate();
-            logger.check_PieceDate_ValidDate();
-            logger.check_EcritureDate_ValidDate();
-            logger.check_DateLet_PieceDate();
-            logger.check_DateLet_EcritureDate();
-            //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+            threadPath = filePath;
+            threadFileName = fileName;
+            Thread openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
+            openFileThread.Start();
+        }
+        public void finalizeOpenFileFromThread()
+        {
             DataGridView gridView = mainWindow.getDataGridView();
-            //List<string[]> content = new List<String[]>();
-            //String[][] content = dataBaseController.getAllLines();
-            //SQLiteDataAdapter dataAdapter = dataBaseController.getDataAdapter();
-            //DataSet dataSet = new DataSet();
-            //dataAdapter.Fill(dataSet);
-            //gridView.DataSource = dataAdapter;
+            gridView.Invoke((Action)finalizeOpenFile);
+        }
+        public void finalizeOpenFile()
+        {
+            DataGridView gridView = mainWindow.getDataGridView();
             String[] Columns = dataBaseController.getColumnNames();
             int size = dataBaseController.getNumberOfLines();
-            /*for (int i=0; i<size ; i++)
-            {
-                content.Add(dataBaseController.getLine(i));
-            }*/
             gridView.ColumnCount = Columns.Length;
             for (int i = 0; i < Columns.Length; i++)
             {
                 gridView.Columns[i].Name = Columns[i];
             }
             gridView.RowCount = size;
-            /*for(int i=0; i<content.Length; i++)//Length was Count
-            {
-                gridView.Rows.Add(content[i]);
-            }
-            gridView.Columns = content.ToArray()[0];*/
-
         }
 
         internal void openFilter(DataGridView gridView)
