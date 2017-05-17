@@ -99,6 +99,7 @@ namespace AnalyseEtControleFEC.Controller
         /// </summary>
         public void init()
         {
+            dbConnection.Close();
             dbConnection.Open();
             new SQLiteCommand("DROP TABLE IF EXISTS Column", dbConnection).ExecuteNonQuery();
             new SQLiteCommand("DROP TABLE IF EXISTS Content", dbConnection).ExecuteNonQuery();
@@ -893,6 +894,166 @@ namespace AnalyseEtControleFEC.Controller
                 }
             }
             return false;
+        }
+
+        public List<String> Compare_Montant_Sens_By_Month()
+        {
+            double debit = 0.0;
+            double credit = 0.0;
+            List<String> List_Temp = new List<string>();
+            SQLiteDataReader reader_JournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", dbConnection).ExecuteReader();
+            while (reader_JournalCode.Read())
+            {
+                SQLiteDataReader reader_Ecriture_Date = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='3' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "')", dbConnection).ExecuteReader();
+                String month = "";
+                while (reader_Ecriture_Date.Read())
+                {
+                    if (reader_Ecriture_Date.GetValue(0).ToString().Substring(0, 6).Equals(month))
+                    {
+                        SQLiteDataReader reader_Montant = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + reader_Ecriture_Date["Content"] + "'))", dbConnection).ExecuteReader();
+                        SQLiteDataReader reader_Sens = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + reader_Ecriture_Date["Content"] + "'))", dbConnection).ExecuteReader();
+
+                        while (reader_Montant.Read() && reader_Sens.Read())
+                        {
+                            if (reader_Sens.GetValue(0).ToString().Equals("D"))
+                            {
+                                debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                            }
+                            else if (reader_Sens.GetValue(0).ToString().Equals("C"))
+                            {
+                                credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                            }
+                            else if (reader_Sens.GetValue(0).ToString().Equals("+1"))
+                            {
+                                debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                            }
+                            else if (reader_Sens.GetValue(0).ToString().Equals("-1"))
+                            {
+                                credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        if (Math.Round(debit - credit, 4) != 0)
+                        {
+                            List_Temp.Add("Journal : " + reader_JournalCode["Content"].ToString() + " Date : " + month);
+                        }
+                        debit = 0.0;
+                        credit = 0.0;
+                        month = reader_Ecriture_Date.GetValue(0).ToString().Substring(0, 6);
+
+                        SQLiteDataReader reader_Montant = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + reader_Ecriture_Date["Content"] + "'))", dbConnection).ExecuteReader();
+                        SQLiteDataReader reader_Sens = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + reader_Ecriture_Date["Content"] + "'))", dbConnection).ExecuteReader();
+
+                        while (reader_Montant.Read() && reader_Sens.Read())
+                        {
+                            if (reader_Sens.GetValue(0).ToString().Equals("D"))
+                            {
+                                debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                            }
+                            else if (reader_Sens.GetValue(0).ToString().Equals("C"))
+                            {
+                                credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                            }
+                            else if (reader_Sens.GetValue(0).ToString().Equals("+1"))
+                            {
+                                debit += Convert.ToDouble(reader_Montant.GetValue(0));
+                            }
+                            else if (reader_Sens.GetValue(0).ToString().Equals("-1"))
+                            {
+                                credit += Convert.ToDouble(reader_Montant.GetValue(0));
+                            }
+                        }
+                    }    
+                }
+                if (Math.Round(debit - credit, 4) != 0)
+                    {
+                        List_Temp.Add("Journal : " + reader_JournalCode["Content"].ToString() + " Date : " + month);
+                    }
+            }
+            return List_Temp;
+        }
+
+        public List<String> Compare_Debit_Credit_By_Month()
+        {
+            double debit = 0.0;
+            double credit = 0.0;
+            List<String> List_Temp = new List<string>();
+            SQLiteDataReader reader_JournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", dbConnection).ExecuteReader();
+            while (reader_JournalCode.Read())
+            {
+                SQLiteDataReader reader_Ecriture_Date = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='3' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "')", dbConnection).ExecuteReader();
+                String month = "";
+                while (reader_Ecriture_Date.Read())
+                {
+                    //Console.WriteLine("Reader : "+ reader_Ecriture_Date.GetValue(0).ToString());
+                    //Console.WriteLine("Month : " + month);
+                    if (reader_Ecriture_Date.GetValue(0).ToString().Substring(0, 6).Equals(month))
+                    {
+                        SQLiteDataReader reader_Debit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + reader_Ecriture_Date["Content"] + "'))", dbConnection).ExecuteReader();
+                        SQLiteDataReader reader_Credit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + reader_Ecriture_Date["Content"] + "'))", dbConnection).ExecuteReader();
+
+                        while (reader_Debit.Read() && reader_Credit.Read())
+                        {
+                            debit += Convert.ToDouble(reader_Debit.GetValue(0));
+                            Console.WriteLine("Debit : "+debit);
+                            credit += Convert.ToDouble(reader_Credit.GetValue(0));
+                            Console.WriteLine("Credit : "+credit);
+
+                        }
+                    }
+                    else
+                    {
+                        //Console.WriteLine("Debit - Credit : " + Math.Round(debit - credit, 4));
+                        if (Math.Round(debit - credit, 4) != 0)
+                        {
+                            List_Temp.Add("Journal : " + reader_JournalCode["Content"].ToString() + " Date : " + month);
+                        }
+                        debit = 0.0;
+                        credit = 0.0;
+                        month = reader_Ecriture_Date.GetValue(0).ToString().Substring(0, 6);
+
+                        SQLiteDataReader reader_Debit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + reader_Ecriture_Date["Content"] + "'))", dbConnection).ExecuteReader();
+                        SQLiteDataReader reader_Credit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' and Line in (SELECT Line from Content where column='0' and content='" + reader_JournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + reader_Ecriture_Date["Content"] + "'))", dbConnection).ExecuteReader();
+
+                        while (reader_Debit.Read() && reader_Credit.Read())
+                        {
+                            debit += Convert.ToDouble(reader_Debit.GetValue(0));
+                            // Console.WriteLine(debit);
+                            credit += Convert.ToDouble(reader_Credit.GetValue(0));
+                            //Console.WriteLine(reader_Credit.GetValue(0));
+
+                        }
+                    }
+                }
+                if (Math.Round(debit - credit, 4) != 0)
+                {
+                    List_Temp.Add("Journal : " + reader_JournalCode["Content"].ToString() + " Date : " + month);
+                }
+            }
+            return List_Temp;
+        }
+
+        public List<String> Is_Date_Unique_For_EcritureNum()
+        {
+            List<String> List_Temp = new List<string>();
+            SQLiteDataReader reader_EcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", dbConnection).ExecuteReader();
+            while (reader_EcritureNum.Read())
+            {
+                int count = 0;
+                SQLiteDataReader reader_Ecriture_Date = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='3' and Line in (SELECT Line from Content where column='2' and content='" + reader_EcritureNum["Content"] + "')", dbConnection).ExecuteReader();
+                while (reader_Ecriture_Date.Read())
+                {
+                    count++;
+                }
+                if (count > 1)
+                {
+                    List_Temp.Add("EcritureNum : " + reader_EcritureNum["Content"].ToString());
+                }
+            }
+            return List_Temp;
         }
     }
 }

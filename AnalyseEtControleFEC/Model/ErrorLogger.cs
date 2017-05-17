@@ -259,6 +259,34 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
+        public void check_Compare_Montant_Sens_By_Month()
+        {
+            List<String> list = dataBaseAccess.Compare_Montant_Sens_By_Month();
+            if (list.Count != 0)
+            {
+                LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur un mois d'un journal :", "ErrorLogger");
+                foreach (String str in list)
+                {
+                    //Console.WriteLine("\t\t EcritureNum :" + str);
+                    LogHelper.WriteToFile("\t\t" + str, "EcritureNum :");
+                }
+            }
+        }
+
+        public void check_Compare_Debit_Credit_By_Month()
+        {
+            List<String> list = dataBaseAccess.Compare_Debit_Credit_By_Month();
+            if (list.Count != 0)
+            {
+                LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur un mois d'un journal :", "ErrorLogger");
+                foreach (String str in list)
+                {
+                    //Console.WriteLine("\t\t EcritureNum :" + str);
+                    LogHelper.WriteToFile("\t\t" + str, "EcritureNum :");
+                }
+            }
+        }
+
         public void check_Is_Montant_Sens()
         {
             bool is_Montant = dataBaseAccess.Is_Montant_Sens();
@@ -268,14 +296,32 @@ namespace AnalyseEtControleFEC.Model
                 check_Montant_Sens_AllLines();
                 check_Montant_Sens_JournalCode();
                 check_Montant_Sens_EcritureNum();
+                check_Compare_Montant_Sens_By_Month();
             }
             else
             {
                 check_Debit_Credit_EcritureNum();
                 check_Debit_Credit_JournalCode();
                 check_Debit_Credit_AllLines();
+                check_Compare_Debit_Credit_By_Month();
             }
         }
+
+        public void check_Is_Date_Unique_For_EcritureNum()
+        {
+            List<String> list = dataBaseAccess.Is_Date_Unique_For_EcritureNum();
+            if (list.Count != 0)
+            {
+                LogHelper.WriteToFile("La date sur l'ecritureNum n'est pas unique :", "ErrorLogger");
+                foreach (String str in list)
+                {
+                    //Console.WriteLine("\t\t EcritureNum :" + str);
+                    LogHelper.WriteToFile("\t\t" + str, "EcritureNum :");
+                }
+            }
+        }
+
+
         /// <summary>
         /// Check if a name is correct for the regex in configuration 
         /// </summary>
