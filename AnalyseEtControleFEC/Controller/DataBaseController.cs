@@ -105,7 +105,6 @@ namespace AnalyseEtControleFEC.Controller
             new SQLiteCommand("DROP TABLE IF EXISTS Content", dbConnection).ExecuteNonQuery();
             new SQLiteCommand("CREATE TEMP TABLE Column (Position INT, Name VARCHAR(20))", dbConnection).ExecuteNonQuery();
             new SQLiteCommand("CREATE TEMP TABLE Content (Line INT, Column INT, Content VARCHAR(100))", dbConnection).ExecuteNonQuery();
-            new SQLiteCommand("CREATE TEMP VIEW FinalFilter AS Select * FROM Content",dbConnection).ExecuteNonQuery();
             new SQLiteCommand("CREATE INDEX AccessIndexContent ON Content (Column,Line)", dbConnection).ExecuteNonQuery();
             SQLiteFunction.RegisterFunction(typeof(IsStrictlySuperiorSQLiteFunction));
             SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
@@ -215,20 +214,6 @@ namespace AnalyseEtControleFEC.Controller
             return result.ToArray();
         }
 
-        /// <summary>
-        /// Return the content of specified column and line in the final filter view
-        /// </summary>
-        /// <param name="column">the column number</param>
-        /// <param name="line">the line number</param>
-        /// <returns>the content of the specified cell as a String</returns>
-        public String getContentFromFilter (int column, int line)
-        {
-            SQLiteCommand command = new SQLiteCommand("SELECT Content FROM FinalFilter WHERE Column = @column AND Line = @line", dbConnection);
-            command.Parameters.Add(new SQLiteParameter("@line", line));
-            command.Parameters.Add(new SQLiteParameter("@column", column));
-            return (String)command.ExecuteScalar();
-        }
-
         public String getContent(int column, int line)
         {
             SQLiteCommand command = new SQLiteCommand("SELECT Content FROM Content WHERE Column = @column AND Line = @line", dbConnection);
@@ -259,8 +244,6 @@ namespace AnalyseEtControleFEC.Controller
             }
             filter.ExecuteNonQuery();
             new SQLiteCommand("CREATE INDEX AccessIndexFilter" + FilterNumber + " ON Filter" + FilterNumber + " (Column,Line)", dbConnection).ExecuteNonQuery();
-            new SQLiteCommand("DROP VIEW FinalFilter", dbConnection).ExecuteNonQuery();
-            new SQLiteCommand("CREATE TEMP VIEW FinalFilter AS SELECT * FROM Filter" + FilterNumber, dbConnection).ExecuteNonQuery();
             FilterNumber++;
         }
 
@@ -282,8 +265,6 @@ namespace AnalyseEtControleFEC.Controller
             filter = new SQLiteCommand("CREATE TEMP TABLE Filter" + FilterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM " + lastTab + " base INNER JOIN ColumnNum" + FilterNumber + " colNum ON base.Line = colNum.Line", dbConnection);
             filter.ExecuteNonQuery();
             new SQLiteCommand("CREATE INDEX AccessIndexFilter" + FilterNumber + " ON Filter" + FilterNumber + " (Column,Line)", dbConnection).ExecuteNonQuery();
-            new SQLiteCommand("DROP VIEW FinalFilter", dbConnection).ExecuteNonQuery();
-            new SQLiteCommand("CREATE TEMP VIEW FinalFilter AS SELECT * FROM Filter" + FilterNumber, dbConnection).ExecuteNonQuery();
             FilterNumber++;
         }
 
@@ -316,10 +297,8 @@ namespace AnalyseEtControleFEC.Controller
         {
             for(;FilterNumber > 0; FilterNumber--)
             {
-                new SQLiteCommand("DROP VIEW Filter"+(FilterNumber-1), dbConnection).ExecuteNonQuery();
+                new SQLiteCommand("DROP Table Filter"+(FilterNumber-1), dbConnection).ExecuteNonQuery();
             }
-            new SQLiteCommand("DROP VIEW FinalFilter", dbConnection).ExecuteNonQuery();
-            new SQLiteCommand("CREATE TEMP VIEW FinalFilter AS Select * FROM Content", dbConnection).ExecuteNonQuery();
         }
 
         internal int getLastFilterId()
@@ -358,14 +337,6 @@ namespace AnalyseEtControleFEC.Controller
         {
             //dbConnection.Open();
             int result = Convert.ToInt32(new SQLiteCommand("SELECT count(*) FROM Content GROUP BY Column", dbConnection).ExecuteScalar());
-            //dbConnection.Close();
-            return result;
-        }
-
-        public int getNumberOfLinesInFilter()
-        {
-            //dbConnection.Open();
-            int result = Convert.ToInt32(new SQLiteCommand("SELECT count(*) FROM FinalFilter GROUP BY Column", dbConnection).ExecuteScalar());
             //dbConnection.Close();
             return result;
         }
