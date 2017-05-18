@@ -22,11 +22,11 @@ namespace AnalyseEtControleFEC.Controller
             instance.getDataBaseController().fillDatabaseFromFile(threadPath);
             logger.checkName(threadFileName);
             logger.checkColumns();
-            logger.checkLinesInDatabase();
+            logger.CheckLinesInDatabase();
             instance.finalizeOpenFileFromThread();
             //logger.check_Dates();
             //Console.WriteLine(logger.check_CompAuxNum_CompAuxLib());
-            Console.WriteLine(logger.createLog());
+            Console.WriteLine(logger.CreateLog());
             logger.check_CompAuxNum_CompAuxLib();
             logger.check_EcritureLet_DateLet();
             logger.check_Montantdevise_Idevise();

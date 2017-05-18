@@ -938,7 +938,7 @@ namespace AnalyseEtControleFEC.Controller
                     {
                         if (Math.Round(debit - credit, 4) != 0)
                         {
-                            List_Temp.Add("Journal : " + reader_JournalCode["Content"].ToString() + " Date : " + month);
+                            List_Temp.Add(reader_JournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
                         }
                         debit = 0.0;
                         credit = 0.0;
@@ -970,13 +970,13 @@ namespace AnalyseEtControleFEC.Controller
                 }
                 if (Math.Round(debit - credit, 4) != 0)
                     {
-                        List_Temp.Add("Journal : " + reader_JournalCode["Content"].ToString() + " Date : " + month);
-                    }
+                    List_Temp.Add(reader_JournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
+                }
             }
             return List_Temp;
         }
 
-        public List<String> Compare_Debit_Credit_By_Month()
+        public List<String> CompareDebitCreditByMonth()
         {
             double debit = 0.0;
             double credit = 0.0;
@@ -1009,7 +1009,7 @@ namespace AnalyseEtControleFEC.Controller
                         //Console.WriteLine("Debit - Credit : " + Math.Round(debit - credit, 4));
                         if (Math.Round(debit - credit, 4) != 0)
                         {
-                            List_Temp.Add("Journal : " + reader_JournalCode["Content"].ToString() + " Date : " + month);
+                            List_Temp.Add(reader_JournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
                         }
                         debit = 0.0;
                         credit = 0.0;
@@ -1030,7 +1030,7 @@ namespace AnalyseEtControleFEC.Controller
                 }
                 if (Math.Round(debit - credit, 4) != 0)
                 {
-                    List_Temp.Add("Journal : " + reader_JournalCode["Content"].ToString() + " Date : " + month);
+                    List_Temp.Add(reader_JournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4,"/"));
                 }
             }
             return List_Temp;
@@ -1050,7 +1050,7 @@ namespace AnalyseEtControleFEC.Controller
                 }
                 if (count > 1)
                 {
-                    List_Temp.Add("EcritureNum : " + reader_EcritureNum["Content"].ToString());
+                    List_Temp.Add(reader_EcritureNum["Content"].ToString());
                 }
             }
             return List_Temp;

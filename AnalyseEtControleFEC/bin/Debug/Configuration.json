@@ -7,26 +7,87 @@
 		}
 	},
 	"columnRegex":{
-		"JournalCode":"^.+$",
-		"JournalLib":"^[^\\|]+$",
-		"EcritureNum":"^.*[0-9]+$",
-		"EcritureDate":"^(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$",
-		"CompteNum":"^\\d+$",
-		"CompteLib":"^[^\\|]+$",
-		"CompAuxNum":"\\d*",
-		"CompAuxLib":"^[^\\|]*$",
-		"PieceRef":"^[^\\|]+$",
-		"PieceDate":"^(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$",
-		"EcritureLib":"^[^\\|]+$",
-		"Debit":"^\\d+\\,+\\d{2}$",
-		"Credit":"^\\d+\\,+\\d{2}$",
-		"EcritureLet":"^[^\\|]*$",
-		"DateLet":"^(|(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01]))$",
-		"ValidDate":"^(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$",
-		"Montantdevise":"^(|\\d+\\,+\\d{2})$",
-		"Idevise":"^[^\\|]*$",
-		"Montant":"^\\d+\\,+\\d{2}$",
-		"Sens":"^(\\+1|\\-1|D|C)$"
+        "JournalCode":{
+            Regex:"^.+$",
+            Error:"Le champs JournalCode ne doit contenir que des caractères alphanumériques (pas de |) et ne peut pas être vide"
+        },
+
+        "JournalLib":{
+            Regex:"^[^\\|]+$",
+            Error:"Le champs JournalCode ne doit contenir que des caractères alphanumériques (pas de |) et ne peut pas être vide"
+        },
+		"EcritureNum":{
+			Regex:"^.*[0-9]+$",
+			Error:"Le champs EcritureNum ne doit contenir que des caractères alphanumériques (pas de |), se termine par un chiffre et ne peut pas être vide"
+        },
+		"EcritureDate":{
+			Regex:"^(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$",
+			Error:"Le champs EcritureDate doit être au format : AAAMMJJ et ne peut pas être vide"
+        },
+		"CompteNum":{
+			Regex:"^\\d+$",
+			Error:"Le champs CompteNum ne doit contenir que des caractères numériques et ne peut pas être vide"
+        },
+		"CompteLib":{
+			Regex:"^[^\\|]+$",
+			Error:"Le champs CompteLib ne doit contenir que des caractères alphanumériques(pas de |) et ne peut pas être vide"
+        },
+		"CompAuxNum":{
+			Regex:"\\d*",
+			Error:"Le champs CompteAuxNum ne doit contenir que des caractères numériques (pas de |) et ne peut pas être vide"
+        },
+		"CompAuxLib":{
+			Regex:"^[^\\|]*$",
+			Error:"Le champs CompAuxLib ne doit contenir que des caractères alphanumériques(pas de |) et ne peut pas être vide"
+        },
+		"PieceRef":{
+			Regex:"^[^\\|]+$",
+			Error:"Le champs PieceRef ne doit contenir que des caractères alphanumériques(pas de |) et ne peut pas être vide"
+        },			
+		"PieceDate":{
+			Regex:"^(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$",
+			Error:"Le champs PieceDate doit être au format : AAAMMJJ et ne peut pas être vide"
+        },
+		"EcritureLib":{
+			Regex:"^[^\\|]+$",
+			Error:"Le champs EcritureLib ne doit contenir que des caractères alphanumériques(pas de |) et ne peut pas être vide"
+        },
+		"Debit":{
+			Regex:"^\\d+\\,+\\d{2}$",
+			Error:"Le champs Debit ne doit contenir que des caractères numériques, virgule ',' et ne peut pas être vide"
+        },
+		"Credit":{
+			Regex:"^\\d+\\,+\\d{2}$",
+			Error:"Le champs Credit ne doit contenir que des caractères numériques, virgule ',' et ne peut pas être vide"
+        },
+		"EcritureLet":{
+			Regex:"^[^\\|]*$",
+			Error:"Le champs EcritureLet ne doit contenir que des caractères alphanumériques(pas de |)"
+        },
+		"DateLet":{
+			Regex:"^(|(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01]))$",
+			Error:"Le champs DateLet doit être au format : AAAMMJJ"
+        },
+		"ValidDate":{
+			Regex:"^(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$",
+			Error:"Le champs ValidDate doit être au format : AAAMMJJ et ne peut pas être vide"
+        },
+		"Montantdevise":{
+			Regex:"^(|\\d+\\,+\\d{2})$",
+			Error:"Le champs Montantdevise ne doit contenir que des caractères numériques et virgule ','"
+        },
+		"Idevise":{
+			Regex:"^[^\\|]*$",
+			Error:"Le champs Iddevise ne doit contenir que des caractères alphanumériques(pas de |)"
+        },
+		"Montant":{
+			Regex:"^\\d+\\,+\\d{2}$",
+			Error:"Le champs Montant ne doit contenir que des caractères numériques, virgule ',' et ne peut pas être vide"
+        },
+		"Sens":{
+			Regex:"^(\\+1|\\-1|D|C)$"
+			Error:"Le champs Sens ne doit contenir que les caractères '+1','-1','D' ou 'C'"
+        },
 	},
 	"columnDependency":{
 		"CompAuxLib":"CompAuxNum",

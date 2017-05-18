@@ -267,22 +267,20 @@ namespace AnalyseEtControleFEC.Model
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur un mois d'un journal :", "ErrorLogger");
                 foreach (String str in list)
                 {
-                    //Console.WriteLine("\t\t EcritureNum :" + str);
-                    LogHelper.WriteToFile("\t\t" + str, "EcritureNum :");
+                    LogHelper.WriteToFile("\t\t" + str, "JournalCode :");
                 }
             }
         }
 
         public void check_Compare_Debit_Credit_By_Month()
         {
-            List<String> list = dataBaseAccess.Compare_Debit_Credit_By_Month();
+            List<String> list = dataBaseAccess.CompareDebitCreditByMonth();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur un mois d'un journal :", "ErrorLogger");
                 foreach (String str in list)
                 {
-                    //Console.WriteLine("\t\t EcritureNum :" + str);
-                    LogHelper.WriteToFile("\t\t" + str, "EcritureNum :");
+                    LogHelper.WriteToFile("\t\t" + str, "JournalCode :");
                 }
             }
         }
@@ -483,7 +481,7 @@ namespace AnalyseEtControleFEC.Model
         /// Check if each line in the file verify the regex in the configuration
         /// </summary>
         /// <returns>false if at least one content is not correct or true if not</returns>
-        public bool checkLinesInDatabase()
+        public bool CheckLinesInDatabase()
         {
             bool valid = true;
             String[] columns = dataBaseAccess.getColumnNames();
@@ -507,7 +505,7 @@ namespace AnalyseEtControleFEC.Model
         /// Create a String that log the encountered errors
         /// </summary>
         /// <returns>the log as a String</returns>
-        public String createLog()
+        public String CreateLog()
         {
             String log = "Rapport d'erreur :\n";
             if (isFileCorrect)
