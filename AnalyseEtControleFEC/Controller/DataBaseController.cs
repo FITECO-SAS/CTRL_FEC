@@ -131,15 +131,17 @@ namespace AnalyseEtControleFEC.Controller
         /// Fill the dataBase by reading an Accounting Entry File
         /// </summary>
         /// <param name="filePath">Path of the file to read</param>
-        public void fillDatabaseFromFile(String filePath)
+        public List<int> fillDatabaseFromFile(String filePath)
         {
             Char[] separators = { '|', '\t' };
+            List<int> errors = new List<int>;
             FileStream fs = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             BufferedStream bs = new BufferedStream(fs);
             StreamReader reader = new StreamReader(bs);
             //File.OpenText(filePath);
             String readLine = reader.ReadLine();
             String[] splitLine = readLine.Split(separators);
+            int nbColumns = splitLine.Length;
             //dbConnection.Open();
             for(int i=0; i<splitLine.Length; i++)
             {
@@ -157,18 +159,23 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     readLine = reader.ReadLine();
                     splitLine = readLine.Split(separators);
-                    for (int column = 0; column < splitLine.Length; column++)
+                    for (int column = 0; column < Math.Min(splitLine.Length,nbColumns); column++)
                     {
                         insertCmd.Parameters.Add(new SQLiteParameter("@line", line));
                         insertCmd.Parameters.Add(new SQLiteParameter("@column", column));
                         insertCmd.Parameters.Add(new SQLiteParameter("@content", splitLine[column]));
                         insertCmd.ExecuteNonQuery();
                     }
+                    if(splitLine.Length != nbColumns)
+                    {
+                        errors.Add(line);
+                    }
                     line++;
                     curCount++;
                 }
                 commitTrans.ExecuteNonQuery();
             }
+            return errors;
             //dbConnection.Close();
         }
 
