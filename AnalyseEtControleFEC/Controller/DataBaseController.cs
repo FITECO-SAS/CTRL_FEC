@@ -288,6 +288,28 @@ namespace AnalyseEtControleFEC.Controller
         }
 
         /// <summary>
+        /// Delete temporary tables created for the last final filter
+        /// </summary>
+        /// <param name="numberOfTables">number of tables created for the last filter (including the final one)</param>
+        public void cleanTempTables(int numberOfTables)
+        {
+            SQLiteCommand dropColumnNumCommand = new SQLiteCommand(dbConnection);
+            SQLiteCommand dropFilterCommand = new SQLiteCommand(dbConnection);
+            if (numberOfTables > 1)
+            {
+                for (int i = FilterNumber - 1; i > FilterNumber - numberOfTables; i--)
+                {
+                    dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + i;
+                    dropFilterCommand.CommandText = "DROP TABLE Filter" + i;
+                    dropColumnNumCommand.ExecuteNonQuery();
+                    dropFilterCommand.ExecuteNonQuery();
+                }
+            }
+            dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + FilterNumber;
+            dropColumnNumCommand.ExecuteNonQuery();
+        }
+
+        /// <summary>
         /// Delete all filters created with the AddFilter function
         /// </summary>
         public void DeleteAllFilters()
