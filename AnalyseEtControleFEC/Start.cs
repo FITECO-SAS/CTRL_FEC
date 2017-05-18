@@ -60,6 +60,13 @@ namespace AnalyseEtControleFEC
         {
             OpenFile openFile = new OpenFile();
             openFile.ShowDialog();
+            if (openFile.DialogResult == DialogResult.OK)
+            {
+                button4.Enabled = true;
+                button1.Enabled = true;
+                button7.Enabled = true;
+                button17.Enabled = true;
+            }
             //this.Hide();
         }
 
@@ -116,21 +123,12 @@ namespace AnalyseEtControleFEC
                 field3ComboBox.Items.Add(dataGridView1.Columns[i].Name);
                 field4ComboBox.Items.Add(dataGridView1.Columns[i].Name);
             }
-            if (treeView1.SelectedNode.Text == "Simple")
+        }
+        private void treeView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if ((sender as TreeView) != null)
             {
-                panel1.Visible = true;
-            }
-            if (treeView1.SelectedNode.Text == "Par Ligne")
-            {
-                panel2.Visible = true;
-            }
-            if (treeView1.SelectedNode.Text == "Par Colonne")
-            {
-                panel23.Visible = true;
-            }
-            if (treeView1.SelectedNode.Text == "Élaboré")
-            {
-                panel6.Visible = true;
+                treeView1.SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
             }
         }
 
@@ -935,6 +933,10 @@ namespace AnalyseEtControleFEC
                         newDataGridView.Rows[j].Cells[i].Value = dataGridView1.Rows[list[j]].Cells[i].Value;
                     }
                 }
+                for(int i = 0;i < newDataGridView.RowCount; i++)
+                {
+                    newDataGridView.Rows[i].HeaderCell.Value = String.Format("{0}", i + 1);
+                }
                 string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
                 TabPage myTabPage = new TabPage(title);
                 myTabPage.Controls.Add(newDataGridView);
@@ -991,6 +993,10 @@ namespace AnalyseEtControleFEC
                         newDataGridView.Rows[j].Cells[i].Value = dataGridView1.Rows[j].Cells[list[i]].Value;
                     }
                 }
+                for (int i = 0; i < newDataGridView.RowCount; i++)
+                {
+                    newDataGridView.Rows[i].HeaderCell.Value = String.Format("{0}", i + 1);
+                }
                 string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
                 TabPage myTabPage = new TabPage(title);
                 myTabPage.Controls.Add(newDataGridView);
@@ -998,5 +1004,27 @@ namespace AnalyseEtControleFEC
                 tabControl1.SelectedTab = myTabPage;
             }
         }
+
+        private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
+            e.Graphics.DrawString(this.tabControl1.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
+            e.DrawFocusRectangle();
+        }
+
+        private void tabControl1_MouseDown(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < this.tabControl1.TabPages.Count; i++)
+            {
+                Rectangle r = tabControl1.GetTabRect(i);
+                //Getting the position of the "x" mark.
+                Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 9, 7);
+                if (closeButton.Contains(e.Location))
+                {
+                    this.tabControl1.TabPages.RemoveAt(i);
+                }
+            }
+        }
+
     }
 }

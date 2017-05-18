@@ -41,13 +41,17 @@ namespace AnalyseEtControleFEC
                 filePath = openFile.FileName;
                 textBox2.Text = openFile.SafeFileName;
                 fileName = openFile.SafeFileName;
+                button2.Enabled = true;
             }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             MainController.get().openFile(filePath,fileName);
+            this.DialogResult = DialogResult.OK;        
             this.Dispose();
+
         }
 
         //This fonction is used to get the address of the file SQLite 

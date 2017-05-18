@@ -240,20 +240,20 @@ namespace AnalyseEtControleFEC
             // ouvrirFECToolStripMenuItem
             // 
             this.ouvrirFECToolStripMenuItem.Name = "ouvrirFECToolStripMenuItem";
-            this.ouvrirFECToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.ouvrirFECToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.ouvrirFECToolStripMenuItem.Text = "Ouvrir FEC";
             this.ouvrirFECToolStripMenuItem.Click += new System.EventHandler(this.ouvrirFECToolStripMenuItem_Click);
             // 
             // fermerFECToolStripMenuItem
             // 
             this.fermerFECToolStripMenuItem.Name = "fermerFECToolStripMenuItem";
-            this.fermerFECToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.fermerFECToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.fermerFECToolStripMenuItem.Text = "Fermer FEC";
             // 
             // quitterToolStripMenuItem
             // 
             this.quitterToolStripMenuItem.Name = "quitterToolStripMenuItem";
-            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.quitterToolStripMenuItem.Text = "Quitter";
             this.quitterToolStripMenuItem.Click += new System.EventHandler(this.quitterToolStripMenuItem_Click);
             // 
@@ -452,6 +452,7 @@ namespace AnalyseEtControleFEC
             this.treeView1.TabIndex = 4;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.Click += new System.EventHandler(this.treeView1_Click);
+            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
             // 
             // panel1
             // 
@@ -496,6 +497,7 @@ namespace AnalyseEtControleFEC
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(531, 389);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 23);
@@ -797,12 +799,17 @@ namespace AnalyseEtControleFEC
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabControl1.ItemSize = new System.Drawing.Size(100, 21);
             this.tabControl1.Location = new System.Drawing.Point(305, 40);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1365, 925);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 6;
+            this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
             this.tabControl1.DoubleClick += new System.EventHandler(this.tabControl1_DoubleClick);
+            this.tabControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabControl1_MouseDown);
             // 
             // tabPage1
             // 
@@ -1469,6 +1476,7 @@ namespace AnalyseEtControleFEC
             // 
             // button7
             // 
+            this.button7.Enabled = false;
             this.button7.Location = new System.Drawing.Point(19, 21);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(215, 23);
@@ -1493,7 +1501,7 @@ namespace AnalyseEtControleFEC
             this.panel2.Controls.Add(this.button5);
             this.panel2.Controls.Add(this.button4);
             this.panel2.Controls.Add(this.textBox1);
-            this.panel2.Location = new System.Drawing.Point(10, 205);
+            this.panel2.Location = new System.Drawing.Point(10, 190);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(266, 197);
             this.panel2.TabIndex = 9;
@@ -1510,6 +1518,7 @@ namespace AnalyseEtControleFEC
             // 
             // button4
             // 
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(113, 106);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(121, 23);
@@ -1531,7 +1540,7 @@ namespace AnalyseEtControleFEC
             this.panel23.Controls.Add(this.button18);
             this.panel23.Controls.Add(this.button17);
             this.panel23.Controls.Add(this.textBox11);
-            this.panel23.Location = new System.Drawing.Point(10, 190);
+            this.panel23.Location = new System.Drawing.Point(14, 187);
             this.panel23.Name = "panel23";
             this.panel23.Size = new System.Drawing.Size(266, 197);
             this.panel23.TabIndex = 10;
@@ -1548,6 +1557,7 @@ namespace AnalyseEtControleFEC
             // 
             // button17
             // 
+            this.button17.Enabled = false;
             this.button17.Location = new System.Drawing.Point(120, 103);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(114, 23);
@@ -1570,8 +1580,8 @@ namespace AnalyseEtControleFEC
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1682, 893);
-            this.Controls.Add(this.panel23);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel23);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl1);
