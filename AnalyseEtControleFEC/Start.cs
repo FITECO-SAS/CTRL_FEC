@@ -17,7 +17,28 @@ namespace AnalyseEtControleFEC
         {
             InitializeComponent();
             panel1.Visible = false;
+            panel2.Visible = false;
+            panel6.Visible = false;
+            panel7.Visible = false;
+            panel8.Visible = false;
+            panel9.Visible = false;
+            panel11.Visible = false;
+            panel13.Visible = false;
+            panel15.Visible = false;
+            panel17.Visible = false;
+            panel19.Visible = false;
+            panel21.Visible = false;
+            panel23.Visible = false;
             panel1.BringToFront();
+            textBox3.ReadOnly = true;
+            textBox4.ReadOnly = true;
+            textBox5.ReadOnly = true;
+            textBox6.ReadOnly = true;
+            textBox7.ReadOnly = true;
+            textBox8.ReadOnly = true;
+            textBox9.ReadOnly = true;
+            textBox10.ReadOnly = true;
+            dataGridView1.MultiSelect = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -30,6 +51,11 @@ namespace AnalyseEtControleFEC
 
         }
 
+        private void analyserToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            MainController.get().analyzeData();
+        }
+
         private void ouvrirFECToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFile openFile = new OpenFile();
@@ -37,17 +63,10 @@ namespace AnalyseEtControleFEC
             //this.Hide();
         }
 
-        private static void readXML(string strFileName)
-        {
-
-        }
-
         private void quitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
-
 
         private void sauvegarderLeFiltreSimpleToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -58,11 +77,6 @@ namespace AnalyseEtControleFEC
         private void sauvegarderLeFiltreÉlaboréToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void dataGridView1_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
@@ -83,7 +97,7 @@ namespace AnalyseEtControleFEC
             return dataGridView1;
         }
 
-    private void tabControl1_DoubleClick(object sender, EventArgs e)
+        private void tabControl1_DoubleClick(object sender, EventArgs e)
         {
             tabControl1.TabPages.RemoveAt(tabControl1.SelectedIndex);
         }
@@ -106,11 +120,18 @@ namespace AnalyseEtControleFEC
             {
                 panel1.Visible = true;
             }
-        }
-
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-            panel1.Visible = false;
+            if (treeView1.SelectedNode.Text == "Par Ligne")
+            {
+                panel2.Visible = true;
+            }
+            if (treeView1.SelectedNode.Text == "Par Colonne")
+            {
+                panel23.Visible = true;
+            }
+            if (treeView1.SelectedNode.Text == "Élaboré")
+            {
+                panel6.Visible = true;
+            }
         }
 
         private void treeView1_Click(object sender, EventArgs e)
@@ -118,6 +139,18 @@ namespace AnalyseEtControleFEC
             if (treeView1.SelectedNode.Text == "Simple")
             {
                 panel1.Visible = true;
+            }
+            if (treeView1.SelectedNode.Text == "Par Ligne")
+            {
+                panel2.Visible = true;
+            }
+            if (treeView1.SelectedNode.Text == "Par Colonne")
+            {
+                panel23.Visible = true;
+            }
+            if (treeView1.SelectedNode.Text == "Élaboré")
+            {
+                panel6.Visible = true;
             }
         }
 
@@ -301,9 +334,669 @@ namespace AnalyseEtControleFEC
             panel1.Visible = false;
         }
 
-        private void analyserToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void button2_Click_1(object sender, EventArgs e)
         {
-            MainController.get().analyzeData();
+            panel1.Visible = false;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            panel2.Visible = false;
+        }
+
+        private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            panel7.Visible = true;
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            panel23.Visible = false;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.Text == "Journal")
+            {
+                comboBox2.Items.Clear();
+                comboBox2.Items.Add("Dans le Journal");
+                comboBox2.Items.Add("Dans un Journal différent de");
+            }
+            if (comboBox1.Text == "CompteNum")
+            {
+                comboBox2.Items.Clear();
+                comboBox2.Items.Add("Contenant au moins une ligne dont le numéro de compte commence par");
+                comboBox2.Items.Add("Ne contenant aucune ligne dont le numéro de compte commence par");
+                comboBox2.Items.Add("Contenant au moins une ligne avec un montant non nul au débit dont le numéro de compte commence par");
+                comboBox2.Items.Add("Contenant au moins une ligne avec un montant non nul au crédit dont le numéro de compte commence par");
+            }
+            if (comboBox1.Text == "Montant")
+            {
+                comboBox2.Items.Clear();
+                comboBox2.Items.Add("Contenant une ligne de produit dont le montant est supérieur à");
+                comboBox2.Items.Add("Contenant une ligne de charge dont le montant est inférieur à");
+                comboBox2.Items.Add("Contenant une ligne de TVA collectée dont le montant est supérieur à");
+                comboBox2.Items.Add("Contenant une ligne de TVA déductible dont le montant est supérieur à");
+                comboBox2.Items.Add("Contenant une ligne de TVA collectée dont le montant est inférieur à");
+                comboBox2.Items.Add("Contenant une ligne de TVA déductible dont le montant est inférieur à");
+            }
+            if (comboBox1.Text == "EcritureDate")
+            {
+                comboBox2.Items.Clear();
+                comboBox2.Items.Add("Dont la date d’écriture est antérieure au");
+                comboBox2.Items.Add("Dont la date d’écriture est postérieure au");
+                comboBox2.Items.Add("Toutes les écritures en date du mois de");
+
+            }
+            if (comboBox1.Text == "PieceDate")
+            {
+                comboBox2.Items.Clear();
+                comboBox2.Items.Add("Dont la date de la pièce est antérieure au");
+                comboBox2.Items.Add("Dont la date de la pièce est postérieure au");
+                comboBox2.Items.Add("Toutes les pièces en date du mois de");
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if ( panel19.Visible == true && panel21.Visible == false)
+            {
+                panel21.Visible = true;
+                textBox10.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
+            }
+            if (panel17.Visible == true && panel19.Visible == false)
+            {
+                panel19.Visible = true;
+                textBox9.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
+            }
+            if (panel15.Visible == true && panel17.Visible == false)
+            {
+                panel17.Visible = true;
+                textBox8.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
+            }
+            if (panel13.Visible == true && panel15.Visible == false)
+            {
+                panel15.Visible = true;
+                textBox7.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
+            }
+            if (panel11.Visible == true && panel13.Visible == false)
+            {
+                panel13.Visible = true;
+                textBox6.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
+            }
+            if (panel9.Visible == true && panel11.Visible == false)
+            {
+                panel11.Visible = true;
+                textBox5.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
+            }
+            if (panel8.Visible == true && panel9.Visible == false )
+            {
+                panel9.Visible = true;
+                textBox4.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
+            }
+            if (panel8.Visible == false)
+            {
+                panel8.Visible = true;
+                textBox3.Text = comboBox1.Text + " " +comboBox2.Text + " " + textBox2.Text;
+            }
+
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            panel21.Visible = false;
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if (panel21.Visible == true)
+            {
+                textBox9.Text = textBox10.Text;
+                panel21.Visible = false;
+            }
+            else
+            {
+                panel19.Visible = false;
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (panel21.Visible == true)
+            {
+                textBox8.Text = textBox9.Text;
+                textBox9.Text = textBox10.Text;
+                panel21.Visible = false;
+            }
+            else if (panel19.Visible == true)
+            {
+                textBox8.Text = textBox9.Text;
+                panel19.Visible = false;
+            }
+            else
+            {
+                panel17.Visible = false;
+            }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            if (panel21.Visible == true)
+            {
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                textBox9.Text = textBox10.Text;
+                panel21.Visible = false;
+            }
+            else if (panel19.Visible == true)
+            {
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                panel19.Visible = false;
+            }
+            else if (panel17.Visible == true)
+            {
+                textBox7.Text = textBox8.Text;
+                panel17.Visible = false;
+            }
+            else
+            {
+                panel15.Visible = false;
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            if (panel21.Visible == true)
+            {
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                textBox9.Text = textBox10.Text;
+                panel21.Visible = false;
+            }
+            else if (panel19.Visible == true)
+            {
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                panel19.Visible = false;
+            }
+            else if (panel17.Visible == true)
+            {
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                panel17.Visible = false;
+            }
+            else if (panel15.Visible == true)
+            {
+                textBox6.Text = textBox7.Text;
+                panel15.Visible = false;
+            }
+            else
+            {
+                panel13.Visible = false;
+            }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            if (panel21.Visible == true)
+            {
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                textBox9.Text = textBox10.Text;
+                panel21.Visible = false;
+            }
+            else if (panel19.Visible == true)
+            {
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                panel19.Visible = false;
+            }
+            else if (panel17.Visible == true)
+            {
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                panel17.Visible = false;
+            }
+            else if (panel15.Visible == true)
+            {
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                panel15.Visible = false;
+            }
+            else if (panel13.Visible == true)
+            {
+                textBox5.Text = textBox6.Text;
+                panel13.Visible = false;
+            }
+            else
+            {
+                panel11.Visible = false;
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (panel21.Visible == true)
+            {
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                textBox9.Text = textBox10.Text;
+                panel21.Visible = false;
+            }
+            else if (panel19.Visible == true)
+            {
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                panel19.Visible = false;
+            }
+            else if (panel17.Visible == true)
+            {
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                panel17.Visible = false;
+            }
+            else if (panel15.Visible == true)
+            {
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                panel15.Visible = false;
+            }
+            else if (panel13.Visible == true)
+            {
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                panel13.Visible = false;
+            }
+            else if (panel11.Visible == true)
+            {
+                textBox4.Text = textBox5.Text;
+                panel11.Visible = false;
+            }
+            else
+            {
+                panel9.Visible = false;
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (panel21.Visible == true)
+            {
+                textBox3.Text = textBox4.Text;
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                textBox9.Text = textBox10.Text;
+                panel21.Visible = false;
+            }
+            else if (panel19.Visible == true)
+            {
+                textBox3.Text = textBox4.Text;
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                panel19.Visible = false;
+            }
+            else if (panel17.Visible == true)
+            {
+                textBox3.Text = textBox4.Text;
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                panel17.Visible = false;
+            }
+            else if (panel15.Visible == true)
+            {
+                textBox3.Text = textBox4.Text;
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                panel15.Visible = false;
+            }
+            else if (panel13.Visible == true)
+            {
+                textBox3.Text = textBox4.Text;
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                panel13.Visible = false;
+            }
+            else if (panel11.Visible == true)
+            {
+                textBox3.Text = textBox4.Text;
+                textBox4.Text = textBox5.Text;
+                panel11.Visible = false;
+            }
+            else if (panel9.Visible == true)
+            {
+                textBox3.Text = textBox4.Text;
+                panel9.Visible = false;
+            }
+            else
+            {
+                panel8.Visible = false;
+            }
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            string text = null;
+            text = textBox10.Text;
+            textBox10.Text = textBox9.Text;
+            textBox9.Text = text;
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            string text = null;
+            text = textBox9.Text;
+            textBox9.Text = textBox8.Text;
+            textBox8.Text = text;
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            string text = null;
+            text = textBox8.Text;
+            textBox8.Text = textBox7.Text;
+            textBox7.Text = text;
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            string text = null;
+            text = textBox7.Text;
+            textBox7.Text = textBox6.Text;
+            textBox6.Text = text;
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            string text = null;
+            text = textBox6.Text;
+            textBox6.Text = textBox5.Text;
+            textBox5.Text = text;
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            string text = null;
+            text = textBox5.Text;
+            textBox5.Text = textBox4.Text;
+            textBox4.Text = text;
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            string text = null;
+            text = textBox4.Text;
+            textBox4.Text = textBox3.Text;
+            textBox3.Text = text;
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            if (panel9.Visible == true)
+            {
+                string text = null;
+                text = textBox3.Text;
+                textBox3.Text = textBox4.Text;
+                textBox4.Text = text;
+            }
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            if (panel11.Visible == true)
+            {
+                string text = null;
+                text = textBox4.Text;
+                textBox4.Text = textBox5.Text;
+                textBox5.Text = text;
+            }
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            if (panel13.Visible == true)
+            {
+                string text = null;
+                text = textBox5.Text;
+                textBox5.Text = textBox6.Text;
+                textBox6.Text = text;
+            }
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            if (panel15.Visible == true)
+            {
+                string text = null;
+                text = textBox6.Text;
+                textBox6.Text = textBox7.Text;
+                textBox7.Text = text;
+            }
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            if (panel17.Visible == true)
+            {
+                string text = null;
+                text = textBox7.Text;
+                textBox7.Text = textBox8.Text;
+                textBox8.Text = text;
+            }
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            if (panel19.Visible == true)
+            {
+                string text = null;
+                text = textBox8.Text;
+                textBox8.Text = textBox9.Text;
+                textBox9.Text = text;
+            }
+        }
+
+        private void button33_Click(object sender, EventArgs e)
+        {
+            panel6.Visible = false;
+        }
+
+        private void dataGridView1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count >= 0)
+            {
+                List<int> list = new List<int>();
+                string result = null;
+                for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
+                {
+                    result += dataGridView1.SelectedRows[i].Index + 1;
+                    if (i < dataGridView1.SelectedRows.Count)
+                    {
+                        result += ",";
+                    }
+                }
+                if (result != null)
+                {
+                    string[] array = result.Split(',');
+                    for (int i = 0; i < array.Length - 1; i++)
+                    {
+                        list.Add(int.Parse(array[i]));
+                    }
+                    list.Sort();
+                    string text = null;
+                    text += Convert.ToString(list[0]);
+                    int count = list.Count;
+                    if (count > 1)
+                    {
+                        for (int i = 1; i < count; i++)
+                        {
+                            if ((list[i - 1] + 1 != list[i]))
+                            {
+                                if (text.EndsWith("-"))
+                                {
+                                    text += list[i - 1];
+                                }
+                                text += "," + list[i];
+                            }
+                            else if (list[i - 1] + 1 == list[i])
+                            {
+                                if (!text.EndsWith("-"))
+                                {
+                                    text += "-";
+                                }
+                            }
+                        }
+                        if (text.EndsWith("-"))
+                        {
+                            text += list[list.Count - 1];
+                        }
+                    }
+                    textBox1.Text = text;
+                }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            List<int> list = new List<int>();
+            string text = textBox1.Text;
+            if (text != "")
+            {
+                if (text.Contains(",") || text.Contains("-"))
+                {
+                    string[] arrayComma = text.Split(',');
+                    for (int i = 0; i < arrayComma.Length; i++)
+                    {
+                        if (!arrayComma[i].Contains("-"))
+                        {
+                            list.Add(int.Parse(arrayComma[i]) - 1);
+                        }
+                    }
+                    for (int i = 0; i < arrayComma.Length; i++)
+                    {
+                        if (arrayComma[i].Contains("-"))
+                        {
+                            string[] arrayHyphen = arrayComma[i].Split('-');
+                            int first = int.Parse(arrayHyphen[0]);
+                            int last = int.Parse(arrayHyphen[1]);
+                            for (int j = first; j <= last; j++)
+                            {
+                                list.Add(j - 1);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    list.Add(int.Parse(text) - 1);
+                }
+                list.Sort();
+                int count = list.Count;
+                DataGridView newDataGridView = new DataGridView();
+                newDataGridView.Size = dataGridView1.Size;
+                newDataGridView.ColumnCount = dataGridView1.ColumnCount;
+
+                for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                {
+                    newDataGridView.Columns[i].HeaderText = dataGridView1.Columns[i].HeaderText;
+                    for (int j = 0; j < count; j++)
+                    {
+                        newDataGridView.Rows.Add();
+                        newDataGridView.Rows[j].Cells[i].Value = dataGridView1.Rows[list[j]].Cells[i].Value;
+                    }
+                }
+                string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
+                TabPage myTabPage = new TabPage(title);
+                myTabPage.Controls.Add(newDataGridView);
+                tabControl1.TabPages.Add(myTabPage);
+                tabControl1.SelectedTab = myTabPage;
+            }
+            
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            List<int> list = new List<int>();
+            string text = textBox11.Text;
+            if (text != "")
+            {
+                if (text.Contains(",") || text.Contains("-"))
+                {
+                    string[] arrayComma = text.Split(',');
+                    for (int i = 0; i < arrayComma.Length; i++)
+                    {
+                        if (!arrayComma[i].Contains("-"))
+                        {
+                            list.Add(int.Parse(arrayComma[i]) - 1);
+                        }
+                    }
+                    for (int i = 0; (i < arrayComma.Length); i++)
+                    {
+                        if (arrayComma[i].Contains("-"))
+                        {
+                            string[] arrayHyphen = arrayComma[i].Split('-');
+                            int first = int.Parse(arrayHyphen[0]);
+                            int last = int.Parse(arrayHyphen[1]);
+                            for (int j = first; j <= last && j <= dataGridView1.ColumnCount; j++)
+                            {
+                                list.Add(j - 1);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    list.Add(int.Parse(text) - 1);
+                }
+                list.Sort();
+                DataGridView newDataGridView = new DataGridView();
+                newDataGridView.Size = dataGridView1.Size;
+                newDataGridView.RowCount = dataGridView1.RowCount;
+                newDataGridView.ColumnCount = list.Count;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    newDataGridView.Columns[i].HeaderText = dataGridView1.Columns[list[i]].HeaderText;
+                    for (int j = 0; j < newDataGridView.RowCount; j++)
+                    {
+                        newDataGridView.Rows[j].Cells[i].Value = dataGridView1.Rows[j].Cells[list[i]].Value;
+                    }
+                }
+                string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
+                TabPage myTabPage = new TabPage(title);
+                myTabPage.Controls.Add(newDataGridView);
+                tabControl1.TabPages.Add(myTabPage);
+                tabControl1.SelectedTab = myTabPage;
+            }
         }
     }
 }
