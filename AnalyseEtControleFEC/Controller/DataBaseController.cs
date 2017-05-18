@@ -132,19 +132,21 @@ namespace AnalyseEtControleFEC.Controller
         /// Fill the dataBase by reading an Accounting Entry File
         /// </summary>
         /// <param name="filePath">Path of the file to read</param>
-        public void fillDatabaseFromFile(String filePath)
+        public List<int> fillDatabaseFromFile(String filePath)
         {
             Char[] separators = { '|', '\t' };
+            List<int> errors = new List<int>();
             FileStream fs = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             BufferedStream bs = new BufferedStream(fs);
             StreamReader reader = new StreamReader(bs);
             //File.OpenText(filePath);
             String readLine = reader.ReadLine();
             String[] splitLine = readLine.Split(separators);
+            int nbColumns = splitLine.Length;
             //dbConnection.Open();
-            for(int i=0; i<splitLine.Length; i++)
+            for (int i = 0; i < splitLine.Length; i++)
             {
-                new SQLiteCommand("INSERT INTO Column (Position, Name) VALUES ("+i+",'"+splitLine[i]+"')", dbConnection).ExecuteNonQuery();
+                new SQLiteCommand("INSERT INTO Column (Position, Name) VALUES (" + i + ",'" + splitLine[i] + "')", dbConnection).ExecuteNonQuery();
             }
             int line = 1;
             SQLiteCommand beginTrans = new SQLiteCommand("BEGIN TRANSACTION", dbConnection);
@@ -154,22 +156,28 @@ namespace AnalyseEtControleFEC.Controller
             {
                 beginTrans.ExecuteNonQuery();
                 int curCount = 0;
-                while (!reader.EndOfStream && curCount<10000)
+                while (!reader.EndOfStream && curCount < 10000)
                 {
                     readLine = reader.ReadLine();
                     splitLine = readLine.Split(separators);
-                    for (int column = 0; column < splitLine.Length; column++)
+                    for (int column = 0; column < Math.Min(splitLine.Length, nbColumns); column++)
                     {
                         insertCmd.Parameters.Add(new SQLiteParameter("@line", line));
                         insertCmd.Parameters.Add(new SQLiteParameter("@column", column));
                         insertCmd.Parameters.Add(new SQLiteParameter("@content", splitLine[column]));
                         insertCmd.ExecuteNonQuery();
                     }
+                    if (splitLine.Length != nbColumns)
+                    {
+                        errors.Add(line);
+                    }
                     line++;
                     curCount++;
                 }
                 commitTrans.ExecuteNonQuery();
             }
+            fs.Close();
+            return errors;
             //dbConnection.Close();
         }
 
@@ -972,6 +980,8 @@ namespace AnalyseEtControleFEC.Controller
                     {
                     List_Temp.Add(reader_JournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
                 }
+                debit = 0.0;
+                credit = 0.0;
             }
             return List_Temp;
         }
@@ -998,16 +1008,16 @@ namespace AnalyseEtControleFEC.Controller
                         while (reader_Debit.Read() && reader_Credit.Read())
                         {
                             debit += Convert.ToDouble(reader_Debit.GetValue(0));
-                            Console.WriteLine("Debit : "+debit);
+                            //Console.WriteLine("Debit : "+debit);
                             credit += Convert.ToDouble(reader_Credit.GetValue(0));
-                            Console.WriteLine("Credit : "+credit);
+                            //Console.WriteLine("Credit : "+credit);
 
                         }
                     }
                     else
                     {
                         //Console.WriteLine("Debit - Credit : " + Math.Round(debit - credit, 4));
-                        if (Math.Round(debit - credit, 4) != 0)
+                        if (Math.Round(debit - credit, 4) != 0 && !reader_JournalCode["Content"].ToString().Equals(null))
                         {
                             List_Temp.Add(reader_JournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
                         }
@@ -1032,6 +1042,8 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     List_Temp.Add(reader_JournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4,"/"));
                 }
+                debit = 0.0;
+                credit = 0.0;
             }
             return List_Temp;
         }

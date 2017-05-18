@@ -21,9 +21,9 @@ namespace AnalyseEtControleFEC.Model
         /// </summary>
         private List<Tuple<String, String, List<List<String>>>> columnSets;
         /// <summary>
-        /// columnRegex is a list of Tuples each containing a column name and the regex that each line of this column must verify
+        /// columnRegex is a list of Tuples each containing a column name and, regex that each line of this column must verify and an associated error message
         /// </summary>
-        private List<Tuple<String, String>> columnRegex;
+        private List<Tuple<String, String, String>> columnRegex;
         /// <summary>
         /// columnDependency is a list of Tuple each containing two column names, the second one can't be empty is the first is not
         /// </summary>
@@ -44,12 +44,12 @@ namespace AnalyseEtControleFEC.Model
             nameRegex = config.Value<String>("nameRegex");
             JToken sets = config.Value<JToken>("columnSets");
             columnSets = new List<Tuple<string, string, List<List<string>>>>();
-            foreach(JProperty regime in sets.Values<JProperty>())
+            foreach (JProperty regime in sets.Values<JProperty>())
             {
-                foreach(JProperty plan in regime.Values())
+                foreach (JProperty plan in regime.Values())
                 {
-                    Tuple<String, String, List<List<String>>> columnSet = new Tuple<string, string, List<List<String>>> (regime.Name,plan.Name,new List<List<String>>());
-                    foreach(JArray column in plan.Values<JArray>().Values<JArray>())
+                    Tuple<String, String, List<List<String>>> columnSet = new Tuple<string, string, List<List<String>>>(regime.Name, plan.Name, new List<List<String>>());
+                    foreach (JArray column in plan.Values<JArray>().Values<JArray>())
                     {
                         columnSet.Item3.Add(new List<String>(column.ToObject<string[]>()));
                     }
@@ -57,10 +57,10 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
             JToken regex = config.Value<JToken>("columnRegex");
-            columnRegex = new List<Tuple<string, string>>();
-            foreach(JProperty column in regex.Values<JProperty>())
+            columnRegex = new List<Tuple<string, string, string>>();
+            foreach (JProperty column in regex.Values<JProperty>())
             {
-                columnRegex.Add(new Tuple<string, string>(column.Name, column.Value.Value<String>()));
+                columnRegex.Add(new Tuple<string, string, string>(column.Name, column.Value.Value<String>("Regex"), column.Value.Value<String>("Error")));
             }
             JToken dependency = config.Value<JToken>("columnDependency");
             columnDependency = new List<Tuple<string, string>>();
@@ -89,30 +89,31 @@ namespace AnalyseEtControleFEC.Model
             return new List<String>[0];
         }
 
+
         /// <summary>
-        /// this function returns as a string the regex associated with the specified column name
+        /// this function returns a tuple with the regex associated with the specified column name and the associated error message
         /// </summary>
         /// <param name="columnName">the name of the column wich we want it regex</param>
         /// <returns>the regex associated with the specified column name</returns>
-        public String getColumnRegex(String columnName)
+        public Tuple<String, String> getColumnRegex(String columnName)
         {
-            foreach (Tuple<String,String> cregex in columnRegex)
+            foreach (Tuple<String, String, String> cregex in columnRegex)
             {
-                if (cregex.Item1 == columnName) 
-                return cregex.Item2;
+                if (cregex.Item1 == columnName)
+                    return new Tuple<String, String>(cregex.Item2, cregex.Item3);
             }
             return null;
         }
 
         /// <summary>
-        /// this function returns an array of string containing regex for each column which name is in the specified array in the same order
+        /// this function returns an array of Tuples containing regex and error message (as String) for each column which name is in the specified array in the same order
         /// </summary>
         /// <param name="columnSet">Array of column names for which we want corresponding regex</param>
         /// <returns></returns>
-        public String[] getColumnsRegex(String[] columnSet)
+        public Tuple<String, String>[] getColumnsRegex(String[] columnSet)
         {
-            List<String> columnRegex = new List<string>();
-            for(int i = 0; i < columnSet.Length; i++)
+            List<Tuple<String, String>> columnRegex = new List<Tuple<String, String>>();
+            for (int i = 0; i < columnSet.Length; i++)
             {
                 columnRegex.Add(getColumnRegex(columnSet[i]));
             }

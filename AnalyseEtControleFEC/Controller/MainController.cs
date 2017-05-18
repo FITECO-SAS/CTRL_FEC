@@ -18,6 +18,7 @@ namespace AnalyseEtControleFEC.Controller
         static String threadFileName;
         static public void threadedLoadFromFile()
         {
+
             ErrorLogger logger = new ErrorLogger(config, instance.getDataBaseController(), "BIC", "PCG");
             instance.getDataBaseController().fillDatabaseFromFile(threadPath);
             logger.checkName(threadFileName);
