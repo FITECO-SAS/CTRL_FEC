@@ -47,9 +47,9 @@ namespace AnalyseEtControleFEC.Model
         private bool AreColumnsCorrect;
         // private bool CompAuxNum_CompAuxLib;
         /// <summary>
-        /// a list of Tuple each containing a column name and a list of line number where an error has been found for it
+        /// a list of Tuple each containing a column name, the associated error message and a list of line number where an error has been found for it
         /// </summary>
-        public List<Tuple<String, List<int>>> lineRegexErrors { get; }
+        public List<Tuple<String, String, List<int>>> lineRegexErrors { get; }
 
         /// <summary>
         /// Constructor for the ErrorLogger
@@ -68,7 +68,7 @@ namespace AnalyseEtControleFEC.Model
             isNameCorrect = true;
             AreColumnsCorrect = true;
             // CompAuxNum_CompAuxLib = true;
-            lineRegexErrors = new List<Tuple<String, List<int>>>();
+            lineRegexErrors = new List<Tuple<String, String, List<int>>>();
         }
 
         public void check_CompAuxNum_CompAuxLib()
@@ -406,96 +406,19 @@ namespace AnalyseEtControleFEC.Model
         /// Check if each line in the file verify the regex in the configuration
         /// </summary>
         /// <returns>false if at least one content is not correct or true if not</returns>
-        public bool checkLines()
-        {
-            bool valid = true;
-            String[] columnsRegex = configuration.getColumnsRegex(dataBaseAccess.getColumnNames());
-            int nbLines = dataBaseAccess.getNumberOfLines();
-            String[] lineContent;
-            for (int line = 0; line < nbLines; line++)
-            {
-                lineContent = dataBaseAccess.getLine(line);
-                for (int column = 0; column < lineContent.Length; column++)
-                {
-                    if (!(new Regex(columnsRegex[column]).IsMatch(lineContent[column])))
-                    {
-                        valid = false;
-                        isFileCorrect = false;
-                        bool found = false;
-                        foreach (Tuple<String, List<int>> col in lineRegexErrors)
-                        {
-                            if (col.Item1 == lineContent[column])
-                            {
-                                found = true;
-                                col.Item2.Add(line);
-                            }
-                        }
-                        if (!found)
-                        {
-                            List<int> lineList = new List<int>();
-                            lineList.Add(line);
-                            lineRegexErrors.Add(new Tuple<String, List<int>>(dataBaseAccess.getColumnNames()[column], lineList));
-                        }
-                    }
-                }
-            }
-            return valid;
-        }
-
-        public bool checkLinesWithAll()
-        {
-            bool valid = true;
-            String[] columnsRegex = configuration.getColumnsRegex(dataBaseAccess.getColumnNames());
-            int nbLines = dataBaseAccess.getNumberOfLines();
-            String[][] content = dataBaseAccess.getAllLines();
-            String[] lineContent;
-            for (int line = 0; line < nbLines; line++)
-            {
-                lineContent = content[line];
-                for (int column = 0; column < lineContent.Length; column++)
-                {
-                    if (!(new Regex(columnsRegex[column]).IsMatch(lineContent[column])))
-                    {
-                        valid = false;
-                        isFileCorrect = false;
-                        bool found = false;
-                        foreach (Tuple<String, List<int>> col in lineRegexErrors)
-                        {
-                            if (col.Item1 == lineContent[column])
-                            {
-                                found = true;
-                                col.Item2.Add(line);
-                            }
-                        }
-                        if (!found)
-                        {
-                            List<int> lineList = new List<int>();
-                            lineList.Add(line);
-                            lineRegexErrors.Add(new Tuple<String, List<int>>(dataBaseAccess.getColumnNames()[column], lineList));
-                        }
-                    }
-                }
-            }
-            return valid;
-        }
-
-        /// <summary>
-        /// Check if each line in the file verify the regex in the configuration
-        /// </summary>
-        /// <returns>false if at least one content is not correct or true if not</returns>
         public bool checkLinesInDatabase()
         {
             bool valid = true;
             String[] columns = dataBaseAccess.getColumnNames();
-            String[] columnsRegex = configuration.getColumnsRegex(columns);
+            Tuple<String, String>[] columnsRegex = configuration.getColumnsRegex(columns);
             for (int i = 0; i < columns.Length; i++)
             {
-                List<int> errors = dataBaseAccess.checkRegexColumn(i, columnsRegex[i]);
+                List<int> errors = dataBaseAccess.checkRegexColumn(i, columnsRegex[i].Item1);
                 if (errors.Count > 0)
                 {
                     valid = false;
                     isFileCorrect = false;
-                    lineRegexErrors.Add(new Tuple<String, List<int>>(columns[i], errors));
+                    lineRegexErrors.Add(new Tuple<String, String, List<int>>(columns[i], columnsRegex[i].Item2, errors));
                 }
             }
             return valid;
@@ -529,10 +452,10 @@ namespace AnalyseEtControleFEC.Model
 
             }
 
-            foreach (Tuple<String, List<int>> col in lineRegexErrors)
+            foreach (Tuple<String, String, List<int>> col in lineRegexErrors)
             {
-                log += "\n Le champs : " + col.Item1 + " est pas valide"; LogHelper.WriteToFile("\n Le champs : " + col.Item1 + " est pas valide", "Class ErrorLogger");
-                foreach (int i in col.Item2)
+                log += "\n Le champs : " + col.Item1 + " n'est pas valide : " + col.Item2; LogHelper.WriteToFile("\n Le champs : " + col.Item1 + " n'est pas valide : "+col.Item2, "Class ErrorLogger");
+                foreach (int i in col.Item3)
                 {
                     log += "\n erreur en ligne : " + i;
                     LogHelper.WriteToFile("\n erreur en ligne: " + i, "erreur en ligne");
