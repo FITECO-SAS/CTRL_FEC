@@ -286,7 +286,7 @@ namespace AnalyseEtControleFEC
         private void button1_Click(object sender, EventArgs e)
         {
             MainController controller = MainController.Get();
-            DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[0];
+            DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[1];
             int filterIdOfLastTab;
             if (lastTabView is DataGridViewBDD)
             {

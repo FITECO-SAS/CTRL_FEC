@@ -193,23 +193,11 @@ namespace AnalyseEtControleFEC.Controller
         }
 
         /// <summary>
-        /// Return a line in the file
+        /// return content of specified cell in base table
         /// </summary>
-        /// <param name="line">Line of the file to read</param>
-        /// <returns>A String array containing the contents for the different columns (in the same order than the getColumnNames function) of the specified line</returns>
-        public String[] GetLine(int line)
-        {
-            //dbConnection.Open();
-            SQLiteDataReader reader = new SQLiteCommand("SELECT Content FROM Content WHERE Line = "+line+" ORDER BY Column ASC", dbConnection).ExecuteReader();
-            List<String> result = new List<String>();
-            while (reader.Read())
-            {
-                result.Add((String)reader["Content"]);
-            }
-            //dbConnection.Close();
-            return result.ToArray();
-        }
-
+        /// <param name="column">column number of celle needed</param>
+        /// <param name="line">line number of cell needed</param>
+        /// <returns>the cell content at specified position</returns>
         public String GetContent(int column, int line)
         {
             SQLiteCommand command = new SQLiteCommand("SELECT Content FROM Content WHERE Column = @column AND Line = @line", dbConnection);
@@ -219,7 +207,7 @@ namespace AnalyseEtControleFEC.Controller
         }
 
         /// <summary>
-        /// Add a filter using the restriction parameter for adding ORDER BY or WHERE clause
+        /// Add a filter using the restriction parameter for adding ORDER BY or WHERE clause, it is restrictive from the last filter
         /// </summary>
         /// <param name="restriction">String representing the clauses for the filter, must contains ORDER BY and/or WHERE clause</param>
         public void AddFilterAdd (String restriction, int lastFilterId)
@@ -243,6 +231,10 @@ namespace AnalyseEtControleFEC.Controller
             FilterNumber++;
         }
 
+        /// <summary>
+        /// Add a filter using the restriction parameter for adding ORDER BY or WHERE clause, it is additive from the last filter
+        /// </summary>
+        /// <param name="restriction">String representing the clauses for the filter, must contains ORDER BY and/or WHERE clause</param>
         public void AddFilterOr(String restriction, int lastTabId)
         {
             SQLiteCommand filter;
@@ -297,32 +289,13 @@ namespace AnalyseEtControleFEC.Controller
             }
         }
 
+        /// <summary>
+        /// return id assigned to the last created filter
+        /// </summary>
+        /// <returns>the last filter id</returns>
         internal int GetLastFilterId()
         {
             return FilterNumber-1;
-        }
-
-        public String[][] GetAllLines()
-        {
-            List<String[]> result = new List<String[]>();
-            SQLiteDataReader reader = new SQLiteCommand("SELECT * FROM Content ORDER BY Line,Column ASC", dbConnection).ExecuteReader();
-            List<String> lineContent = null;
-            int line = 0;
-            while (reader.Read())
-            {
-                if(line != (int)reader["Line"])
-                {
-                    if(lineContent != null)
-                    {
-                        result.Add(lineContent.ToArray());
-                    }
-                    line = (int)reader["Line"];
-                    lineContent = new List<String>();
-                }
-                lineContent.Add((String)reader["Content"]);
-            }
-            result.Add(lineContent.ToArray());
-            return result.ToArray();
         }
 
         /// <summary>
@@ -337,6 +310,11 @@ namespace AnalyseEtControleFEC.Controller
             return result;
         }
 
+        /// <summary>
+        /// return the number of line in specified filternumber
+        /// </summary>
+        /// <param name="FilterNumber"> the number of the filter we want the number of lines</param>
+        /// <returns>the number of lines in this filter</returns>
         public int GetNumberOfLinesInFilter(int FilterNumber)
         {
             //dbConnection.Open();
