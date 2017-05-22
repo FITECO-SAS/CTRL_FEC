@@ -305,5 +305,15 @@ namespace AnalyseEtControleFEC
         {
             MainController.get().analyzeData();
         }
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataBaseController dataBase = MainController.get().getDataBaseController();
+            dataBase.setSort(e.ColumnIndex);
+            DataGridView source = (DataGridView)sender;
+            for (int i = 0; i < source.Columns.Count; i++) {
+                source.InvalidateColumn(i);
+            }
+        }
     }
 }

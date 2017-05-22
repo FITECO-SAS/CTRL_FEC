@@ -78,6 +78,9 @@ namespace AnalyseEtControleFEC.Controller
         SQLiteConnection dbConnection;
         MainController mainController;
         private int FilterNumber;
+        private bool isSorted;
+        private bool isAscendant;
+        private int columnNumberSort;
 
         /// <summary>
         /// Constructor for DataBaseController
@@ -110,6 +113,7 @@ namespace AnalyseEtControleFEC.Controller
             SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
             SQLiteFunction.RegisterFunction(typeof(IsEqualSQLiteFunction));
             FilterNumber = 0;
+            isSorted = false;
             //dbConnection.Close();
         }
 
@@ -120,7 +124,16 @@ namespace AnalyseEtControleFEC.Controller
 
         internal object getContentFromFilter(int column, int line, int filterNumber)
         {
-            SQLiteCommand command = new SQLiteCommand("SELECT Content FROM Filter"+filterNumber+" WHERE Column = @column AND Line = @line", dbConnection);
+            SQLiteCommand command;
+            if (isSorted)
+            {
+                command = new SQLiteCommand("SELECT Content FROM Filter" + filterNumber + " base ORDER BY (SELECT Content FROM Content order WHERE order.Line = base.Line AND order.Column = @orderColumn) WHERE Column = @column OFFSET @line LIMIT 1", dbConnection);
+                command.Parameters.Add(new SQLiteParameter("@orderColumn", columnNumberSort));
+            }
+            else
+            {
+                command = new SQLiteCommand("SELECT Content FROM Filter" + filterNumber + " WHERE Column = @column AND Line = @line", dbConnection);
+            }
             command.Parameters.Add(new SQLiteParameter("@line", line));
             command.Parameters.Add(new SQLiteParameter("@column", column));
             return (String)command.ExecuteScalar();
@@ -175,6 +188,7 @@ namespace AnalyseEtControleFEC.Controller
                 }
                 commitTrans.ExecuteNonQuery();
             }
+
             return errors;
             //dbConnection.Close();
         }
@@ -304,6 +318,20 @@ namespace AnalyseEtControleFEC.Controller
         internal int getLastFilterId()
         {
             return FilterNumber-1;
+        }
+
+        public void setSort(int column)
+        {
+            if (!isSorted || columnNumberSort != column)
+            {
+                isSorted = true;
+                isAscendant = true;
+            }
+            else
+            {
+                isAscendant = !isAscendant;
+            }
+            columnNumberSort = column;
         }
 
         public String[][] getAllLines()

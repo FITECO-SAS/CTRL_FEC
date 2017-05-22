@@ -126,8 +126,8 @@ namespace AnalyseEtControleFEC
             this.aideToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1682, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1262, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -138,27 +138,27 @@ namespace AnalyseEtControleFEC
             this.fermerFECToolStripMenuItem,
             this.quitterToolStripMenuItem});
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
-            this.fichierToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.fichierToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.fichierToolStripMenuItem.Text = "Fichier";
             this.fichierToolStripMenuItem.Click += new System.EventHandler(this.fichierToolStripMenuItem_Click);
             // 
             // ouvrirFECToolStripMenuItem
             // 
             this.ouvrirFECToolStripMenuItem.Name = "ouvrirFECToolStripMenuItem";
-            this.ouvrirFECToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.ouvrirFECToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.ouvrirFECToolStripMenuItem.Text = "Ouvrir FEC";
             this.ouvrirFECToolStripMenuItem.Click += new System.EventHandler(this.ouvrirFECToolStripMenuItem_Click);
             // 
             // fermerFECToolStripMenuItem
             // 
             this.fermerFECToolStripMenuItem.Name = "fermerFECToolStripMenuItem";
-            this.fermerFECToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.fermerFECToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.fermerFECToolStripMenuItem.Text = "Fermer FEC";
             // 
             // quitterToolStripMenuItem
             // 
             this.quitterToolStripMenuItem.Name = "quitterToolStripMenuItem";
-            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.quitterToolStripMenuItem.Text = "Quitter";
             this.quitterToolStripMenuItem.Click += new System.EventHandler(this.quitterToolStripMenuItem_Click);
             // 
@@ -171,38 +171,38 @@ namespace AnalyseEtControleFEC
             this.sauvegarderLeFiltreSimpleToolStripMenuItem,
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem});
             this.outilsToolStripMenuItem.Name = "outilsToolStripMenuItem";
-            this.outilsToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.outilsToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.outilsToolStripMenuItem.Text = "Outils";
             // 
             // afficherLesÉcrituresToolStripMenuItem
             // 
             this.afficherLesÉcrituresToolStripMenuItem.Name = "afficherLesÉcrituresToolStripMenuItem";
-            this.afficherLesÉcrituresToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
+            this.afficherLesÉcrituresToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.afficherLesÉcrituresToolStripMenuItem.Text = "Afficher les écritures";
             // 
             // copierLaSélectionToolStripMenuItem
             // 
             this.copierLaSélectionToolStripMenuItem.Name = "copierLaSélectionToolStripMenuItem";
-            this.copierLaSélectionToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
+            this.copierLaSélectionToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.copierLaSélectionToolStripMenuItem.Text = "Copier la sélection";
             // 
             // exporterLaSélectionToolStripMenuItem
             // 
             this.exporterLaSélectionToolStripMenuItem.Name = "exporterLaSélectionToolStripMenuItem";
-            this.exporterLaSélectionToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
+            this.exporterLaSélectionToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.exporterLaSélectionToolStripMenuItem.Text = "Exporter la sélection";
             // 
             // sauvegarderLeFiltreSimpleToolStripMenuItem
             // 
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Name = "sauvegarderLeFiltreSimpleToolStripMenuItem";
-            this.sauvegarderLeFiltreSimpleToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
+            this.sauvegarderLeFiltreSimpleToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Text = "Sauvegarder le filtre simple";
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderLeFiltreSimpleToolStripMenuItem_Click);
             // 
             // sauvegarderLeFiltreÉlaboréToolStripMenuItem
             // 
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Name = "sauvegarderLeFiltreÉlaboréToolStripMenuItem";
-            this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
+            this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Text = "Sauvegarder le filtre élaboré";
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderLeFiltreÉlaboréToolStripMenuItem_Click);
             // 
@@ -214,13 +214,13 @@ namespace AnalyseEtControleFEC
             this.sélectionnerToolStripMenuItem,
             this.analyserToolStripMenuItem});
             this.analyseToolStripMenuItem.Name = "analyseToolStripMenuItem";
-            this.analyseToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
+            this.analyseToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.analyseToolStripMenuItem.Text = "Analyse";
             // 
             // filtrerToolStripMenuItem
             // 
             this.filtrerToolStripMenuItem.Name = "filtrerToolStripMenuItem";
-            this.filtrerToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.filtrerToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.filtrerToolStripMenuItem.Text = "Filtrer";
             // 
             // trierToolStripMenuItem
@@ -229,31 +229,31 @@ namespace AnalyseEtControleFEC
             this.mesFiltresSimplesToolStripMenuItem,
             this.mesFiltresÉlaborésToolStripMenuItem});
             this.trierToolStripMenuItem.Name = "trierToolStripMenuItem";
-            this.trierToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.trierToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.trierToolStripMenuItem.Text = "Trier";
             // 
             // mesFiltresSimplesToolStripMenuItem
             // 
             this.mesFiltresSimplesToolStripMenuItem.Name = "mesFiltresSimplesToolStripMenuItem";
-            this.mesFiltresSimplesToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
+            this.mesFiltresSimplesToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.mesFiltresSimplesToolStripMenuItem.Text = "Mes filtres simples";
             // 
             // mesFiltresÉlaborésToolStripMenuItem
             // 
             this.mesFiltresÉlaborésToolStripMenuItem.Name = "mesFiltresÉlaborésToolStripMenuItem";
-            this.mesFiltresÉlaborésToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
+            this.mesFiltresÉlaborésToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.mesFiltresÉlaborésToolStripMenuItem.Text = "Mes filtres élaborés";
             // 
             // sélectionnerToolStripMenuItem
             // 
             this.sélectionnerToolStripMenuItem.Name = "sélectionnerToolStripMenuItem";
-            this.sélectionnerToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.sélectionnerToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.sélectionnerToolStripMenuItem.Text = "Sélectionner";
             // 
             // analyserToolStripMenuItem
             // 
             this.analyserToolStripMenuItem.Name = "analyserToolStripMenuItem";
-            this.analyserToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.analyserToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.analyserToolStripMenuItem.Text = "Analyser";
             this.analyserToolStripMenuItem.Click += new System.EventHandler(this.analyserToolStripMenuItem_Click_1);
             // 
@@ -264,25 +264,25 @@ namespace AnalyseEtControleFEC
             this.compteDeRésultatToolStripMenuItem,
             this.déterminationDeLaValeurAjoutéeToolStripMenuItem});
             this.declarationsToolStripMenuItem.Name = "declarationsToolStripMenuItem";
-            this.declarationsToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
+            this.declarationsToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
             this.declarationsToolStripMenuItem.Text = "Declarations";
             // 
             // bilanToolStripMenuItem
             // 
             this.bilanToolStripMenuItem.Name = "bilanToolStripMenuItem";
-            this.bilanToolStripMenuItem.Size = new System.Drawing.Size(318, 26);
+            this.bilanToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.bilanToolStripMenuItem.Text = "Bilan";
             // 
             // compteDeRésultatToolStripMenuItem
             // 
             this.compteDeRésultatToolStripMenuItem.Name = "compteDeRésultatToolStripMenuItem";
-            this.compteDeRésultatToolStripMenuItem.Size = new System.Drawing.Size(318, 26);
+            this.compteDeRésultatToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.compteDeRésultatToolStripMenuItem.Text = "Compte de résultat";
             // 
             // déterminationDeLaValeurAjoutéeToolStripMenuItem
             // 
             this.déterminationDeLaValeurAjoutéeToolStripMenuItem.Name = "déterminationDeLaValeurAjoutéeToolStripMenuItem";
-            this.déterminationDeLaValeurAjoutéeToolStripMenuItem.Size = new System.Drawing.Size(318, 26);
+            this.déterminationDeLaValeurAjoutéeToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.déterminationDeLaValeurAjoutéeToolStripMenuItem.Text = "Détermination de la Valeur Ajoutée";
             // 
             // parametresToolStripMenuItem
@@ -290,13 +290,13 @@ namespace AnalyseEtControleFEC
             this.parametresToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.affichageToolStripMenuItem});
             this.parametresToolStripMenuItem.Name = "parametresToolStripMenuItem";
-            this.parametresToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
+            this.parametresToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.parametresToolStripMenuItem.Text = "Parametres";
             // 
             // affichageToolStripMenuItem
             // 
             this.affichageToolStripMenuItem.Name = "affichageToolStripMenuItem";
-            this.affichageToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
+            this.affichageToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.affichageToolStripMenuItem.Text = "Affichage";
             // 
             // aideToolStripMenuItem
@@ -305,37 +305,40 @@ namespace AnalyseEtControleFEC
             this.documentationUtilisateurToolStripMenuItem,
             this.versionToolStripMenuItem});
             this.aideToolStripMenuItem.Name = "aideToolStripMenuItem";
-            this.aideToolStripMenuItem.Size = new System.Drawing.Size(52, 24);
+            this.aideToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.aideToolStripMenuItem.Text = "Aide";
             // 
             // documentationUtilisateurToolStripMenuItem
             // 
             this.documentationUtilisateurToolStripMenuItem.Name = "documentationUtilisateurToolStripMenuItem";
-            this.documentationUtilisateurToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
+            this.documentationUtilisateurToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.documentationUtilisateurToolStripMenuItem.Text = "documentation utilisateur";
             // 
             // versionToolStripMenuItem
             // 
             this.versionToolStripMenuItem.Name = "versionToolStripMenuItem";
-            this.versionToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
+            this.versionToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.versionToolStripMenuItem.Text = "version";
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 6);
+            this.dataGridView1.Location = new System.Drawing.Point(4, 5);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(1345, 867);
+            this.dataGridView1.Size = new System.Drawing.Size(1009, 704);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.VirtualMode = true;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.dataGridView1_CellValueNeeded);
+            this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
             // 
             // treeView1
             // 
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeView1.Location = new System.Drawing.Point(10, 43);
+            this.treeView1.Location = new System.Drawing.Point(8, 35);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.treeView1.Name = "treeView1";
             treeNode1.Name = "Node3";
             treeNode1.Text = "Par Ligne";
@@ -353,7 +356,7 @@ namespace AnalyseEtControleFEC
             treeNode2,
             treeNode5,
             treeNode6});
-            this.treeView1.Size = new System.Drawing.Size(266, 151);
+            this.treeView1.Size = new System.Drawing.Size(200, 123);
             this.treeView1.TabIndex = 4;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.Click += new System.EventHandler(this.treeView1_Click);
@@ -383,16 +386,18 @@ namespace AnalyseEtControleFEC
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(10, 219);
+            this.panel1.Location = new System.Drawing.Point(8, 178);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(664, 509);
+            this.panel1.Size = new System.Drawing.Size(498, 414);
             this.panel1.TabIndex = 5;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(531, 467);
+            this.button2.Location = new System.Drawing.Point(398, 379);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 25);
+            this.button2.Size = new System.Drawing.Size(75, 20);
             this.button2.TabIndex = 22;
             this.button2.Text = "Cacher";
             this.button2.UseVisualStyleBackColor = true;
@@ -401,9 +406,10 @@ namespace AnalyseEtControleFEC
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.Location = new System.Drawing.Point(531, 415);
+            this.button1.Location = new System.Drawing.Point(398, 337);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 25);
+            this.button1.Size = new System.Drawing.Size(75, 20);
             this.button1.TabIndex = 21;
             this.button1.Text = "Filtrer";
             this.button1.UseVisualStyleBackColor = false;
@@ -413,9 +419,10 @@ namespace AnalyseEtControleFEC
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(66, 33);
+            this.label5.Location = new System.Drawing.Point(50, 27);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 17);
+            this.label5.Size = new System.Drawing.Size(23, 13);
             this.label5.TabIndex = 20;
             this.label5.Text = "OU";
             // 
@@ -423,9 +430,10 @@ namespace AnalyseEtControleFEC
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(23, 33);
+            this.label4.Location = new System.Drawing.Point(17, 27);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(26, 17);
+            this.label4.Size = new System.Drawing.Size(21, 13);
             this.label4.TabIndex = 19;
             this.label4.Text = "ET";
             // 
@@ -433,17 +441,19 @@ namespace AnalyseEtControleFEC
             // 
             this.panel5.Controls.Add(this.orRadioButton3);
             this.panel5.Controls.Add(this.andRadioButton3);
-            this.panel5.Location = new System.Drawing.Point(4, 333);
+            this.panel5.Location = new System.Drawing.Point(3, 271);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(103, 27);
+            this.panel5.Size = new System.Drawing.Size(77, 22);
             this.panel5.TabIndex = 18;
             // 
             // orRadioButton3
             // 
             this.orRadioButton3.AutoSize = true;
-            this.orRadioButton3.Location = new System.Drawing.Point(62, 5);
+            this.orRadioButton3.Location = new System.Drawing.Point(46, 4);
+            this.orRadioButton3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.orRadioButton3.Name = "orRadioButton3";
-            this.orRadioButton3.Size = new System.Drawing.Size(17, 16);
+            this.orRadioButton3.Size = new System.Drawing.Size(14, 13);
             this.orRadioButton3.TabIndex = 1;
             this.orRadioButton3.TabStop = true;
             this.orRadioButton3.UseVisualStyleBackColor = true;
@@ -451,9 +461,10 @@ namespace AnalyseEtControleFEC
             // andRadioButton3
             // 
             this.andRadioButton3.AutoSize = true;
-            this.andRadioButton3.Location = new System.Drawing.Point(19, 5);
+            this.andRadioButton3.Location = new System.Drawing.Point(14, 4);
+            this.andRadioButton3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.andRadioButton3.Name = "andRadioButton3";
-            this.andRadioButton3.Size = new System.Drawing.Size(17, 16);
+            this.andRadioButton3.Size = new System.Drawing.Size(14, 13);
             this.andRadioButton3.TabIndex = 0;
             this.andRadioButton3.TabStop = true;
             this.andRadioButton3.UseVisualStyleBackColor = true;
@@ -462,17 +473,19 @@ namespace AnalyseEtControleFEC
             // 
             this.panel4.Controls.Add(this.orRadioButton2);
             this.panel4.Controls.Add(this.andRadioButton2);
-            this.panel4.Location = new System.Drawing.Point(4, 255);
+            this.panel4.Location = new System.Drawing.Point(3, 207);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(103, 27);
+            this.panel4.Size = new System.Drawing.Size(77, 22);
             this.panel4.TabIndex = 17;
             // 
             // orRadioButton2
             // 
             this.orRadioButton2.AutoSize = true;
-            this.orRadioButton2.Location = new System.Drawing.Point(62, 4);
+            this.orRadioButton2.Location = new System.Drawing.Point(46, 3);
+            this.orRadioButton2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.orRadioButton2.Name = "orRadioButton2";
-            this.orRadioButton2.Size = new System.Drawing.Size(17, 16);
+            this.orRadioButton2.Size = new System.Drawing.Size(14, 13);
             this.orRadioButton2.TabIndex = 1;
             this.orRadioButton2.TabStop = true;
             this.orRadioButton2.UseVisualStyleBackColor = true;
@@ -480,9 +493,10 @@ namespace AnalyseEtControleFEC
             // andRadioButton2
             // 
             this.andRadioButton2.AutoSize = true;
-            this.andRadioButton2.Location = new System.Drawing.Point(19, 4);
+            this.andRadioButton2.Location = new System.Drawing.Point(14, 3);
+            this.andRadioButton2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.andRadioButton2.Name = "andRadioButton2";
-            this.andRadioButton2.Size = new System.Drawing.Size(17, 16);
+            this.andRadioButton2.Size = new System.Drawing.Size(14, 13);
             this.andRadioButton2.TabIndex = 0;
             this.andRadioButton2.TabStop = true;
             this.andRadioButton2.UseVisualStyleBackColor = true;
@@ -491,17 +505,19 @@ namespace AnalyseEtControleFEC
             // 
             this.panel3.Controls.Add(this.andRadioButton1);
             this.panel3.Controls.Add(this.orRadioButton1);
-            this.panel3.Location = new System.Drawing.Point(4, 177);
+            this.panel3.Location = new System.Drawing.Point(3, 144);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(103, 27);
+            this.panel3.Size = new System.Drawing.Size(77, 22);
             this.panel3.TabIndex = 16;
             // 
             // andRadioButton1
             // 
             this.andRadioButton1.AutoSize = true;
-            this.andRadioButton1.Location = new System.Drawing.Point(19, 6);
+            this.andRadioButton1.Location = new System.Drawing.Point(14, 5);
+            this.andRadioButton1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.andRadioButton1.Name = "andRadioButton1";
-            this.andRadioButton1.Size = new System.Drawing.Size(17, 16);
+            this.andRadioButton1.Size = new System.Drawing.Size(14, 13);
             this.andRadioButton1.TabIndex = 0;
             this.andRadioButton1.TabStop = true;
             this.andRadioButton1.UseVisualStyleBackColor = true;
@@ -509,39 +525,44 @@ namespace AnalyseEtControleFEC
             // orRadioButton1
             // 
             this.orRadioButton1.AutoSize = true;
-            this.orRadioButton1.Location = new System.Drawing.Point(62, 6);
+            this.orRadioButton1.Location = new System.Drawing.Point(46, 5);
+            this.orRadioButton1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.orRadioButton1.Name = "orRadioButton1";
-            this.orRadioButton1.Size = new System.Drawing.Size(17, 16);
+            this.orRadioButton1.Size = new System.Drawing.Size(14, 13);
             this.orRadioButton1.TabIndex = 0;
             this.orRadioButton1.TabStop = true;
             this.orRadioButton1.UseVisualStyleBackColor = true;
             // 
             // value4TextBox
             // 
-            this.value4TextBox.Location = new System.Drawing.Point(493, 333);
+            this.value4TextBox.Location = new System.Drawing.Point(370, 271);
+            this.value4TextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.value4TextBox.Name = "value4TextBox";
-            this.value4TextBox.Size = new System.Drawing.Size(138, 22);
+            this.value4TextBox.Size = new System.Drawing.Size(104, 20);
             this.value4TextBox.TabIndex = 14;
             // 
             // value3TextBox
             // 
-            this.value3TextBox.Location = new System.Drawing.Point(493, 255);
+            this.value3TextBox.Location = new System.Drawing.Point(370, 207);
+            this.value3TextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.value3TextBox.Name = "value3TextBox";
-            this.value3TextBox.Size = new System.Drawing.Size(138, 22);
+            this.value3TextBox.Size = new System.Drawing.Size(104, 20);
             this.value3TextBox.TabIndex = 13;
             // 
             // value2TextBox
             // 
-            this.value2TextBox.Location = new System.Drawing.Point(493, 177);
+            this.value2TextBox.Location = new System.Drawing.Point(370, 144);
+            this.value2TextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.value2TextBox.Name = "value2TextBox";
-            this.value2TextBox.Size = new System.Drawing.Size(138, 22);
+            this.value2TextBox.Size = new System.Drawing.Size(104, 20);
             this.value2TextBox.TabIndex = 12;
             // 
             // value1TextBox
             // 
-            this.value1TextBox.Location = new System.Drawing.Point(493, 91);
+            this.value1TextBox.Location = new System.Drawing.Point(370, 74);
+            this.value1TextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.value1TextBox.Name = "value1TextBox";
-            this.value1TextBox.Size = new System.Drawing.Size(138, 22);
+            this.value1TextBox.Size = new System.Drawing.Size(104, 20);
             this.value1TextBox.TabIndex = 11;
             // 
             // field4ComboBox
@@ -567,9 +588,10 @@ namespace AnalyseEtControleFEC
             "ValidDate",
             "Montantdevise",
             "Idevise"});
-            this.field4ComboBox.Location = new System.Drawing.Point(142, 335);
+            this.field4ComboBox.Location = new System.Drawing.Point(106, 272);
+            this.field4ComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.field4ComboBox.Name = "field4ComboBox";
-            this.field4ComboBox.Size = new System.Drawing.Size(138, 24);
+            this.field4ComboBox.Size = new System.Drawing.Size(104, 21);
             this.field4ComboBox.TabIndex = 10;
             this.field4ComboBox.SelectedIndexChanged += new System.EventHandler(this.field4ComboBox_SelectedIndexChanged);
             // 
@@ -596,9 +618,10 @@ namespace AnalyseEtControleFEC
             "ValidDate",
             "Montantdevise",
             "Idevise"});
-            this.field3ComboBox.Location = new System.Drawing.Point(142, 257);
+            this.field3ComboBox.Location = new System.Drawing.Point(106, 209);
+            this.field3ComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.field3ComboBox.Name = "field3ComboBox";
-            this.field3ComboBox.Size = new System.Drawing.Size(138, 24);
+            this.field3ComboBox.Size = new System.Drawing.Size(104, 21);
             this.field3ComboBox.TabIndex = 9;
             this.field3ComboBox.SelectedIndexChanged += new System.EventHandler(this.field3ComboBox_SelectedIndexChanged);
             // 
@@ -625,106 +648,118 @@ namespace AnalyseEtControleFEC
             "ValidDate",
             "Montantdevise",
             "Idevise"});
-            this.field2ComboBox.Location = new System.Drawing.Point(142, 179);
+            this.field2ComboBox.Location = new System.Drawing.Point(106, 145);
+            this.field2ComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.field2ComboBox.Name = "field2ComboBox";
-            this.field2ComboBox.Size = new System.Drawing.Size(138, 24);
+            this.field2ComboBox.Size = new System.Drawing.Size(104, 21);
             this.field2ComboBox.TabIndex = 8;
             this.field2ComboBox.SelectedIndexChanged += new System.EventHandler(this.field2ComboBox_SelectedIndexChanged);
             // 
             // field1ComboBox
             // 
             this.field1ComboBox.FormattingEnabled = true;
-            this.field1ComboBox.Location = new System.Drawing.Point(142, 93);
+            this.field1ComboBox.Location = new System.Drawing.Point(106, 76);
+            this.field1ComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.field1ComboBox.Name = "field1ComboBox";
-            this.field1ComboBox.Size = new System.Drawing.Size(138, 24);
+            this.field1ComboBox.Size = new System.Drawing.Size(104, 21);
             this.field1ComboBox.TabIndex = 7;
             this.field1ComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // condition4ComboBox
             // 
             this.condition4ComboBox.FormattingEnabled = true;
-            this.condition4ComboBox.Location = new System.Drawing.Point(325, 335);
+            this.condition4ComboBox.Location = new System.Drawing.Point(244, 272);
+            this.condition4ComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.condition4ComboBox.Name = "condition4ComboBox";
-            this.condition4ComboBox.Size = new System.Drawing.Size(138, 24);
+            this.condition4ComboBox.Size = new System.Drawing.Size(104, 21);
             this.condition4ComboBox.TabIndex = 6;
             // 
             // condition3ComboBox
             // 
             this.condition3ComboBox.FormattingEnabled = true;
-            this.condition3ComboBox.Location = new System.Drawing.Point(325, 257);
+            this.condition3ComboBox.Location = new System.Drawing.Point(244, 209);
+            this.condition3ComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.condition3ComboBox.Name = "condition3ComboBox";
-            this.condition3ComboBox.Size = new System.Drawing.Size(138, 24);
+            this.condition3ComboBox.Size = new System.Drawing.Size(104, 21);
             this.condition3ComboBox.TabIndex = 5;
             // 
             // condition2ComboBox
             // 
             this.condition2ComboBox.FormattingEnabled = true;
-            this.condition2ComboBox.Location = new System.Drawing.Point(325, 179);
+            this.condition2ComboBox.Location = new System.Drawing.Point(244, 145);
+            this.condition2ComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.condition2ComboBox.Name = "condition2ComboBox";
-            this.condition2ComboBox.Size = new System.Drawing.Size(138, 24);
+            this.condition2ComboBox.Size = new System.Drawing.Size(104, 21);
             this.condition2ComboBox.TabIndex = 4;
             // 
             // condition1ComboBox
             // 
             this.condition1ComboBox.FormattingEnabled = true;
-            this.condition1ComboBox.Location = new System.Drawing.Point(325, 93);
+            this.condition1ComboBox.Location = new System.Drawing.Point(244, 76);
+            this.condition1ComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.condition1ComboBox.Name = "condition1ComboBox";
-            this.condition1ComboBox.Size = new System.Drawing.Size(138, 24);
+            this.condition1ComboBox.Size = new System.Drawing.Size(104, 21);
             this.condition1ComboBox.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(530, 33);
+            this.label3.Location = new System.Drawing.Point(398, 27);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 17);
+            this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Valeurs";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(352, 33);
+            this.label2.Location = new System.Drawing.Point(264, 27);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 17);
+            this.label2.Size = new System.Drawing.Size(51, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Condition";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(187, 33);
+            this.label1.Location = new System.Drawing.Point(140, 27);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 17);
+            this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Champ";
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(305, 43);
+            this.tabControl1.Location = new System.Drawing.Point(229, 35);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1365, 987);
+            this.tabControl1.Size = new System.Drawing.Size(1024, 802);
             this.tabControl1.TabIndex = 6;
             this.tabControl1.DoubleClick += new System.EventHandler(this.tabControl1_DoubleClick);
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1357, 958);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Size = new System.Drawing.Size(1016, 776);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(10, 688);
+            this.button3.Location = new System.Drawing.Point(8, 559);
+            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(56, 19);
             this.button3.TabIndex = 7;
             this.button3.Text = "output";
             this.button3.UseVisualStyleBackColor = true;
@@ -732,11 +767,11 @@ namespace AnalyseEtControleFEC
             // 
             // Start
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(1682, 953);
+            this.ClientSize = new System.Drawing.Size(1262, 774);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl1);
@@ -746,6 +781,7 @@ namespace AnalyseEtControleFEC
             this.ForeColor = System.Drawing.Color.Red;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Start";
             this.Text = "mi";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
