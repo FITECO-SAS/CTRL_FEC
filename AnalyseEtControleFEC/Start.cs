@@ -53,7 +53,7 @@ namespace AnalyseEtControleFEC
 
         private void analyserToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            MainController.get().analyzeData();
+            MainController.Get().AnalyzeData();
         }
 
         private void ouvrirFECToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,14 +81,14 @@ namespace AnalyseEtControleFEC
 
         private void dataGridView1_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
-            MainController controller = MainController.get();
+            MainController controller = MainController.Get();
             if(sender is DataGridViewBDD)
             {
-                e.Value = controller.dataBaseController.getContentFromFilter(e.ColumnIndex, e.RowIndex+1, ((DataGridViewBDD)sender).numGridView);
+                e.Value = controller.dataBaseController.GetContentFromFilter(e.ColumnIndex, e.RowIndex+1, ((DataGridViewBDD)sender).numGridView);
             }
             else
             {
-                e.Value = controller.dataBaseController.getContent(e.ColumnIndex, e.RowIndex+1);
+                e.Value = controller.dataBaseController.GetContent(e.ColumnIndex, e.RowIndex+1);
             }       
         }
 
@@ -240,7 +240,7 @@ namespace AnalyseEtControleFEC
 
         private void addFilter(int lastTabId, bool isOr, String field, String condition, String value)
         {
-            MainController controller = MainController.get();
+            MainController controller = MainController.Get();
             string finalWhereClause = "";
             if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("MONTANT") ||
                 field.ToUpper().Contains("DEBIT") || field.ToUpper().Contains("CREDIT"))
@@ -285,7 +285,7 @@ namespace AnalyseEtControleFEC
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MainController controller = MainController.get();
+            MainController controller = MainController.Get();
             DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[0];
             int filterIdOfLastTab;
             if (lastTabView is DataGridViewBDD)
@@ -299,7 +299,7 @@ namespace AnalyseEtControleFEC
             addFilter(filterIdOfLastTab, false, field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
             if (andRadioButton1.Checked)
             {
-                addFilter(controller.getDataBaseController().getLastFilterId(), false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+                addFilter(controller.GetDataBaseController().GetLastFilterId(), false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
             }
             else if (orRadioButton1.Checked)
             {
@@ -307,7 +307,7 @@ namespace AnalyseEtControleFEC
             }
             if (andRadioButton2.Checked)
             {
-                addFilter(controller.getDataBaseController().getLastFilterId(), false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                addFilter(controller.GetDataBaseController().GetLastFilterId(), false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
             }
             else if (orRadioButton2.Checked)
             {
@@ -315,7 +315,7 @@ namespace AnalyseEtControleFEC
             }
             if (andRadioButton3.Checked)
             {
-                addFilter(controller.getDataBaseController().getLastFilterId(), false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                addFilter(controller.GetDataBaseController().GetLastFilterId(), false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
             }
             else if (orRadioButton3.Checked)
             {
@@ -324,10 +324,10 @@ namespace AnalyseEtControleFEC
             reinitializeFilterForm();
             string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
             TabPage myTabPage = new TabPage(title);
-            DataGridViewBDD newDataGridView = new DataGridViewBDD(controller.getDataBaseController().getLastFilterId());
+            DataGridViewBDD newDataGridView = new DataGridViewBDD(controller.GetDataBaseController().GetLastFilterId());
             newDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
             newDataGridView.Size = dataGridView1.Size;
-            MainController.get().openFilter(newDataGridView, newDataGridView.numGridView);
+            MainController.Get().OpenFilter(newDataGridView, newDataGridView.numGridView);
             myTabPage.Controls.Add(newDataGridView);
             tabControl1.TabPages.Add(myTabPage);
             tabControl1.SelectedTab = myTabPage;

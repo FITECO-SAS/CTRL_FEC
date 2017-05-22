@@ -46,7 +46,8 @@ namespace AnalyseEtControleFEC
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MainController.get().openFile(filePath,fileName);
+            MainController.Get().OpenFile(filePath,fileName);
+            LogHelper.file = fileName;
             this.Dispose();
         }
 

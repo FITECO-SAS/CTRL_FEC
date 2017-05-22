@@ -71,9 +71,12 @@ namespace AnalyseEtControleFEC.Model
             lineRegexErrors = new List<Tuple<String, String, List<int>>>();
         }
 
-        public void check_CompAuxNum_CompAuxLib()
+        /// <summary>
+        /// Check the consistency between the CompAuxNum and CompAuxLib columns
+        /// </summary>
+        public void CheckCompAuxNumCompAuxLib()
         {
-            List<int> list = dataBaseAccess.CompareContent_CompAuxNum_CompAuxLib();
+            List<int> list = dataBaseAccess.CompareContentCompAuxNumCompAuxLib();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("L'un des champs CompAuxNum ou CompAuxLib est vide :\n", "Class ErrorLogger");
@@ -84,9 +87,13 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
         }
-        public void check_EcritureLet_DateLet()
+
+        /// <summary>
+        /// Check the consistency between the EcritureLet and DateLet columns
+        /// </summary>
+        public void CheckEcritureLetDateLet()
         {
-            List<int> list = dataBaseAccess.CompareContent_EcritureLet_DateLet();
+            List<int> list = dataBaseAccess.CompareContentEcritureLetDateLet();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("L'un des champs EcritureLet ou DateLet est vide :\n", "Class ErrorLogger");
@@ -98,9 +105,13 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
         }
-        public void check_Montantdevise_Idevise()
+
+        /// <summary>
+        /// Check the consistency between the Montantdevise and Idevise columns
+        /// </summary>
+        public void CheckMontantdeviseIdevise()
         {
-            List<int> list = dataBaseAccess.CompareContent_Montantdevise_Idevise();
+            List<int> list = dataBaseAccess.CompareContentMontantdeviseIdevise();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("L'un des champs Montantdevise ou Idevise est vide :\n", "Class ErrorLogger");
@@ -112,9 +123,13 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
         }
-        public void check_DateLet_EcritureDate()
+
+        /// <summary>
+        /// Check if DateLet column is not lower than EcritureDate column
+        /// </summary>
+        public void CheckDateLetEcritureDate()
         {
-            List<int> list = dataBaseAccess.CompareContent_DateLet_EcritureDate();
+            List<int> list = dataBaseAccess.CompareContentDateLetEcritureDate();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champs DateLet < EcritureDate :\n", "Class ErrorLogger");
@@ -126,9 +141,13 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
         }
-        public void check_PieceDate_EcritureDate()
+
+        /// <summary>
+        /// Check if PieceDate column is not upper than EcritureDate column
+        /// </summary>
+        public void CheckPieceDateEcritureDate()
         {
-            List<int> list = dataBaseAccess.CompareContent_PieceDate_EcritureDate();
+            List<int> list = dataBaseAccess.CompareContentPieceDateEcritureDate();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champ PieceDate > EcritureDate :\n", "Class ErrorLogger");
@@ -140,9 +159,13 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
         }
-        public void check_PieceDate_ValidDate()
+
+        /// <summary>
+        /// Check if EcritureDate column is not upper than ValidDate column
+        /// </summary>
+        public void CheckPieceDateValidDate()
         {
-            List<int> list = dataBaseAccess.CompareContent_PieceDate_ValidDate();
+            List<int> list = dataBaseAccess.CompareContentPieceDateValidDate();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champ PieceDate > ValidDate :\n", "Class ErrorLogger");
@@ -154,9 +177,13 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
         }
-        public void check_EcritureDate_ValidDate()
+
+        /// <summary>
+        /// Check if EcritureDate column is not upper than ValidDate column
+        /// </summary>
+        public void CheckEcritureDateValidDate()
         {
-            List<int> list = dataBaseAccess.CompareContent_EcritureDate_ValidDate();
+            List<int> list = dataBaseAccess.CompareContentEcritureDateValidDate();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champ EcritureDate > ValidDate :\n", "Class ErrorLogger");
@@ -168,9 +195,13 @@ namespace AnalyseEtControleFEC.Model
                 }
             }
         }
-        public void check_DateLet_PieceDate()
+
+        /// <summary>
+        /// Check if DateLet column is not lower than PieceDate column
+        /// </summary>
+        public void CheckDateLetPieceDate()
         {
-            List<int> list = dataBaseAccess.CompareContent_DateLet_PieceDate();
+            List<int> list = dataBaseAccess.CompareContentDateLetPieceDate();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champs DateLet < PieceDate :\n", "Class ErrorLogger");
@@ -183,9 +214,12 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Debit_Credit_EcritureNum()
+        /// <summary>
+        /// Check if the sum of the Debit column is equal to the sum the Credit column for a specific EcritureNum value
+        /// </summary>
+        public void CheckDebitCreditEcritureNum()
         {
-            List<String> list = dataBaseAccess.EcritureNum_Debit_Credit();
+            List<String> list = dataBaseAccess.EcritureNumDebitCredit();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits :", "Class ErrorLogger");
@@ -196,9 +230,12 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Debit_Credit_JournalCode()
+        /// <summary>
+        /// Check if the sum of the Debit column is equal to the sum the Credit column for a specific JournalCode value
+        /// </summary>
+        public void CheckDebitCreditJournalCode()
         {
-            List<String> list = dataBaseAccess.JournalCode_Debit_Credit();
+            List<String> list = dataBaseAccess.JournalCodeDebitCredit();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits :", "Class ErrorLogger");
@@ -210,9 +247,12 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Debit_Credit_AllLines()
+        /// <summary>
+        /// Check if the sum of the Debit column is equal to the sum the Credit column on the entire file
+        /// </summary>
+        public void CheckDebitCreditAllLines()
         {
-            bool list = dataBaseAccess.AllLines_Debit_Credit();
+            bool list = dataBaseAccess.AllLinesDebitCredit();
             if (list == true)
             {
                 Console.WriteLine("Erreur Debit Credit\n");
@@ -220,9 +260,12 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Montant_Sens_AllLines()
+        /// <summary>
+        /// Check if the sum of the Debit column is equal to the sum the Credit column on the entire file (in a Montant-Sens file)
+        /// </summary>
+        public void CheckMontantSensAllLines()
         {
-            bool list = dataBaseAccess.AllLines_Montant_Sens();
+            bool list = dataBaseAccess.AllLinesMontantSens();
             if (list == true)
             {
                 //Console.WriteLine("Erreur Montant Sens \n");
@@ -230,9 +273,12 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Montant_Sens_JournalCode()
+        /// <summary>
+        /// Check if the sum of the Debit column is equal to the sum the Credit column for a specific JournalCode value (in a Montant-Sens file)
+        /// </summary>
+        public void CheckMontantSensJournalCode()
         {
-            List<String> list = dataBaseAccess.JournalCode_Montant_Sens();
+            List<String> list = dataBaseAccess.JournalCodeMontantSens();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur les JournalCode :", "Class ErrorLogger");
@@ -244,9 +290,12 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Montant_Sens_EcritureNum()
+        /// <summary>
+        /// Check if the sum of the Debit column is equal to the sum the Credit column for a specific EcritureNum value (in a Montant-Sens file)
+        /// </summary>
+        public void CheckMontantSensEcritureNum()
         {
-            List<String> list = dataBaseAccess.EcritureNum_Montant_Sens();
+            List<String> list = dataBaseAccess.EcritureNumMontantSens();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur les EcritureNum :", "Class ErrorLogger");
@@ -258,9 +307,12 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Compare_Montant_Sens_By_Month()
+        /// <summary>
+        /// Check if the sum of the Debit column is equal to the sum the Credit column for a specific Month value for each JournalCode (in a Montant-Sens file)
+        /// </summary>
+        public void CheckCompareMontantSensByMonth()
         {
-            List<String> list = dataBaseAccess.Compare_Montant_Sens_By_Month();
+            List<String> list = dataBaseAccess.CompareMontantSensByMonth();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur un mois d'un journal :", "Class ErrorLogger");
@@ -271,7 +323,10 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Compare_Debit_Credit_By_Month()
+        /// <summary>
+        /// Check if the sum of the Debit column is equal to the sum the Credit column for a specific Month value for each JournalCode
+        /// </summary>
+        public void CheckCompareDebitCreditByMonth()
         {
             List<String> list = dataBaseAccess.CompareDebitCreditByMonth();
             if (list.Count != 0)
@@ -284,29 +339,35 @@ namespace AnalyseEtControleFEC.Model
             }
         }
 
-        public void check_Is_Montant_Sens()
+        /// <summary>
+        /// Check if the file are a Montant-Sens file and do the associated complementary controls
+        /// </summary>
+        public void CheckIsMontantSens()
         {
-            bool is_Montant = dataBaseAccess.Is_Montant_Sens();
-            if (is_Montant)
+            bool isMontant = dataBaseAccess.IsMontantSens();
+            if (isMontant)
             {
 
-                check_Montant_Sens_AllLines();
-                check_Montant_Sens_JournalCode();
-                check_Montant_Sens_EcritureNum();
-                check_Compare_Montant_Sens_By_Month();
+                CheckMontantSensAllLines();
+                CheckMontantSensJournalCode();
+                CheckMontantSensEcritureNum();
+                CheckCompareMontantSensByMonth();
             }
             else
             {
-                check_Debit_Credit_EcritureNum();
-                check_Debit_Credit_JournalCode();
-                check_Debit_Credit_AllLines();
-                check_Compare_Debit_Credit_By_Month();
+                CheckDebitCreditEcritureNum();
+                CheckDebitCreditJournalCode();
+                CheckDebitCreditAllLines();
+                CheckCompareDebitCreditByMonth();
             }
         }
 
-        public void check_Is_Date_Unique_For_EcritureNum()
+        /// <summary>
+        /// Check if date are unique for each EcritureNum
+        /// </summary>
+        public void CheckIsDateUniqueForEcritureNum()
         {
-            List<String> list = dataBaseAccess.Is_Date_Unique_For_EcritureNum();
+            List<String> list = dataBaseAccess.IsDateUniqueForEcritureNum();
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La date sur l'ecritureNum n'est pas unique :", "Class ErrorLogger");
@@ -324,7 +385,7 @@ namespace AnalyseEtControleFEC.Model
         /// </summary>
         /// <param name="name">the name that we want to check</param>
         /// <returns>true if the name is correct or false if it's not</returns>
-        public bool checkName(String name)
+        public bool CheckName(String name)
         {
             Regex nameRegex = new Regex(configuration.nameRegex);
             if (!nameRegex.IsMatch(name))
@@ -340,11 +401,11 @@ namespace AnalyseEtControleFEC.Model
         /// Check if the columns names correspond to one of the columns sets in configuration for specified regime and plan
         /// </summary>
         /// <returns>true if the column set exists and false if it's not</returns>
-        public bool checkColumns()
+        public bool CheckColumns()
         {
-            String[] columns = dataBaseAccess.getColumnNames();
+            String[] columns = dataBaseAccess.GetColumnNames();
             bool check = false;
-            foreach (List<String> set in configuration.getColumnSets(regime, plan))
+            foreach (List<String> set in configuration.GetColumnSets(regime, plan))
             {
                 bool found = true;
                 for (int i = 0; i < columns.Length; i++)
@@ -369,13 +430,13 @@ namespace AnalyseEtControleFEC.Model
         /// Check if the columns names correspond to one of the columns sets in configuration for specified regime and plan
         /// </summary>
         /// <returns>true if the column set exists and false if it's not</returns>
-        public String getErrorColumns()
+        public String GetErrorColumns()
         {
-            String[] columns = dataBaseAccess.getColumnNames();
+            String[] columns = dataBaseAccess.GetColumnNames();
             String listErrorColumns = "";
             bool checkColumns = true;
             int line = 0;
-            foreach (List<String> set in configuration.getColumnSets(regime, plan))
+            foreach (List<String> set in configuration.GetColumnSets(regime, plan))
             {
                 bool found = true;
                 for (int i = 0; i < columns.Length; i++)
@@ -407,11 +468,11 @@ namespace AnalyseEtControleFEC.Model
         public bool CheckLinesInDatabase()
         {
             bool valid = true;
-            String[] columns = dataBaseAccess.getColumnNames();
-            Tuple<String, String>[] columnsRegex = configuration.getColumnsRegex(columns);
+            String[] columns = dataBaseAccess.GetColumnNames();
+            Tuple<String, String>[] columnsRegex = configuration.GetColumnsRegex(columns);
             for (int i = 0; i < columns.Length; i++)
             {
-                List<int> errors = dataBaseAccess.checkRegexColumn(i, columnsRegex[i].Item1);
+                List<int> errors = dataBaseAccess.CheckRegexColumn(i, columnsRegex[i].Item1);
                 if (errors.Count > 0)
                 {
                     valid = false;
@@ -435,18 +496,23 @@ namespace AnalyseEtControleFEC.Model
             if (isFileCorrect)
             {
                 log += "Aucune erreur structurelle n'a été détectée\n";
+                LogHelper.WriteToFile("\n Aucune erreur structurelle n'a été détectée", "Class ErrorLogger");
             }
             else
             {
                 log += "Une ou plusieurs erreur(s) a/ont été détéctée(s) :\n";
+                LogHelper.WriteToFile("\n Une ou plusieurs erreur(s) a/ont été détéctée(s) :", "Class ErrorLogger");
                 if (!isNameCorrect)
                 {
                     log += "\t - Le nom du fichier n'est pas conforme\n";
+                    LogHelper.WriteToFile("\n Le nom du fichier n'est pas conforme", "Class ErrorLogger");
                 }
                 if (!AreColumnsCorrect)
                 {
                     log += "\t- Les entêtes de colonnes ne correspondent à aucun ensemble possible pour le régime et le plan indiqués. Voici les ensembles possibles :\n";
-                    log += "\t\t-" + getErrorColumns() + "\n";
+                    log += "\t\t-" + GetErrorColumns() + "\n";
+                    LogHelper.WriteToFile("\nLes entêtes de colonnes ne correspondent à aucun ensemble possible pour le régime et le plan indiqués. Voici les ensembles possibles :", "Class ErrorLogger");
+                    LogHelper.WriteToFile("\n\t\t-" + GetErrorColumns(), "Colonnes");
                 }
 
             }

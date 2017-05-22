@@ -9,11 +9,14 @@ namespace AnalyseEtControleFEC
 {
     class LogHelper
     {
+        public static string file { get; set; } = "";
+
+
         public static void WriteToFile(string errorMessage, string className)
         {
             DateTime nowDate = DateTime.Now;
-            string shortDate = String.Format("{0:yyyy-MM-dd}", nowDate);
-            string filename = string.Format("{0}.log", shortDate);
+            string shortDate = String.Format("{0:yyyy-MM-dd-HH-mm}", nowDate);
+            string filename = "Rapport_"+file.Split('.')[0]+"_"+string.Format("{0}.log", shortDate);
             //création du nom de fichier .log
             filename = filename.Replace("/", "-");
             //récupérer le path complet, application PC

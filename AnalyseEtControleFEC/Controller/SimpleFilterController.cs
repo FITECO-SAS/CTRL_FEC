@@ -53,7 +53,7 @@ namespace AnalyseEtControleFEC.Controller
         public string NumericOrDateSimpleFilter(string column, string typeFilter, string value)
         {
             
-            string[] columnNames = dataBaseController.getColumnNames();
+            string[] columnNames = dataBaseController.GetColumnNames();
             string columnNameInDb = "";
             for (int i = 0; i < columnNames.Length; i++)
             {
@@ -84,7 +84,7 @@ namespace AnalyseEtControleFEC.Controller
 
         public string TextSimpleFilter(string column, string typeFilter, string value)
         {
-            string[] columnNames = dataBaseController.getColumnNames();
+            string[] columnNames = dataBaseController.GetColumnNames();
             string columnNameInDb = "";
             for (int i = 0; i < columnNames.Length; i++)
             {

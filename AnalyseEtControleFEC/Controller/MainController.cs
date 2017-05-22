@@ -16,29 +16,32 @@ namespace AnalyseEtControleFEC.Controller
         //Static Thread stuff
         static String threadPath;
         static String threadFileName;
-        static public void threadedLoadFromFile()
+        static public void ThreadedLoadFromFile()
         {
 
-            ErrorLogger logger = new ErrorLogger(config, instance.getDataBaseController(), "BIC", "PCG");
-            instance.getDataBaseController().fillDatabaseFromFile(threadPath);
-            logger.checkName(threadFileName);
-            logger.checkColumns();
-            logger.CheckLinesInDatabase();
-            instance.finalizeOpenFileFromThread();
+            ErrorLogger logger = new ErrorLogger(config, instance.GetDataBaseController(), "BIC", "PCG");
+            instance.GetDataBaseController().FillDatabaseFromFile(threadPath);
+            logger.CheckName(threadFileName);
+            logger.CheckColumns();
+            if(logger.CheckColumns()) logger.CheckLinesInDatabase();
+            instance.FinalizeOpenFileFromThread();
             //logger.check_Dates();
             //Console.WriteLine(logger.check_CompAuxNum_CompAuxLib());
-            Console.WriteLine(logger.CreateLog());
-            logger.check_CompAuxNum_CompAuxLib();
-            logger.check_EcritureLet_DateLet();
-            logger.check_Montantdevise_Idevise();
-            logger.check_PieceDate_EcritureDate();
-            logger.check_PieceDate_ValidDate();
-            logger.check_EcritureDate_ValidDate();
-            logger.check_DateLet_PieceDate();
-            logger.check_DateLet_EcritureDate();
-            logger.check_Is_Montant_Sens();
-            logger.check_Is_Date_Unique_For_EcritureNum();
-            //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+            logger.CreateLog();
+            if (logger.CheckColumns())
+            {
+                logger.CheckCompAuxNumCompAuxLib();
+                logger.CheckEcritureLetDateLet();
+                logger.CheckMontantdeviseIdevise();
+                logger.CheckPieceDateEcritureDate();
+                logger.CheckPieceDateValidDate();
+                logger.CheckEcritureDateValidDate();
+                logger.CheckDateLetPieceDate();
+                logger.CheckDateLetEcritureDate();
+                logger.CheckIsMontantSens();
+                logger.CheckIsDateUniqueForEcritureNum();
+                //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+            }
         }
 
         //Constants
@@ -51,7 +54,7 @@ namespace AnalyseEtControleFEC.Controller
         public SimpleFilterController simpleFilterController { get; set; }
         Start mainWindow;
 
-        static public MainController get()
+        static public MainController Get()
         {
             if(instance == null)
             {
@@ -66,17 +69,17 @@ namespace AnalyseEtControleFEC.Controller
             config = new Configuration(configuration);
         }
 
-        public DataBaseController getDataBaseController()
+        public DataBaseController GetDataBaseController()
         {
             return dataBaseController;
         }
 
-        public SimpleFilterController getSimpleFilterController()
+        public SimpleFilterController GetSimpleFilterController()
         {
             return simpleFilterController;
         }
 
-        public void start()
+        public void Start()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -86,15 +89,15 @@ namespace AnalyseEtControleFEC.Controller
         }
 
         /// <summary>
-        /// analyser les données (controles élémentaires)
+        /// Analyser les données (controles élémentaires)
        /// </summary>
-        public void analyzeData()
+        public void AnalyzeData()
         {
             for(int i = 0; i<mainWindow.getDataGridView().RowCount; i++)
             {
                 for(int j = 0; j<mainWindow.getDataGridView().ColumnCount; j++)
                 {
-                    if(!isCellValid(j, (String)mainWindow.getDataGridView().Rows[i].Cells[j].Value))
+                    if(!IsCellValid(j, (String)mainWindow.getDataGridView().Rows[i].Cells[j].Value))
                     {
                         mainWindow.getDataGridView().Rows[i].Cells[j].Style.ForeColor = Color.Red;
                     }
@@ -107,12 +110,12 @@ namespace AnalyseEtControleFEC.Controller
         }
 
         /// <summary>
-        /// vérifier la validiter des champs
+        /// Vérifier la validiter des champs
         /// </summary>
         /// <param name="columnNumber"></param>
         /// <param name="columnContent"></param>
         /// <returns> boolean </returns>
-        private bool isCellValid(int columnNumber, String columnContent)
+        private bool IsCellValid(int columnNumber, String columnContent)
         {
             if(columnContent==null)
             {
@@ -189,24 +192,24 @@ namespace AnalyseEtControleFEC.Controller
             return false;
         }
 
-        internal void openFile(string filePath, string fileName)
+        internal void OpenFile(string filePath, string fileName)
         {
-            dataBaseController.init();
+            dataBaseController.Init();
             threadPath = filePath;
             threadFileName = fileName;
-            Thread openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
+            Thread openFileThread = new Thread(new ThreadStart(ThreadedLoadFromFile));
             openFileThread.Start();
         }
-        public void finalizeOpenFileFromThread()
+        public void FinalizeOpenFileFromThread()
         {
             DataGridView gridView = mainWindow.getDataGridView();
-            gridView.Invoke((Action)finalizeOpenFile);
+            gridView.Invoke((Action)FinalizeOpenFile);
         }
-        public void finalizeOpenFile()
+        public void FinalizeOpenFile()
         {
             DataGridView gridView = mainWindow.getDataGridView();
-            String[] Columns = dataBaseController.getColumnNames();
-            int size = dataBaseController.getNumberOfLines();
+            String[] Columns = dataBaseController.GetColumnNames();
+            int size = dataBaseController.GetNumberOfLines();
             gridView.ColumnCount = Columns.Length;
             for (int i = 0; i < Columns.Length; i++)
             {
@@ -215,10 +218,10 @@ namespace AnalyseEtControleFEC.Controller
             gridView.RowCount = size;
         }
 
-        internal void openFilter(DataGridView gridView, int filterNumber)
+        internal void OpenFilter(DataGridView gridView, int filterNumber)
         {
-            String[] Columns = dataBaseController.getColumnNames();
-            int size = dataBaseController.getNumberOfLinesInFilter(filterNumber);
+            String[] Columns = dataBaseController.GetColumnNames();
+            int size = dataBaseController.GetNumberOfLinesInFilter(filterNumber);
             gridView.ColumnCount = Columns.Length;
             for (int i = 0; i < Columns.Length; i++)
             {

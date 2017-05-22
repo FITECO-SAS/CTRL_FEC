@@ -77,7 +77,7 @@ namespace AnalyseEtControleFEC.Model
         /// <param name="regime">the regime that we use</param>
         /// <param name="plan">the plan that we use</param>
         /// <returns></returns>
-        public List<String>[] getColumnSets(string regime, string plan)
+        public List<String>[] GetColumnSets(string regime, string plan)
         {
             foreach(Tuple<String, String, List<List<String>>> sets in columnSets)
             {
@@ -95,7 +95,7 @@ namespace AnalyseEtControleFEC.Model
         /// </summary>
         /// <param name="columnName">the name of the column wich we want it regex</param>
         /// <returns>the regex associated with the specified column name</returns>
-        public Tuple<String, String> getColumnRegex(String columnName)
+        public Tuple<String, String> GetColumnRegex(String columnName)
         {
             foreach (Tuple<String, String, String> cregex in columnRegex)
             {
@@ -110,12 +110,12 @@ namespace AnalyseEtControleFEC.Model
         /// </summary>
         /// <param name="columnSet">Array of column names for which we want corresponding regex</param>
         /// <returns></returns>
-        public Tuple<String, String>[] getColumnsRegex(String[] columnSet)
+        public Tuple<String, String>[] GetColumnsRegex(String[] columnSet)
         {
             List<Tuple<String, String>> columnRegex = new List<Tuple<String, String>>();
             for (int i = 0; i < columnSet.Length; i++)
             {
-                columnRegex.Add(getColumnRegex(columnSet[i]));
+                columnRegex.Add(GetColumnRegex(columnSet[i]));
             }
             return columnRegex.ToArray();
         }

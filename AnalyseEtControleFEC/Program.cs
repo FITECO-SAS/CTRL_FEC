@@ -14,9 +14,9 @@ namespace AnalyseEtControleFEC
         [STAThread]
         static void Main()
         {
-            MainController mainController = MainController.get();
-            mainController.start();
-            DataBaseController data = mainController.getDataBaseController();
+            MainController mainController = MainController.Get();
+            mainController.Start();
+            DataBaseController data = mainController.GetDataBaseController();
         }
     }
 }
