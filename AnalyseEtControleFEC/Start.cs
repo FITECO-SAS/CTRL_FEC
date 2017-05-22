@@ -15,6 +15,7 @@ namespace AnalyseEtControleFEC
     {
         public Start()
         {
+            /*init*/
             InitializeComponent();
             panel1.Visible = false;
             panel2.Visible = false;
@@ -60,6 +61,7 @@ namespace AnalyseEtControleFEC
         {
             OpenFile openFile = new OpenFile();
             openFile.ShowDialog();
+            /*if the user has't chosen any file or the table is empty, he can't click other button*/
             if (openFile.DialogResult == DialogResult.OK)
             {
                 button4.Enabled = true;
@@ -70,6 +72,7 @@ namespace AnalyseEtControleFEC
             //this.Hide();
         }
 
+        /*After click the item, this application will be closed*/
         private void quitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -103,7 +106,7 @@ namespace AnalyseEtControleFEC
         {
             return dataGridView1;
         }
-
+        /*after double click the tab, this tabpages will be closed*/
         private void tabControl1_DoubleClick(object sender, EventArgs e)
         {
             tabControl1.TabPages.RemoveAt(tabControl1.SelectedIndex);
@@ -124,6 +127,7 @@ namespace AnalyseEtControleFEC
                 field4ComboBox.Items.Add(dataGridView1.Columns[i].Name);
             }
         }
+        /*this is used to update the selected node*/
         private void treeView1_MouseDown(object sender, MouseEventArgs e)
         {
             if ((sender as TreeView) != null)
@@ -131,7 +135,7 @@ namespace AnalyseEtControleFEC
                 treeView1.SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
             }
         }
-
+        /*after select different node, different panel will show*/
         private void treeView1_Click(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode.Text == "Simple")
@@ -332,31 +336,32 @@ namespace AnalyseEtControleFEC
             panel1.Visible = false;
         }
 
+        /*hide the panel1*/
         private void button2_Click_1(object sender, EventArgs e)
         {
             panel1.Visible = false;
         }
-
+        /*hide the panel2*/
         private void button5_Click(object sender, EventArgs e)
         {
             panel2.Visible = false;
         }
-
+        /*to show the line number of the table*/
         private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);
         }
-
+        /*show the panel7*/
         private void button7_Click(object sender, EventArgs e)
         {
             panel7.Visible = true;
         }
-
+        /*hide the panel23*/
         private void button18_Click(object sender, EventArgs e)
         {
             panel23.Visible = false;
         }
-
+        /*display the corresponding item in comboBox2*/
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox1.Text == "Journal")
@@ -399,7 +404,7 @@ namespace AnalyseEtControleFEC
                 comboBox2.Items.Add("Toutes les pièces en date du mois de");
             }
         }
-
+        /*this function is used to determine the condition will show in which textBox*/
         private void button8_Click(object sender, EventArgs e)
         {
             if ( panel19.Visible == true && panel21.Visible == false)
@@ -444,12 +449,12 @@ namespace AnalyseEtControleFEC
             }
 
         }
-
+        /*this fuction is used to delete a condition*/
         private void button16_Click(object sender, EventArgs e)
         {
             panel21.Visible = false;
         }
-
+        /*this fuction is used to delete a condition*/
         private void button15_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -462,7 +467,7 @@ namespace AnalyseEtControleFEC
                 panel19.Visible = false;
             }
         }
-
+        /*this fuction is used to delete a condition*/
         private void button14_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -481,7 +486,7 @@ namespace AnalyseEtControleFEC
                 panel17.Visible = false;
             }
         }
-
+        /*this fuction is used to delete a condition*/
         private void button13_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -507,7 +512,7 @@ namespace AnalyseEtControleFEC
                 panel15.Visible = false;
             }
         }
-
+        /*this fuction is used to delete a condition*/
         private void button12_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -541,7 +546,7 @@ namespace AnalyseEtControleFEC
                 panel13.Visible = false;
             }
         }
-
+        /*this fuction is used to delete a condition*/
         private void button11_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -584,7 +589,7 @@ namespace AnalyseEtControleFEC
                 panel11.Visible = false;
             }
         }
-
+        /*this fuction is used to delete a condition*/
         private void button10_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -637,7 +642,7 @@ namespace AnalyseEtControleFEC
                 panel9.Visible = false;
             }
         }
-
+        /*this fuction is used to delete a condition*/
         private void button9_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -701,7 +706,7 @@ namespace AnalyseEtControleFEC
                 panel8.Visible = false;
             }
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button20_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -709,7 +714,7 @@ namespace AnalyseEtControleFEC
             textBox10.Text = textBox9.Text;
             textBox9.Text = text;
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button27_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -717,7 +722,7 @@ namespace AnalyseEtControleFEC
             textBox9.Text = textBox8.Text;
             textBox8.Text = text;
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button26_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -725,7 +730,7 @@ namespace AnalyseEtControleFEC
             textBox8.Text = textBox7.Text;
             textBox7.Text = text;
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button25_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -733,7 +738,7 @@ namespace AnalyseEtControleFEC
             textBox7.Text = textBox6.Text;
             textBox6.Text = text;
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button24_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -741,7 +746,7 @@ namespace AnalyseEtControleFEC
             textBox6.Text = textBox5.Text;
             textBox5.Text = text;
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button23_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -749,7 +754,7 @@ namespace AnalyseEtControleFEC
             textBox5.Text = textBox4.Text;
             textBox4.Text = text;
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button22_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -757,7 +762,7 @@ namespace AnalyseEtControleFEC
             textBox4.Text = textBox3.Text;
             textBox3.Text = text;
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button19_Click(object sender, EventArgs e)
         {
             if (panel9.Visible == true)
@@ -768,7 +773,7 @@ namespace AnalyseEtControleFEC
                 textBox4.Text = text;
             }
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button21_Click(object sender, EventArgs e)
         {
             if (panel11.Visible == true)
@@ -779,7 +784,7 @@ namespace AnalyseEtControleFEC
                 textBox5.Text = text;
             }
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button28_Click(object sender, EventArgs e)
         {
             if (panel13.Visible == true)
@@ -790,7 +795,7 @@ namespace AnalyseEtControleFEC
                 textBox6.Text = text;
             }
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button29_Click(object sender, EventArgs e)
         {
             if (panel15.Visible == true)
@@ -801,7 +806,7 @@ namespace AnalyseEtControleFEC
                 textBox7.Text = text;
             }
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button30_Click(object sender, EventArgs e)
         {
             if (panel17.Visible == true)
@@ -812,7 +817,7 @@ namespace AnalyseEtControleFEC
                 textBox8.Text = text;
             }
         }
-
+        /*this function is used to exchange the positions of two conditions*/
         private void button31_Click(object sender, EventArgs e)
         {
             if (panel19.Visible == true)
@@ -828,7 +833,7 @@ namespace AnalyseEtControleFEC
         {
             panel6.Visible = false;
         }
-
+        /*this function is used to determine the selected line number*/
         private void dataGridView1_MouseUp(object sender, MouseEventArgs e)
         {
             if (dataGridView1.SelectedRows.Count >= 0)
@@ -883,7 +888,7 @@ namespace AnalyseEtControleFEC
                 }
             }
         }
-
+        /*this function is used to create a new table by the line number*/
         private void button4_Click(object sender, EventArgs e)
         {
             List<int> list = new List<int>();
@@ -945,7 +950,7 @@ namespace AnalyseEtControleFEC
             }
             
         }
-
+        /*this function is used to create a new table by the column number*/
         private void button17_Click(object sender, EventArgs e)
         {
             List<int> list = new List<int>();
@@ -1004,14 +1009,14 @@ namespace AnalyseEtControleFEC
                 tabControl1.SelectedTab = myTabPage;
             }
         }
-
+        /*this function is ussed to add [x] at the tab*/
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
             e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
             e.Graphics.DrawString(this.tabControl1.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
             e.DrawFocusRectangle();
         }
-
+        /*this function is used to add an action when the user click the [x]*/
         private void tabControl1_MouseDown(object sender, MouseEventArgs e)
         {
             for (int i = 0; i < this.tabControl1.TabPages.Count; i++)

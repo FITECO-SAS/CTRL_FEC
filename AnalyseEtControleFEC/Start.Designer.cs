@@ -222,7 +222,7 @@ namespace AnalyseEtControleFEC
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1682, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1670, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -240,20 +240,20 @@ namespace AnalyseEtControleFEC
             // ouvrirFECToolStripMenuItem
             // 
             this.ouvrirFECToolStripMenuItem.Name = "ouvrirFECToolStripMenuItem";
-            this.ouvrirFECToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.ouvrirFECToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.ouvrirFECToolStripMenuItem.Text = "Ouvrir FEC";
             this.ouvrirFECToolStripMenuItem.Click += new System.EventHandler(this.ouvrirFECToolStripMenuItem_Click);
             // 
             // fermerFECToolStripMenuItem
             // 
             this.fermerFECToolStripMenuItem.Name = "fermerFECToolStripMenuItem";
-            this.fermerFECToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.fermerFECToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.fermerFECToolStripMenuItem.Text = "Fermer FEC";
             // 
             // quitterToolStripMenuItem
             // 
             this.quitterToolStripMenuItem.Name = "quitterToolStripMenuItem";
-            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.quitterToolStripMenuItem.Text = "Quitter";
             this.quitterToolStripMenuItem.Click += new System.EventHandler(this.quitterToolStripMenuItem_Click);
             // 
@@ -1575,8 +1575,9 @@ namespace AnalyseEtControleFEC
             // 
             // Start
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1682, 893);

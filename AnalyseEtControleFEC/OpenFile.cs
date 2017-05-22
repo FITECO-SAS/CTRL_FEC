@@ -35,6 +35,7 @@ namespace AnalyseEtControleFEC
             openFile.Filter = "text files (*.txt)|*.txt";
             openFile.FilterIndex = 2;
             openFile.RestoreDirectory = false;
+            /*if the user hasn't chosen a file, he can't click other button*/
             if (openFile.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = openFile.FileName;
