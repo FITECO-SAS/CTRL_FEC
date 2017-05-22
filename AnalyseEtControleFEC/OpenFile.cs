@@ -35,20 +35,29 @@ namespace AnalyseEtControleFEC
             openFile.Filter = "text files (*.txt)|*.txt";
             openFile.FilterIndex = 2;
             openFile.RestoreDirectory = false;
+            /*if the user hasn't chosen a file, he can't click other button*/
             if (openFile.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = openFile.FileName;
                 filePath = openFile.FileName;
                 textBox2.Text = openFile.SafeFileName;
                 fileName = openFile.SafeFileName;
+                button2.Enabled = true;
             }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             MainController.Get().OpenFile(filePath,fileName);
             LogHelper.file = fileName;
+=======
+            MainController.get().openFile(filePath,fileName);
+            this.DialogResult = DialogResult.OK;        
+>>>>>>> origin/Interface-Feature
             this.Dispose();
+
         }
 
         //This fonction is used to get the address of the file SQLite 
