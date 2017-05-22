@@ -49,13 +49,9 @@ namespace AnalyseEtControleFEC
 
         private void button2_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             MainController.Get().OpenFile(filePath,fileName);
             LogHelper.file = fileName;
-=======
-            MainController.get().openFile(filePath,fileName);
-            this.DialogResult = DialogResult.OK;        
->>>>>>> origin/Interface-Feature
+            this.DialogResult = DialogResult.OK;
             this.Dispose();
 
         }
