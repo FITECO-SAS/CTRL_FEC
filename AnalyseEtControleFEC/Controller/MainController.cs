@@ -22,25 +22,38 @@ namespace AnalyseEtControleFEC.Controller
         static public void threadedFilterCreation(object o)
         {
             MainController controller = MainController.Get();
+            controller.GetDataBaseController().requestCheckPause();
             Tuple<int, int,
-                Tuple<String, String, String>,
-                Tuple<bool, String, String, String>,
-                Tuple<bool, String, String, String>,
-                Tuple<bool, String, String, String>,
-                Start> data =
+                   Tuple<String, String, String>,
+                   Tuple<Tuple<bool, String, String, String>,
+                   Tuple<bool, String, String, String>,
+                   Tuple<bool, String, String, String>,
+                   Tuple<bool, String, String, String>,
+                   Tuple<bool, String, String, String>,
+                   Tuple<bool, String, String, String>,
+                   Tuple<bool, String, String, String>>,
+                   Start> data =
                 (Tuple<int, int,
-                Tuple<String, String, String>,
-                Tuple<bool, String, String, String>,
-                Tuple<bool, String, String, String>,
-                Tuple<bool, String, String, String>,
-                Start>)o;
+                    Tuple<String, String, String>,
+                    Tuple<Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>>,
+                    Start>)o;
             int filterIdOfLastTab = data.Item1;
             int numberOfFilters = data.Item2;
             Tuple<String, String, String> filter1 = data.Item3;
-            Tuple<bool, String, String, String> filter2 = data.Item4;
-            Tuple<bool, String, String, String> filter3 = data.Item5;
-            Tuple<bool, String, String, String> filter4 = data.Item6;
-            Start start = data.Item7;
+            Tuple<bool, String, String, String> filter2 = data.Item4.Item1;
+            Tuple<bool, String, String, String> filter3 = data.Item4.Item2;
+            Tuple<bool, String, String, String> filter4 = data.Item4.Item3;
+            Tuple<bool, String, String, String> filter5 = data.Item4.Item4;
+            Tuple<bool, String, String, String> filter6 = data.Item4.Item5;
+            Tuple<bool, String, String, String> filter7 = data.Item4.Item6;
+            Tuple<bool, String, String, String> filter8 = data.Item4.Item7;
+            Start start = data.Item5;
             addFilter(filterIdOfLastTab, false, filter1.Item1, filter1.Item2, filter1.Item3);
             if (numberOfFilters >= 2)
             {
@@ -75,8 +88,53 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter4.Item2, filter4.Item3, filter4.Item4);
                 }
             }
+            if (numberOfFilters >= 5)
+            {
+                if (!filter5.Item1)
+                {
+                    addFilter(controller.GetDataBaseController().GetLastFilterId(), false, filter5.Item2, filter5.Item3, filter5.Item4);
+                }
+                else
+                {
+                    addFilter(filterIdOfLastTab, true, filter6.Item2, filter6.Item3, filter6.Item4);
+                }
+            }
+            if (numberOfFilters >= 6)
+            {
+                if (!filter6.Item1)
+                {
+                    addFilter(controller.GetDataBaseController().GetLastFilterId(), false, filter6.Item2, filter6.Item3, filter6.Item4);
+                }
+                else
+                {
+                    addFilter(filterIdOfLastTab, true, filter6.Item2, filter6.Item3, filter6.Item4);
+                }
+            }
+            if (numberOfFilters >= 7)
+            {
+                if (!filter7.Item1)
+                {
+                    addFilter(controller.GetDataBaseController().GetLastFilterId(), false, filter7.Item2, filter7.Item3, filter7.Item4);
+                }
+                else
+                {
+                    addFilter(filterIdOfLastTab, true, filter7.Item2, filter7.Item3, filter7.Item4);
+                }
+            }
+            if (numberOfFilters >= 8)
+            {
+                if (!filter8.Item1)
+                {
+                    addFilter(controller.GetDataBaseController().GetLastFilterId(), false, filter8.Item2, filter8.Item3, filter8.Item4);
+                }
+                else
+                {
+                    addFilter(filterIdOfLastTab, true, filter8.Item2, filter8.Item3, filter8.Item4);
+                }
+            }
             controller.GetDataBaseController().CleanTempTables(numberOfFilters);
             start.Invoke((Action)start.FinalizeFilterCreation);
+            controller.GetDataBaseController().resumeCheck();
         }
 
         static public void threadedLoadFromFile()
@@ -130,9 +188,13 @@ namespace AnalyseEtControleFEC.Controller
 
         public void addFilters(Tuple<int, int,
                     Tuple<String, String, String>,
+                    Tuple<Tuple<bool, String, String, String>,
                     Tuple<bool, String, String, String>,
                     Tuple<bool, String, String, String>,
                     Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>>,
                     Start> data)
         {
             Thread filterCreator = new Thread(threadedFilterCreation);

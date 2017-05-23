@@ -250,29 +250,6 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        private void addFilter(int lastTabId, bool isOr, String field, String condition, String value)
-        {
-            MainController controller = MainController.Get();
-            string finalWhereClause = "";
-            if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("MONTANT") ||
-                field.ToUpper().Contains("DEBIT") || field.ToUpper().Contains("CREDIT"))
-            {
-                finalWhereClause = controller.simpleFilterController.NumericOrDateSimpleFilter(field, condition, value);
-            }
-            else
-            {
-                finalWhereClause = controller.simpleFilterController.TextSimpleFilter(field, condition, value);
-            }
-            if (isOr)
-            {
-                controller.dataBaseController.AddFilterOr(finalWhereClause, lastTabId);
-            }
-            else
-            {
-                controller.dataBaseController.AddFilterAdd(finalWhereClause, lastTabId);
-            }
-        }
-
         private void reinitializeFilterForm()
         {
             andRadioButton1.Checked = false;
@@ -308,42 +285,139 @@ namespace AnalyseEtControleFEC
             {
                 filterIdOfLastTab = -1;
             }
-            addFilter(filterIdOfLastTab, false, field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
+            int numberOfFilters = 1;
+            Tuple<String, String, String> filter1 = new Tuple<string, string, string>(field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
+            Tuple<bool, String, String, String> filter2 = null;
+            Tuple<bool, String, String, String> filter3 = null;
+            Tuple<bool, String, String, String> filter4 = null;
+            Tuple<bool, String, String, String> filter5 = null;
+            Tuple<bool, String, String, String> filter6 = null;
+            Tuple<bool, String, String, String> filter7 = null;
+            Tuple<bool, String, String, String> filter8 = null;
             if (andRadioButton1.Checked)
             {
-                addFilter(controller.GetDataBaseController().GetLastFilterId(), false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+                numberOfFilters++;
+                filter2 = new Tuple<bool, string, string, string>(false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
             }
             else if (orRadioButton1.Checked)
             {
-                addFilter(filterIdOfLastTab, true, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+                numberOfFilters++;
+                filter2 = new Tuple<bool, string, string, string>(true, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
             }
-            if (andRadioButton2.Checked)
+            if(andRadioButton1.Checked || orRadioButton1.Checked)
             {
-                addFilter(controller.GetDataBaseController().GetLastFilterId(), false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                if (andRadioButton2.Checked)
+                {
+                    numberOfFilters++;
+                    filter3 = new Tuple<bool, string, string, string>(false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                }
+                else if (orRadioButton2.Checked)
+                {
+                    numberOfFilters++;
+                    filter3 = new Tuple<bool, string, string, string>(true, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                }
+                if (andRadioButton2.Checked || orRadioButton2.Checked)
+                {
+                    if (andRadioButton3.Checked)
+                    {
+                        numberOfFilters++;
+                        filter4 = new Tuple<bool, string, string, string>(false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                    }
+                    else if (orRadioButton3.Checked)
+                    {
+                        numberOfFilters++;
+                        filter4 = new Tuple<bool, string, string, string>(true, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                    }
+                    if (andRadioButton3.Checked || orRadioButton3.Checked)
+                    {
+                        if (andRadioButton4.Checked)
+                        {
+                            numberOfFilters++;
+                            filter5 = new Tuple<bool, string, string, string>(false, field5ComboBox.SelectedItem.ToString(), condition5ComboBox.SelectedItem.ToString(), value5TextBox.Text);
+                        }
+                        else if (orRadioButton4.Checked)
+                        {
+                            numberOfFilters++;
+                            filter5 = new Tuple<bool, string, string, string>(true, field5ComboBox.SelectedItem.ToString(), condition5ComboBox.SelectedItem.ToString(), value5TextBox.Text);
+                        }
+                        if (andRadioButton4.Checked || orRadioButton4.Checked)
+                        {
+                            if (andRadioButton5.Checked)
+                            {
+                                numberOfFilters++;
+                                filter6 = new Tuple<bool, string, string, string>(false, field6ComboBox.SelectedItem.ToString(), condition6ComboBox.SelectedItem.ToString(), value6TextBox.Text);
+                            }
+                            else if (orRadioButton5.Checked)
+                            {
+                                numberOfFilters++;
+                                filter6 = new Tuple<bool, string, string, string>(true, field6ComboBox.SelectedItem.ToString(), condition6ComboBox.SelectedItem.ToString(), value6TextBox.Text);
+                            }
+                            if (andRadioButton5.Checked || orRadioButton5.Checked)
+                            {
+                                if (andRadioButton6.Checked)
+                                {
+                                    numberOfFilters++;
+                                    filter7 = new Tuple<bool, string, string, string>(false, field7ComboBox.SelectedItem.ToString(), condition7ComboBox.SelectedItem.ToString(), value7TextBox.Text);
+                                }
+                                else if (orRadioButton6.Checked)
+                                {
+                                    numberOfFilters++;
+                                    filter7 = new Tuple<bool, string, string, string>(true, field7ComboBox.SelectedItem.ToString(), condition7ComboBox.SelectedItem.ToString(), value7TextBox.Text);
+                                }
+                                if (andRadioButton6.Checked || orRadioButton6.Checked)
+                                {
+                                    if (andRadioButton7.Checked)
+                                    {
+                                        numberOfFilters++;
+                                        filter8 = new Tuple<bool, string, string, string>(false, field8ComboBox.SelectedItem.ToString(), condition8ComboBox.SelectedItem.ToString(), value8TextBox.Text);
+                                    }
+                                    else if (orRadioButton7.Checked)
+                                    {
+                                        numberOfFilters++;
+                                        filter8 = new Tuple<bool, string, string, string>(true, field8ComboBox.SelectedItem.ToString(), condition8ComboBox.SelectedItem.ToString(), value8TextBox.Text);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            else if (orRadioButton2.Checked)
-            {
-                addFilter(filterIdOfLastTab, true, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
-            }
-            if (andRadioButton3.Checked)
-            {
-                addFilter(controller.GetDataBaseController().GetLastFilterId(), false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
-            }
-            else if (orRadioButton3.Checked)
-            {
-                addFilter(filterIdOfLastTab, true, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
-            }
-            reinitializeFilterForm();
-            string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
-            TabPage myTabPage = new TabPage(title);
-            DataGridViewBDD newDataGridView = new DataGridViewBDD(controller.GetDataBaseController().GetLastFilterId());
-            newDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
-            newDataGridView.Size = dataGridView1.Size;
-            MainController.Get().OpenFilter(newDataGridView, newDataGridView.numGridView);
-            myTabPage.Controls.Add(newDataGridView);
-            tabControl1.TabPages.Add(myTabPage);
-            tabControl1.SelectedTab = myTabPage;
+            andRadioButton1.Checked = false;
+            orRadioButton1.Checked = false;
+            andRadioButton2.Checked = false;
+            orRadioButton2.Checked = false;
+            andRadioButton3.Checked = false;
+            orRadioButton3.Checked = false;
+            field1ComboBox.Text = "";
+            condition1ComboBox.Text = "";
+            value1TextBox.Text = "";
+            field2ComboBox.Text = "";
+            condition2ComboBox.Text = "";
+            value2TextBox.Text = "";
+            field3ComboBox.Text = "";
+            condition3ComboBox.Text = "";
+            value3TextBox.Text = "";
+            field4ComboBox.Text = "";
+            condition4ComboBox.Text = "";
+            value4TextBox.Text = "";
             panel1.Visible = false;
+            controller.addFilters(new
+                Tuple<int, int,
+                    Tuple<String, String, String>,
+                    Tuple<Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>>,
+                    Start>(filterIdOfLastTab, numberOfFilters, filter1, new Tuple<Tuple<bool, String, String, String>,
+                        Tuple<bool, String, String, String>,
+                        Tuple<bool, String, String, String>,
+                        Tuple<bool, String, String, String>,
+                        Tuple<bool, String, String, String>,
+                        Tuple<bool, String, String, String>,
+                        Tuple<bool, String, String, String>>(filter2, filter3, filter4, filter5, filter6, filter7, filter8), this));
         }
 
         /*hide the panel1*/

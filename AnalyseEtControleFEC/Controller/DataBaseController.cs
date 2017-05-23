@@ -84,6 +84,27 @@ namespace AnalyseEtControleFEC.Controller
         MainController mainController;
         String fileName;
         private int FilterNumber;
+        private bool requestedCheckPause;
+
+        public void requestCheckPause()
+        {
+            requestedCheckPause = true;
+        }
+
+        public void resumeCheck()
+        {
+            requestedCheckPause = false;
+        }
+
+        private void pauseCheckIfAsked()
+        {
+            checkDbConnection.Close();
+            while (requestedCheckPause)
+            {
+                Thread.Sleep(2000);
+            }
+            checkDbConnection.Open();
+        }
 
         /// <summary>
         /// Constructor for DataBaseController
@@ -93,6 +114,7 @@ namespace AnalyseEtControleFEC.Controller
         public DataBaseController(String fileName, MainController mainController)
         {
             this.fileName = fileName;
+            requestedCheckPause = false;
         }
 
         /// <summary>
@@ -487,6 +509,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             bool boolien = false;
             List<int> Line = new List<int>();
+            pauseCheckIfAsked();
             SQLiteDataReader reader = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='6' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader reader1 = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='7' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
 
@@ -524,6 +547,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             bool boolien = false;
             List<int> Line = new List<int>();
+            pauseCheckIfAsked();
             SQLiteDataReader reader = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='13' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader reader1 = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='14' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
 
@@ -561,6 +585,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             bool boolien = false;
             List<int> Line = new List<int>();
+            pauseCheckIfAsked();
             SQLiteDataReader reader = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='16' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader reader1 = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='17' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
 
@@ -601,6 +626,7 @@ namespace AnalyseEtControleFEC.Controller
             int pieceDate = 0;
             int validDate = 0;
             // dbConnection.Open();
+            pauseCheckIfAsked();
             SQLiteDataReader readerPieceDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='9' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerValidDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='15' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
 
@@ -651,6 +677,7 @@ namespace AnalyseEtControleFEC.Controller
             int PieceDate = 0;
             int ecritureDate = 0;
             // dbConnection.Open();
+            pauseCheckIfAsked();
             SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='3' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerPieceDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='9' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerEcritureDate.Read() && readerPieceDate.Read())
@@ -698,6 +725,7 @@ namespace AnalyseEtControleFEC.Controller
             List<int> Line = new List<int>();
             int ecritureDate = 0;
             int validDate = 0;
+            pauseCheckIfAsked();
             SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='3' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerValidDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='15' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerEcritureDate.Read() && readerValidDate.Read())
@@ -744,6 +772,7 @@ namespace AnalyseEtControleFEC.Controller
             List<int> Line = new List<int>();
             int PieceDate = 0;
             int DateLet = 0;
+            pauseCheckIfAsked();
             SQLiteDataReader readerPieceDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='9' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerDateLet = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='14' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerPieceDate.Read() && readerDateLet.Read())
@@ -792,6 +821,7 @@ namespace AnalyseEtControleFEC.Controller
             List<int> Line = new List<int>();
             int ecritureDate = 0;
             int DateLet = 0;
+            pauseCheckIfAsked();
             // dbConnection.Open();
             SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='3' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerDateLet = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='14' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
@@ -840,6 +870,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
+            pauseCheckIfAsked();
             List<String> ListTemp = new List<string>();
             SQLiteDataReader readerEcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerEcritureNum.Read())
@@ -873,6 +904,7 @@ namespace AnalyseEtControleFEC.Controller
             double debit = 0.0;
             double credit = 0.0;
             List<String> ListTemp = new List<string>();
+            pauseCheckIfAsked();
             SQLiteDataReader readerJournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerJournalCode.Read())
             {
@@ -905,6 +937,7 @@ namespace AnalyseEtControleFEC.Controller
             double debit = 0.0;
             double credit = 0.0;
             bool check = false;
+            pauseCheckIfAsked();
             SQLiteDataReader readerDebit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' ", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerCredit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' ", checkDbConnection).ExecuteReader();
             while (readerDebit.Read() && readerCredit.Read())
@@ -931,6 +964,7 @@ namespace AnalyseEtControleFEC.Controller
             double debit = 0.0;
             double credit = 0.0;
             bool check = false;
+            pauseCheckIfAsked();
             SQLiteDataReader readerMontant = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='11' ", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerSens = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='12' ", checkDbConnection).ExecuteReader();
             while (readerMontant.Read() && readerSens.Read())
@@ -967,6 +1001,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
+            pauseCheckIfAsked();
             List<String> ListTemp = new List<string>();
             SQLiteDataReader readerJournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerJournalCode.Read())
@@ -1011,6 +1046,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
+            pauseCheckIfAsked();
             List<String> ListTemp = new List<string>();
             SQLiteDataReader readerEcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerEcritureNum.Read())
@@ -1055,6 +1091,7 @@ namespace AnalyseEtControleFEC.Controller
         /// <returns>True if the file is a Montant-Sens file</returns>
         public bool IsMontantSens()
         {
+            pauseCheckIfAsked();
             SQLiteDataReader readerColumnName = new SQLiteCommand("SELECT DISTINCT Name FROM Column", checkDbConnection).ExecuteReader();
             while (readerColumnName.Read())
             {
@@ -1074,6 +1111,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
+            pauseCheckIfAsked();
             List<String> ListTemp = new List<string>();
             SQLiteDataReader readerJournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerJournalCode.Read())
@@ -1160,6 +1198,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
+            pauseCheckIfAsked();
             List<String> ListTemp = new List<string>();
             SQLiteDataReader readerJournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerJournalCode.Read())
@@ -1224,6 +1263,7 @@ namespace AnalyseEtControleFEC.Controller
         /// <returns>The list of JournalCode and Month where there are errors</returns>
         public List<String> IsDateUniqueForEcritureNum()
         {
+            pauseCheckIfAsked();
             List<String> listTemp = new List<string>();
             SQLiteDataReader readerEcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             while (readerEcritureNum.Read())
