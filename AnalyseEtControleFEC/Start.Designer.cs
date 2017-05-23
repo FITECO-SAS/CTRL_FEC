@@ -74,14 +74,6 @@ namespace AnalyseEtControleFEC
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel23 = new System.Windows.Forms.Panel();
-            this.button18 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panelLine8 = new System.Windows.Forms.Panel();
             this.buttonUp8 = new System.Windows.Forms.Button();
             this.panel29 = new System.Windows.Forms.Panel();
@@ -156,6 +148,14 @@ namespace AnalyseEtControleFEC
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel23 = new System.Windows.Forms.Panel();
+            this.button18 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -231,8 +231,6 @@ namespace AnalyseEtControleFEC
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel23.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panelLine8.SuspendLayout();
             this.panel29.SuspendLayout();
             this.panelLine7.SuspendLayout();
@@ -248,6 +246,8 @@ namespace AnalyseEtControleFEC
             this.panelLine2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panelLine1.SuspendLayout();
+            this.panel23.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -484,7 +484,7 @@ namespace AnalyseEtControleFEC
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(1326, 784);
+            this.dataGridView1.Size = new System.Drawing.Size(1326, 785);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.VirtualMode = true;
             this.dataGridView1.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.dataGridView1_CellValueNeeded);
@@ -540,86 +540,6 @@ namespace AnalyseEtControleFEC
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(750, 566);
             this.panel1.TabIndex = 5;
-            // 
-            // panel23
-            // 
-            this.panel23.BackColor = System.Drawing.SystemColors.Window;
-            this.panel23.Controls.Add(this.button18);
-            this.panel23.Controls.Add(this.button17);
-            this.panel23.Controls.Add(this.textBox11);
-            this.panel23.Location = new System.Drawing.Point(0, 100);
-            this.panel23.Name = "panel23";
-            this.panel23.Size = new System.Drawing.Size(269, 187);
-            this.panel23.TabIndex = 10;
-            // 
-            // button18
-            // 
-            this.button18.Location = new System.Drawing.Point(120, 138);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(114, 23);
-            this.button18.TabIndex = 2;
-            this.button18.Text = "Cacher";
-            this.button18.UseVisualStyleBackColor = true;
-            this.button18.Click += new System.EventHandler(this.button18_Click);
-            // 
-            // button17
-            // 
-            this.button17.Enabled = false;
-            this.button17.Location = new System.Drawing.Point(120, 103);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(114, 23);
-            this.button17.TabIndex = 1;
-            this.button17.Text = "Selectionner";
-            this.button17.UseVisualStyleBackColor = true;
-            this.button17.Click += new System.EventHandler(this.button17_Click);
-            // 
-            // textBox11
-            // 
-            this.textBox11.Location = new System.Drawing.Point(26, 20);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(208, 25);
-            this.textBox11.TabIndex = 0;
-            this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Window;
-            this.panel2.Controls.Add(this.button5);
-            this.panel2.Controls.Add(this.button4);
-            this.panel2.Controls.Add(this.textBox1);
-            this.panel2.Location = new System.Drawing.Point(0, 100);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(269, 188);
-            this.panel2.TabIndex = 9;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(113, 135);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(121, 23);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "Cacher";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button4
-            // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(113, 106);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(121, 23);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "Selectionner";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(26, 31);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(208, 25);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // panelLine8
             // 
@@ -1491,17 +1411,97 @@ namespace AnalyseEtControleFEC
             this.label1.TabIndex = 0;
             this.label1.Text = "Champ";
             // 
+            // panel23
+            // 
+            this.panel23.BackColor = System.Drawing.SystemColors.Window;
+            this.panel23.Controls.Add(this.button18);
+            this.panel23.Controls.Add(this.button17);
+            this.panel23.Controls.Add(this.textBox11);
+            this.panel23.Location = new System.Drawing.Point(0, 100);
+            this.panel23.Name = "panel23";
+            this.panel23.Size = new System.Drawing.Size(269, 187);
+            this.panel23.TabIndex = 10;
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(120, 138);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(114, 23);
+            this.button18.TabIndex = 2;
+            this.button18.Text = "Cacher";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
+            // button17
+            // 
+            this.button17.Enabled = false;
+            this.button17.Location = new System.Drawing.Point(120, 103);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(114, 23);
+            this.button17.TabIndex = 1;
+            this.button17.Text = "Selectionner";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // textBox11
+            // 
+            this.textBox11.Location = new System.Drawing.Point(26, 20);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(208, 25);
+            this.textBox11.TabIndex = 0;
+            this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Window;
+            this.panel2.Controls.Add(this.button5);
+            this.panel2.Controls.Add(this.button4);
+            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Location = new System.Drawing.Point(0, 100);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(269, 188);
+            this.panel2.TabIndex = 9;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(113, 135);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(121, 23);
+            this.button5.TabIndex = 2;
+            this.button5.Text = "Cacher";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button4
+            // 
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(113, 106);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(121, 23);
+            this.button4.TabIndex = 1;
+            this.button4.Text = "Selectionner";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(26, 31);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(208, 25);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabControl1.ItemSize = new System.Drawing.Size(100, 21);
+            this.tabControl1.ItemSize = new System.Drawing.Size(100, 20);
             this.tabControl1.Location = new System.Drawing.Point(339, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1340, 819);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 6;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
             this.tabControl1.DoubleClick += new System.EventHandler(this.tabControl1_DoubleClick);
@@ -1510,10 +1510,10 @@ namespace AnalyseEtControleFEC
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1332, 790);
+            this.tabPage1.Size = new System.Drawing.Size(1332, 791);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -2249,10 +2249,6 @@ namespace AnalyseEtControleFEC
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel23.ResumeLayout(false);
-            this.panel23.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panelLine8.ResumeLayout(false);
             this.panelLine8.PerformLayout();
             this.panel29.ResumeLayout(false);
@@ -2283,6 +2279,10 @@ namespace AnalyseEtControleFEC
             this.panel3.PerformLayout();
             this.panelLine1.ResumeLayout(false);
             this.panelLine1.PerformLayout();
+            this.panel23.ResumeLayout(false);
+            this.panel23.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);

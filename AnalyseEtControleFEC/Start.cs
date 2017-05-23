@@ -1200,7 +1200,7 @@ namespace AnalyseEtControleFEC
 
         private void buttonDown1_Click(object sender, EventArgs e)
         {
-            if (panelLine2.Visible == true)
+            if (panelLine2.Visible == true && (value1TextBox.Text != "" && field1ComboBox.Text != "" && condition1ComboBox.Text != "") && (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)))
             {
                 String text,text1,text2;
                 text = value1TextBox.Text;
@@ -1221,7 +1221,7 @@ namespace AnalyseEtControleFEC
 
         private void buttonDown2_Click(object sender, EventArgs e)
         {
-            if (panelLine3.Visible == true)
+            if (panelLine3.Visible == true && (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)) && (value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true)))
             {
                 String text, text1, text2;
                 text = value2TextBox.Text;
@@ -1253,7 +1253,7 @@ namespace AnalyseEtControleFEC
 
         private void buttonDown3_Click(object sender, EventArgs e)
         {
-            if (panelLine4.Visible == true)
+            if (panelLine4.Visible == true && (value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true)) && (value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)))
             {
                 String text, text1, text2;
                 text = value3TextBox.Text;
@@ -1281,7 +1281,7 @@ namespace AnalyseEtControleFEC
 
         private void buttonDown4_Click(object sender, EventArgs e)
         {
-            if (panelLine5.Visible == true)
+            if (panelLine5.Visible == true && (value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)) && (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)))
             {
                 String text, text1, text2;
                 text = value4TextBox.Text;
@@ -1309,7 +1309,7 @@ namespace AnalyseEtControleFEC
 
         private void buttonDown5_Click(object sender, EventArgs e)
         {
-            if (panelLine6.Visible == true)
+            if (panelLine6.Visible == true && (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)) && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)))
             {
                 String text, text1, text2;
                 text = value5TextBox.Text;
@@ -1337,8 +1337,8 @@ namespace AnalyseEtControleFEC
 
         private void buttonDown6_Click(object sender, EventArgs e)
         {
-            if (panelLine7.Visible == true)
-            {
+            if (panelLine7.Visible == true && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)) && (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)))
+                {
                 String text, text1, text2;
                 text = value6TextBox.Text;
                 value6TextBox.Text = value7TextBox.Text;
@@ -1366,7 +1366,7 @@ namespace AnalyseEtControleFEC
 
         private void buttonDown7_Click(object sender, EventArgs e)
         {
-            if (panelLine8.Visible == true)
+            if (panelLine8.Visible == true && (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)) && (value8TextBox.Text != "" && field8ComboBox.Text != "" && condition8ComboBox.Text != "" && (andRadioButton7.Checked == true || orRadioButton7.Checked == true)))
             {
                 String text, text1, text2;
                 text = value7TextBox.Text;
@@ -1394,173 +1394,198 @@ namespace AnalyseEtControleFEC
 
         private void buttonUp2_Click(object sender, EventArgs e)
         {
-            String text, text1, text2;
-            text = value1TextBox.Text;
-            value1TextBox.Text = value2TextBox.Text;
-            value2TextBox.Text = text;
+            if ((value1TextBox.Text != "" && field1ComboBox.Text != "" && condition1ComboBox.Text != "") && (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)))
+            {
+                String text, text1, text2;
+                text = value1TextBox.Text;
+                value1TextBox.Text = value2TextBox.Text;
+                value2TextBox.Text = text;
 
-            text1 = condition1ComboBox.Text;
-            text2 = condition2ComboBox.Text;
+                text1 = condition1ComboBox.Text;
+                text2 = condition2ComboBox.Text;
 
-            text = field1ComboBox.Text;
-            field1ComboBox.Text = field2ComboBox.Text;
-            field2ComboBox.Text = text;
+                text = field1ComboBox.Text;
+                field1ComboBox.Text = field2ComboBox.Text;
+                field2ComboBox.Text = text;
 
-            condition1ComboBox.Text = text2;
-            condition2ComboBox.Text = text1;
+                condition1ComboBox.Text = text2;
+                condition2ComboBox.Text = text1;
+            }
         }
 
         private void buttonUp3_Click(object sender, EventArgs e)
         {
-            String text, text1, text2;
-            text = value2TextBox.Text;
-            value2TextBox.Text = value3TextBox.Text;
-            value3TextBox.Text = text;
-
-            text1 = condition2ComboBox.Text;
-            text2 = condition3ComboBox.Text;
-
-            text = field2ComboBox.Text;
-            field2ComboBox.Text = field3ComboBox.Text;
-            field3ComboBox.Text = text;
-
-            condition2ComboBox.Text = text2;
-            condition3ComboBox.Text = text1;
-            if (andRadioButton1.Checked == true && orRadioButton2.Checked == true)
+            if ((value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)) && (value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true)))
             {
-                andRadioButton2.Checked = true;
-                orRadioButton1.Checked = true;
-            }
-            else if (andRadioButton2.Checked == true && orRadioButton1.Checked == true)
-            {
-                andRadioButton1.Checked = true;
-                orRadioButton2.Checked = true;
+                String text, text1, text2;
+                text = value2TextBox.Text;
+                value2TextBox.Text = value3TextBox.Text;
+                value3TextBox.Text = text;
+
+                text1 = condition2ComboBox.Text;
+                text2 = condition3ComboBox.Text;
+
+                text = field2ComboBox.Text;
+                field2ComboBox.Text = field3ComboBox.Text;
+                field3ComboBox.Text = text;
+
+                condition2ComboBox.Text = text2;
+                condition3ComboBox.Text = text1;
+                if (andRadioButton1.Checked == true && orRadioButton2.Checked == true)
+                {
+                    andRadioButton2.Checked = true;
+                    orRadioButton1.Checked = true;
+                }
+                else if (andRadioButton2.Checked == true && orRadioButton1.Checked == true)
+                {
+                    andRadioButton1.Checked = true;
+                    orRadioButton2.Checked = true;
+                }
             }
         }
 
         private void buttonUp4_Click(object sender, EventArgs e)
         {
-            String text, text1, text2;
-            text = value3TextBox.Text;
-            value3TextBox.Text = value4TextBox.Text;
-            value4TextBox.Text = text;
-            text1 = condition3ComboBox.Text;
-            text2 = condition4ComboBox.Text;
-            text = field3ComboBox.Text;
-            field3ComboBox.Text = field4ComboBox.Text;
-            field4ComboBox.Text = text;
-            condition3ComboBox.Text = text2;
-            condition4ComboBox.Text = text1;
-            if (andRadioButton2.Checked == true && orRadioButton3.Checked == true)
+            if ((value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true)) && (value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)))
             {
-                andRadioButton3.Checked = true;
-                orRadioButton2.Checked = true;
-            }
-            else if (andRadioButton3.Checked == true && orRadioButton2.Checked == true)
-            {
-                andRadioButton2.Checked = true;
-                orRadioButton3.Checked = true;
-            }
+                String text, text1, text2;
+                text = value3TextBox.Text;
+                value3TextBox.Text = value4TextBox.Text;
+                value4TextBox.Text = text;
+                text1 = condition3ComboBox.Text;
+                text2 = condition4ComboBox.Text;
+                text = field3ComboBox.Text;
+                field3ComboBox.Text = field4ComboBox.Text;
+                field4ComboBox.Text = text;
+                condition3ComboBox.Text = text2;
+                condition4ComboBox.Text = text1;
+                if (andRadioButton2.Checked == true && orRadioButton3.Checked == true)
+                {
+                    andRadioButton3.Checked = true;
+                    orRadioButton2.Checked = true;
+                }
+                else if (andRadioButton3.Checked == true && orRadioButton2.Checked == true)
+                {
+                    andRadioButton2.Checked = true;
+                    orRadioButton3.Checked = true;
+                }
+            }   
         }
 
         private void buttonUp5_Click(object sender, EventArgs e)
         {
-            String text, text1, text2;
-            text = value4TextBox.Text;
-            value4TextBox.Text = value5TextBox.Text;
-            value5TextBox.Text = text;
-            text1 = condition4ComboBox.Text;
-            text2 = condition5ComboBox.Text;
-            text = field4ComboBox.Text;
-            field4ComboBox.Text = field5ComboBox.Text;
-            field5ComboBox.Text = text;
-            condition4ComboBox.Text = text2;
-            condition5ComboBox.Text = text1;
-            if (andRadioButton3.Checked == true && orRadioButton4.Checked == true)
+            if((value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)) && (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)))
             {
-                andRadioButton4.Checked = true;
-                orRadioButton3.Checked = true;
+                String text, text1, text2;
+                text = value4TextBox.Text;
+                value4TextBox.Text = value5TextBox.Text;
+                value5TextBox.Text = text;
+                text1 = condition4ComboBox.Text;
+                text2 = condition5ComboBox.Text;
+                text = field4ComboBox.Text;
+                field4ComboBox.Text = field5ComboBox.Text;
+                field5ComboBox.Text = text;
+                condition4ComboBox.Text = text2;
+                condition5ComboBox.Text = text1;
+                if (andRadioButton3.Checked == true && orRadioButton4.Checked == true)
+                {
+                    andRadioButton4.Checked = true;
+                    orRadioButton3.Checked = true;
+                }
+                else if (andRadioButton4.Checked == true && orRadioButton3.Checked == true)
+                {
+                    andRadioButton3.Checked = true;
+                    orRadioButton4.Checked = true;
+                }
             }
-            else if (andRadioButton4.Checked == true && orRadioButton3.Checked == true)
-            {
-                andRadioButton3.Checked = true;
-                orRadioButton4.Checked = true;
-            }
+            
         }
 
         private void buttonUp6_Click(object sender, EventArgs e)
         {
-            String text, text1, text2;
-            text = value5TextBox.Text;
-            value5TextBox.Text = value6TextBox.Text;
-            value6TextBox.Text = text;
-            text1 = condition5ComboBox.Text;
-            text2 = condition6ComboBox.Text;
-            text = field5ComboBox.Text;
-            field5ComboBox.Text = field6ComboBox.Text;
-            field6ComboBox.Text = text;
-            condition5ComboBox.Text = text2;
-            condition6ComboBox.Text = text1;
-            if (andRadioButton4.Checked == true && orRadioButton5.Checked == true)
+            if((value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)) && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)))
             {
-                andRadioButton5.Checked = true;
-                orRadioButton4.Checked = true;
+                String text, text1, text2;
+                text = value5TextBox.Text;
+                value5TextBox.Text = value6TextBox.Text;
+                value6TextBox.Text = text;
+                text1 = condition5ComboBox.Text;
+                text2 = condition6ComboBox.Text;
+                text = field5ComboBox.Text;
+                field5ComboBox.Text = field6ComboBox.Text;
+                field6ComboBox.Text = text;
+                condition5ComboBox.Text = text2;
+                condition6ComboBox.Text = text1;
+                if (andRadioButton4.Checked == true && orRadioButton5.Checked == true)
+                {
+                    andRadioButton5.Checked = true;
+                    orRadioButton4.Checked = true;
+                }
+                else if (andRadioButton5.Checked == true && orRadioButton4.Checked == true)
+                {
+                    andRadioButton4.Checked = true;
+                    orRadioButton5.Checked = true;
+                }
             }
-            else if (andRadioButton5.Checked == true && orRadioButton4.Checked == true)
-            {
-                andRadioButton4.Checked = true;
-                orRadioButton5.Checked = true;
-            }
+                
         }
 
         private void buttonUp7_Click(object sender, EventArgs e)
         {
-            String text, text1, text2;
-            text = value6TextBox.Text;
-            value6TextBox.Text = value7TextBox.Text;
-            value7TextBox.Text = text;
-            text1 = condition6ComboBox.Text;
-            text2 = condition7ComboBox.Text;
-            text = field6ComboBox.Text;
-            field6ComboBox.Text = field7ComboBox.Text;
-            field7ComboBox.Text = text;
-            condition6ComboBox.Text = text2;
-            condition7ComboBox.Text = text1;
-            if (andRadioButton5.Checked == true && orRadioButton6.Checked == true)
+            if ((value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)) && (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)))
             {
-                andRadioButton6.Checked = true;
-                orRadioButton5.Checked = true;
+                String text, text1, text2;
+                text = value6TextBox.Text;
+                value6TextBox.Text = value7TextBox.Text;
+                value7TextBox.Text = text;
+                text1 = condition6ComboBox.Text;
+                text2 = condition7ComboBox.Text;
+                text = field6ComboBox.Text;
+                field6ComboBox.Text = field7ComboBox.Text;
+                field7ComboBox.Text = text;
+                condition6ComboBox.Text = text2;
+                condition7ComboBox.Text = text1;
+                if (andRadioButton5.Checked == true && orRadioButton6.Checked == true)
+                {
+                    andRadioButton6.Checked = true;
+                    orRadioButton5.Checked = true;
+                }
+                else if (andRadioButton6.Checked == true && orRadioButton5.Checked == true)
+                {
+                    andRadioButton5.Checked = true;
+                    orRadioButton6.Checked = true;
+                }
             }
-            else if (andRadioButton6.Checked == true && orRadioButton5.Checked == true)
-            {
-                andRadioButton5.Checked = true;
-                orRadioButton6.Checked = true;
-            }
+                
         }
 
         private void buttonUp8_Click(object sender, EventArgs e)
         {
-            String text, text1, text2;
-            text = value7TextBox.Text;
-            value7TextBox.Text = value8TextBox.Text;
-            value8TextBox.Text = text;
-            text1 = condition7ComboBox.Text;
-            text2 = condition8ComboBox.Text;
-            text = field7ComboBox.Text;
-            field7ComboBox.Text = field8ComboBox.Text;
-            field8ComboBox.Text = text;
-            condition7ComboBox.Text = text2;
-            condition8ComboBox.Text = text1;
-            if (andRadioButton6.Checked == true && orRadioButton7.Checked == true)
+            if ((value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)) && (value8TextBox.Text != "" && field8ComboBox.Text != "" && condition8ComboBox.Text != "" && (andRadioButton7.Checked == true || orRadioButton7.Checked == true)))
             {
-                andRadioButton7.Checked = true;
-                orRadioButton6.Checked = true;
+                String text, text1, text2;
+                text = value7TextBox.Text;
+                value7TextBox.Text = value8TextBox.Text;
+                value8TextBox.Text = text;
+                text1 = condition7ComboBox.Text;
+                text2 = condition8ComboBox.Text;
+                text = field7ComboBox.Text;
+                field7ComboBox.Text = field8ComboBox.Text;
+                field8ComboBox.Text = text;
+                condition7ComboBox.Text = text2;
+                condition8ComboBox.Text = text1;
+                if (andRadioButton6.Checked == true && orRadioButton7.Checked == true)
+                {
+                    andRadioButton7.Checked = true;
+                    orRadioButton6.Checked = true;
+                }
+                else if (andRadioButton7.Checked == true && orRadioButton6.Checked == true)
+                {
+                    andRadioButton6.Checked = true;
+                    orRadioButton7.Checked = true;
+                }
             }
-            else if (andRadioButton7.Checked == true && orRadioButton6.Checked == true)
-            {
-                andRadioButton6.Checked = true;
-                orRadioButton7.Checked = true;
-            } 
+                
         }
 
         private int ShowValidLineSimpleFilter()
