@@ -16,6 +16,66 @@ namespace AnalyseEtControleFEC.Controller
         //Static Thread stuff
         static String threadPath;
         static String threadFileName;
+
+        static public void threadedFilterCreation(object o)
+        {
+            MainController controller = MainController.get();
+            Tuple<int, int,
+                Tuple<String, String, String>,
+                Tuple<bool, String, String, String>,
+                Tuple<bool, String, String, String>,
+                Tuple<bool, String, String, String>,
+                Start> data =
+                (Tuple<int, int,
+                Tuple<String, String, String>,
+                Tuple<bool, String, String, String>,
+                Tuple<bool, String, String, String>,
+                Tuple<bool, String, String, String>,
+                Start>)o;
+            int filterIdOfLastTab = data.Item1;
+            int numberOfFilters = data.Item2;
+            Tuple<String, String, String> filter1 = data.Item3;
+            Tuple<bool, String, String, String> filter2 = data.Item4;
+            Tuple<bool, String, String, String> filter3 = data.Item5;
+            Tuple<bool, String, String, String> filter4 = data.Item6;
+            Start start = data.Item7;
+            addFilter(filterIdOfLastTab, false, filter1.Item1, filter1.Item2, filter1.Item3);
+            if (numberOfFilters >= 2)
+            {
+                if (!filter2.Item1)
+                {
+                    addFilter(controller.getDataBaseController().getLastFilterId(), false, filter2.Item2, filter2.Item3, filter2.Item4);
+                }
+                else
+                {
+                    addFilter(filterIdOfLastTab, true, filter2.Item2, filter2.Item3, filter2.Item4);
+                }
+            }
+            if (numberOfFilters >= 3)
+            {
+                if (!filter3.Item1)
+                {
+                    addFilter(controller.getDataBaseController().getLastFilterId(), false, filter3.Item2, filter3.Item3, filter3.Item4);
+                }
+                else
+                {
+                    addFilter(filterIdOfLastTab, true, filter3.Item2, filter3.Item3, filter3.Item4);
+                }
+            }
+            if (numberOfFilters >= 4)
+            {
+                if (!filter4.Item1)
+                {
+                    addFilter(controller.getDataBaseController().getLastFilterId(), false, filter4.Item2, filter4.Item3, filter4.Item4);
+                }
+                else
+                {
+                    addFilter(filterIdOfLastTab, true, filter4.Item2, filter4.Item3, filter4.Item4);
+                }
+            }
+            start.Invoke((Action)start.FinalizeFilterCreation);
+        }
+
         static public void threadedLoadFromFile()
         {
 
@@ -39,6 +99,40 @@ namespace AnalyseEtControleFEC.Controller
             logger.check_Is_Montant_Sens();
             logger.check_Is_Date_Unique_For_EcritureNum();
             //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+        }
+
+        private static void addFilter(int lastTabId, bool isOr, String field, String condition, String value)
+        {
+            MainController controller = MainController.get();
+            string finalWhereClause = "";
+            if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("MONTANT") ||
+                field.ToUpper().Contains("DEBIT") || field.ToUpper().Contains("CREDIT"))
+            {
+                finalWhereClause = controller.simpleFilterController.NumericOrDateSimpleFilter(field, condition, value);
+            }
+            else
+            {
+                finalWhereClause = controller.simpleFilterController.TextSimpleFilter(field, condition, value);
+            }
+            if (isOr)
+            {
+                controller.dataBaseController.AddFilterOr(finalWhereClause, lastTabId);
+            }
+            else
+            {
+                controller.dataBaseController.AddFilterAdd(finalWhereClause, lastTabId);
+            }
+        }
+
+        public void addFilters(Tuple<int, int,
+                    Tuple<String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Start> data)
+        {
+            Thread filterCreator = new Thread(threadedFilterCreation);
+            filterCreator.Start(data);
         }
 
         //Constants

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -238,31 +239,80 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        private void addFilter(int lastTabId, bool isOr, String field, String condition, String value)
+        public void FinalizeFilterCreation()
         {
             MainController controller = MainController.get();
-            string finalWhereClause = "";
-            if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("MONTANT") ||
-                field.ToUpper().Contains("DEBIT") || field.ToUpper().Contains("CREDIT"))
-            {
-                finalWhereClause = controller.simpleFilterController.NumericOrDateSimpleFilter(field, condition, value);
-            }
-            else
-            {
-                finalWhereClause = controller.simpleFilterController.TextSimpleFilter(field, condition, value);
-            }
-            if (isOr)
-            {
-                controller.dataBaseController.AddFilterOr(finalWhereClause, lastTabId);
-            }
-            else
-            {
-                controller.dataBaseController.AddFilterAdd(finalWhereClause, lastTabId);
-            }
+            string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
+            TabPage myTabPage = new TabPage(title);
+            DataGridViewBDD newDataGridView = new DataGridViewBDD(controller.getDataBaseController().getLastFilterId());
+            newDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
+            newDataGridView.Size = dataGridView1.Size;
+            MainController.get().openFilter(newDataGridView, newDataGridView.numGridView);
+            myTabPage.Controls.Add(newDataGridView);
+            tabControl1.TabPages.Add(myTabPage);
+            tabControl1.SelectedTab = myTabPage;
         }
 
-        private void reinitializeFilterForm()
+        private void button1_Click(object sender, EventArgs e)
         {
+            MainController controller = MainController.get();
+            DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[1];
+            int filterIdOfLastTab;
+            if (lastTabView is DataGridViewBDD)
+            {
+                filterIdOfLastTab = ((DataGridViewBDD)tabControl1.SelectedTab.Controls[0]).numGridView;
+            }
+            else
+            {
+                filterIdOfLastTab = -1;
+            }
+            int numberOfFilters = 1;
+            Tuple<String, String, String> filter1 = new Tuple<string, string, string>(field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
+            Tuple<bool, String, String, String> filter2 = null;
+            Tuple<bool, String, String, String> filter3 = null;
+            Tuple<bool, String, String, String> filter4 = null;
+            if (andRadioButton1.Checked)
+            {
+                numberOfFilters++;
+                filter2 = new Tuple<bool, string, string, string>(false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+                //addFilter(controller.getDataBaseController().getLastFilterId(), false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+            }
+            else if (orRadioButton1.Checked)
+            {
+                numberOfFilters++;
+                filter2 = new Tuple<bool, string, string, string>(true, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+                //addFilter(filterIdOfLastTab, true, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
+            }
+            else
+            {
+                if (andRadioButton2.Checked)
+                {
+                    numberOfFilters++;
+                    filter3 = new Tuple<bool, string, string, string>(false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                    //addFilter(controller.getDataBaseController().getLastFilterId(), false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                }
+                else if (orRadioButton2.Checked)
+                {
+                    numberOfFilters++;
+                    filter3 = new Tuple<bool, string, string, string>(true, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                    //addFilter(filterIdOfLastTab, true, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
+                }
+                else
+                {
+                    if (andRadioButton3.Checked)
+                    {
+                        numberOfFilters++;
+                        filter4 = new Tuple<bool, string, string, string>(false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                        //addFilter(controller.getDataBaseController().getLastFilterId(), false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                    }
+                    else if (orRadioButton3.Checked)
+                    {
+                        numberOfFilters++;
+                        filter4 = new Tuple<bool, string, string, string>(true, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                        //addFilter(filterIdOfLastTab, true, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
+                    }
+                }
+            }
             andRadioButton1.Checked = false;
             orRadioButton1.Checked = false;
             andRadioButton2.Checked = false;
@@ -281,57 +331,14 @@ namespace AnalyseEtControleFEC
             field4ComboBox.Text = "";
             condition4ComboBox.Text = "";
             value4TextBox.Text = "";
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MainController controller = MainController.get();
-            DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[1];
-            int filterIdOfLastTab;
-            if (lastTabView is DataGridViewBDD)
-            {
-                filterIdOfLastTab = ((DataGridViewBDD)tabControl1.SelectedTab.Controls[0]).numGridView;
-            }
-            else
-            {
-                filterIdOfLastTab = -1;
-            }
-            addFilter(filterIdOfLastTab, false, field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
-            if (andRadioButton1.Checked)
-            {
-                addFilter(controller.getDataBaseController().getLastFilterId(), false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
-            }
-            else if (orRadioButton1.Checked)
-            {
-                addFilter(filterIdOfLastTab, true, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
-            }
-            if (andRadioButton2.Checked)
-            {
-                addFilter(controller.getDataBaseController().getLastFilterId(), false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
-            }
-            else if (orRadioButton2.Checked)
-            {
-                addFilter(filterIdOfLastTab, true, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
-            }
-            if (andRadioButton3.Checked)
-            {
-                addFilter(controller.getDataBaseController().getLastFilterId(), false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
-            }
-            else if (orRadioButton3.Checked)
-            {
-                addFilter(filterIdOfLastTab, true, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
-            }
-            reinitializeFilterForm();
-            string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
-            TabPage myTabPage = new TabPage(title);
-            DataGridViewBDD newDataGridView = new DataGridViewBDD(controller.getDataBaseController().getLastFilterId());
-            newDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
-            newDataGridView.Size = dataGridView1.Size;
-            MainController.get().openFilter(newDataGridView, newDataGridView.numGridView);
-            myTabPage.Controls.Add(newDataGridView);
-            tabControl1.TabPages.Add(myTabPage);
-            tabControl1.SelectedTab = myTabPage;
             panel1.Visible = false;
+            controller.addFilters(new
+                Tuple<int, int,
+                    Tuple<String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Tuple<bool, String, String, String>,
+                    Start>(filterIdOfLastTab, numberOfFilters, filter1, filter2, filter3, filter4, this));
         }
 
         private void button2_Click_1(object sender, EventArgs e)
