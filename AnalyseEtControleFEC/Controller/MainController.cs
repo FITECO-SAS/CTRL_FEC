@@ -30,16 +30,18 @@ namespace AnalyseEtControleFEC.Controller
             logger.CreateLog();
             if (logger.CheckColumns())
             {
-                logger.CheckCompAuxNumCompAuxLib();
-                logger.CheckEcritureLetDateLet();
-                logger.CheckMontantdeviseIdevise();
-                logger.CheckPieceDateEcritureDate();
-                logger.CheckPieceDateValidDate();
-                logger.CheckEcritureDateValidDate();
-                logger.CheckDateLetPieceDate();
-                logger.CheckDateLetEcritureDate();
-                logger.CheckIsMontantSens();
-                logger.CheckIsDateUniqueForEcritureNum();
+                if (logger.CheckLinesInDatabase()) {
+                    logger.CheckCompAuxNumCompAuxLib();
+                    logger.CheckEcritureLetDateLet();
+                    logger.CheckMontantdeviseIdevise();
+                    logger.CheckPieceDateEcritureDate();
+                    logger.CheckPieceDateValidDate();
+                    logger.CheckEcritureDateValidDate();
+                    logger.CheckDateLetPieceDate();
+                    logger.CheckDateLetEcritureDate();
+                    logger.CheckIsMontantSens();
+                    logger.CheckIsDateUniqueForEcritureNum();
+                }
                 //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
             }
         }
