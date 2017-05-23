@@ -4,6 +4,8 @@ using System.Text;
 using System.Data.SQLite;
 using System.IO;
 using AnalyseEtControleFEC.Controller;
+using System.Threading;
+using System.Diagnostics;
 
 namespace AnalyseEtControleFEC.Controller
 {
@@ -106,10 +108,36 @@ namespace AnalyseEtControleFEC.Controller
                     checkDbConnection.Close();
                     filterDbConnection.Close();
                     uiDbConnection.Close();
+                    DeleteAllFilters();
+                    mainDbConnection.Open();
+                    bool success = false;
+                    while (!success)
+                    {
+                        try
+                        {
+                            new SQLiteCommand("DROP Table Column", mainDbConnection).ExecuteNonQuery();
+                            new SQLiteCommand("DROP Table Content", mainDbConnection).ExecuteNonQuery();
+                        }
+                        catch (SQLiteException e)
+                        {
+                            //database is certainly locked, we'll just try again after one second ...
+                            filterDbConnection.Close();
+                            Thread.Sleep(1000);
+                            filterDbConnection.Open();
+                        }
+                    }
+                    mainDbConnection.Close();
                 }
-                File.Delete(fileName);
+                else
+                {
+                    File.Delete(fileName);
+                    SQLiteConnection.CreateFile(fileName);
+                }
             }
-            SQLiteConnection.CreateFile(fileName);
+            else
+            {
+                SQLiteConnection.CreateFile(fileName);
+            }
             mainDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
             checkDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
             filterDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
@@ -244,7 +272,10 @@ namespace AnalyseEtControleFEC.Controller
                     }
                     catch (SQLiteException e)
                     {
-                        //database is certainly locked, we just try again...
+                        //database is certainly locked, we'll just try again after one second ...
+                        filterDbConnection.Close();
+                        Thread.Sleep(1000);
+                        filterDbConnection.Open();
                     }
                 }
                 filter = new SQLiteCommand("CREATE TABLE Filter" + FilterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM Content base INNER JOIN ColumnNum" + FilterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
@@ -262,7 +293,10 @@ namespace AnalyseEtControleFEC.Controller
                     }
                     catch (SQLiteException e)
                     {
-                        //database is certainly locked, we just try again...
+                        //database is certainly locked, we'll just try again after one second ...
+                        filterDbConnection.Close();
+                        Thread.Sleep(1000);
+                        filterDbConnection.Open();
                     }
                 }
                 filter = new SQLiteCommand("CREATE TABLE Filter" + FilterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM Filter" + lastFilterId + " base INNER JOIN ColumnNum" + FilterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
@@ -278,7 +312,10 @@ namespace AnalyseEtControleFEC.Controller
                 }
                 catch(SQLiteException e)
                 {
-                    //database is certainly locked, we just try again...
+                    //database is certainly locked, we'll just try again after one second ...
+                    filterDbConnection.Close();
+                    Thread.Sleep(1000);
+                    filterDbConnection.Open();
                 }
             }
             FilterNumber++;
@@ -315,7 +352,10 @@ namespace AnalyseEtControleFEC.Controller
                 }
                 catch (SQLiteException e)
                 {
-                    //database is certainly locked, we just try again...
+                    //database is certainly locked, we'll just try again after one second ...
+                    filterDbConnection.Close();
+                    Thread.Sleep(1000);
+                    filterDbConnection.Open();
                 }
             }
             filter = new SQLiteCommand("CREATE TEMP TABLE Filter" + FilterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM " + lastTab + " base INNER JOIN ColumnNum" + FilterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
@@ -329,7 +369,10 @@ namespace AnalyseEtControleFEC.Controller
                 }
                 catch (SQLiteException e)
                 {
-                    //database is certainly locked, we just try again...
+                    //database is certainly locked, we'll just try again after one second ...
+                    filterDbConnection.Close();
+                    Thread.Sleep(1000);
+                    filterDbConnection.Open();
                 }
             }
             new SQLiteCommand("CREATE INDEX AccessIndexFilter" + FilterNumber + " ON Filter" + FilterNumber + " (Column,Line)", filterDbConnection).ExecuteNonQuery();
@@ -346,9 +389,9 @@ namespace AnalyseEtControleFEC.Controller
             filterDbConnection.Open();
             SQLiteCommand dropColumnNumCommand = new SQLiteCommand(filterDbConnection);
             SQLiteCommand dropFilterCommand = new SQLiteCommand(filterDbConnection);
-            if (numberOfTables > 1)
+            if (numberOfTables > 2)
             {
-                for (int i = FilterNumber - 1; i > FilterNumber - numberOfTables; i--)
+                for (int i = FilterNumber - 2; i >= FilterNumber - numberOfTables; i--)
                 {
                     dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + i;
                     dropFilterCommand.CommandText = "DROP TABLE Filter" + i;
@@ -356,7 +399,7 @@ namespace AnalyseEtControleFEC.Controller
                     dropFilterCommand.ExecuteNonQuery();
                 }
             }
-            dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + FilterNumber;
+            dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + (FilterNumber-1);
             dropColumnNumCommand.ExecuteNonQuery();
             filterDbConnection.Close();
         }

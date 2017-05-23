@@ -13,6 +13,9 @@ namespace AnalyseEtControleFEC.Controller
 {
     public class MainController
     {
+        Thread filterCreator;
+        Thread openFileThread;
+
         //Static Thread stuff
         static String threadPath;
         static String threadFileName;
@@ -73,6 +76,7 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter4.Item2, filter4.Item3, filter4.Item4);
                 }
             }
+            controller.getDataBaseController().cleanTempTables(numberOfFilters);
             start.Invoke((Action)start.FinalizeFilterCreation);
         }
 
@@ -131,7 +135,6 @@ namespace AnalyseEtControleFEC.Controller
                     Tuple<bool, String, String, String>,
                     Start> data)
         {
-            Thread filterCreator = new Thread(threadedFilterCreation);
             filterCreator.Start(data);
         }
 
@@ -158,6 +161,8 @@ namespace AnalyseEtControleFEC.Controller
             dataBaseController = new DataBaseController(dataBaseFile,this);
             simpleFilterController = new SimpleFilterController(dataBaseController);
             config = new Configuration(configuration);
+            filterCreator = new Thread(threadedFilterCreation);
+            openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
         }
 
         public DataBaseController getDataBaseController()
@@ -288,7 +293,6 @@ namespace AnalyseEtControleFEC.Controller
             dataBaseController.init();
             threadPath = filePath;
             threadFileName = fileName;
-            Thread openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
             openFileThread.Start();
         }
         public void finalizeOpenFileFromThread()
@@ -320,6 +324,11 @@ namespace AnalyseEtControleFEC.Controller
             }
             size++;
             gridView.RowCount = size;
+        }
+
+        public void stopFilterThread()
+        {
+            filterCreator.Interrupt();
         }
     }
 }
