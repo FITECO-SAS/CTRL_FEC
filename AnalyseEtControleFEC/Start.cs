@@ -77,7 +77,7 @@ namespace AnalyseEtControleFEC
                 fileLoaded = true;
                 button1.Enabled = true;
                 button7.Enabled = true;
-                
+
             }
             //this.Hide();
         }
@@ -96,20 +96,20 @@ namespace AnalyseEtControleFEC
 
         private void sauvegarderLeFiltreÉlaboréToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void dataGridView1_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
             MainController controller = MainController.Get();
-            if(sender is DataGridViewBDD)
+            if (sender is DataGridViewBDD)
             {
-                e.Value = controller.dataBaseController.GetContentFromFilter(e.ColumnIndex, e.RowIndex+1, ((DataGridViewBDD)sender).numGridView);
+                e.Value = controller.dataBaseController.getContentFromFilter(e.ColumnIndex, e.RowIndex + 1, ((DataGridViewBDD)sender).numGridView);
             }
             else
             {
-                e.Value = controller.dataBaseController.GetContent(e.ColumnIndex, e.RowIndex+1);
-            }       
+                e.Value = controller.dataBaseController.GetContent(e.ColumnIndex, e.RowIndex + 1);
+            }
         }
 
         internal DataGridView getDataGridView()
@@ -298,7 +298,7 @@ namespace AnalyseEtControleFEC
         private void button1_Click(object sender, EventArgs e)
         {
             MainController controller = MainController.Get();
-            DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[tabControl1.SelectedTab.Controls.Count-1];
+            DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[0];
             int filterIdOfLastTab;
             if (lastTabView is DataGridViewBDD)
             {
@@ -417,7 +417,7 @@ namespace AnalyseEtControleFEC
         /*this function is used to determine the condition will show in which textBox*/
         private void button8_Click(object sender, EventArgs e)
         {
-            if ( panel19.Visible == true && panel21.Visible == false)
+            if (panel19.Visible == true && panel21.Visible == false)
             {
                 panel21.Visible = true;
                 textBox10.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
@@ -447,7 +447,7 @@ namespace AnalyseEtControleFEC
                 panel11.Visible = true;
                 textBox5.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
-            if (panel8.Visible == true && panel9.Visible == false )
+            if (panel8.Visible == true && panel9.Visible == false)
             {
                 panel9.Visible = true;
                 textBox4.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
@@ -455,7 +455,7 @@ namespace AnalyseEtControleFEC
             if (panel8.Visible == false)
             {
                 panel8.Visible = true;
-                textBox3.Text = comboBox1.Text + " " +comboBox2.Text + " " + textBox2.Text;
+                textBox3.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
 
         }
@@ -948,7 +948,7 @@ namespace AnalyseEtControleFEC
                         newDataGridView.Rows[j].Cells[i].Value = dataGridView1.Rows[list[j]].Cells[i].Value;
                     }
                 }
-                for(int i = 0;i < newDataGridView.RowCount; i++)
+                for (int i = 0; i < newDataGridView.RowCount; i++)
                 {
                     newDataGridView.Rows[i].HeaderCell.Value = String.Format("{0}", i + 1);
                 }
@@ -958,7 +958,7 @@ namespace AnalyseEtControleFEC
                 tabControl1.TabPages.Add(myTabPage);
                 tabControl1.SelectedTab = myTabPage;
             }
-            
+
         }
         /*this function is used to create a new table by the column number*/
         private void button17_Click(object sender, EventArgs e)
@@ -1068,7 +1068,7 @@ namespace AnalyseEtControleFEC
             {
                 //panelLine2.Visible = true;
                 isLine1OK = true;
-                
+
             }
             else
             {
@@ -1086,7 +1086,7 @@ namespace AnalyseEtControleFEC
 
         private void value2TextBox_TextChanged(object sender, EventArgs e)
         {
-            if (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" &&(andRadioButton1.Checked == true || orRadioButton1.Checked == true))
+            if (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true))
             {
                 //panelLine3.Visible = true;
                 isLine2OK = true;
@@ -1202,7 +1202,7 @@ namespace AnalyseEtControleFEC
         {
             if (panelLine2.Visible == true && (value1TextBox.Text != "" && field1ComboBox.Text != "" && condition1ComboBox.Text != "") && (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)))
             {
-                String text,text1,text2;
+                String text, text1, text2;
                 text = value1TextBox.Text;
                 value1TextBox.Text = value2TextBox.Text;
                 value2TextBox.Text = text;
@@ -1216,7 +1216,7 @@ namespace AnalyseEtControleFEC
 
                 condition1ComboBox.Text = text2;
                 condition2ComboBox.Text = text1;
-            }            
+            }
         }
 
         private void buttonDown2_Click(object sender, EventArgs e)
@@ -1338,7 +1338,7 @@ namespace AnalyseEtControleFEC
         private void buttonDown6_Click(object sender, EventArgs e)
         {
             if (panelLine7.Visible == true && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)) && (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)))
-                {
+            {
                 String text, text1, text2;
                 text = value6TextBox.Text;
                 value6TextBox.Text = value7TextBox.Text;
@@ -1469,12 +1469,12 @@ namespace AnalyseEtControleFEC
                     andRadioButton2.Checked = true;
                     orRadioButton3.Checked = true;
                 }
-            }   
+            }
         }
 
         private void buttonUp5_Click(object sender, EventArgs e)
         {
-            if((value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)) && (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)))
+            if ((value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)) && (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)))
             {
                 String text, text1, text2;
                 text = value4TextBox.Text;
@@ -1498,12 +1498,12 @@ namespace AnalyseEtControleFEC
                     orRadioButton4.Checked = true;
                 }
             }
-            
+
         }
 
         private void buttonUp6_Click(object sender, EventArgs e)
         {
-            if((value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)) && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)))
+            if ((value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)) && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)))
             {
                 String text, text1, text2;
                 text = value5TextBox.Text;
@@ -1527,7 +1527,7 @@ namespace AnalyseEtControleFEC
                     orRadioButton5.Checked = true;
                 }
             }
-                
+
         }
 
         private void buttonUp7_Click(object sender, EventArgs e)
@@ -1556,7 +1556,7 @@ namespace AnalyseEtControleFEC
                     orRadioButton6.Checked = true;
                 }
             }
-                
+
         }
 
         private void buttonUp8_Click(object sender, EventArgs e)
@@ -1585,13 +1585,13 @@ namespace AnalyseEtControleFEC
                     orRadioButton7.Checked = true;
                 }
             }
-                
+
         }
 
         private int ShowValidLineSimpleFilter()
         {
             int nb = 0;
-            if(isLine1OK)
+            if (isLine1OK)
             {
                 panelLine2.Visible = true;
                 if (isLine2OK)
@@ -1618,7 +1618,7 @@ namespace AnalyseEtControleFEC
                                         {
                                             nb = 7;
                                         }
-                                            
+
                                     }
                                     else
                                     {
@@ -1684,6 +1684,29 @@ namespace AnalyseEtControleFEC
                 nb = 0;
             }
             return nb;
+        }
+
+        public void reinitializeTabs()
+        {
+            foreach (TabPage page in tabControl1.TabPages)
+            {
+                if (!page.Equals(tabControl1.TabPages[0]))
+                    page.Dispose();
+            }
+        }
+
+        public void FinalizeFilterCreation()
+        {
+            MainController controller = MainController.Get();
+            string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
+            TabPage myTabPage = new TabPage(title);
+            DataGridViewBDD newDataGridView = new DataGridViewBDD(controller.GetDataBaseController().GetLastFilterId());
+            newDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
+            newDataGridView.Size = dataGridView1.Size;
+            MainController.Get().OpenFilter(newDataGridView, newDataGridView.numGridView);
+            myTabPage.Controls.Add(newDataGridView);
+            tabControl1.TabPages.Add(myTabPage);
+            tabControl1.SelectedTab = myTabPage;
         }
     }
 }
