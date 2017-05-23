@@ -1005,5 +1005,15 @@ namespace AnalyseEtControleFEC
                 tabControl1.SelectedTab = myTabPage;
             }
         }
+
+        public void reinitializeTabs()
+        {
+            foreach(TabPage page in tabControl1.TabPages)
+            {
+                if(!page.Equals(tabControl1.TabPages[0]))
+                    page.Dispose();
+            }
+        }
+
     }
 }

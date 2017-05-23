@@ -108,51 +108,50 @@ namespace AnalyseEtControleFEC.Controller
                     checkDbConnection.Close();
                     filterDbConnection.Close();
                     uiDbConnection.Close();
-                    DeleteAllFilters();
-                    mainDbConnection.Open();
-                    bool success = false;
-                    while (!success)
-                    {
-                        try
-                        {
-                            new SQLiteCommand("DROP Table Column", mainDbConnection).ExecuteNonQuery();
-                            new SQLiteCommand("DROP Table Content", mainDbConnection).ExecuteNonQuery();
-                        }
-                        catch (SQLiteException e)
-                        {
-                            //database is certainly locked, we'll just try again after one second ...
-                            filterDbConnection.Close();
-                            Thread.Sleep(1000);
-                            filterDbConnection.Open();
-                        }
-                    }
-                    mainDbConnection.Close();
+                    DeleteAll();
+                    uiDbConnection.Open();
+                    checkDbConnection.Open();
                 }
                 else
                 {
                     File.Delete(fileName);
                     SQLiteConnection.CreateFile(fileName);
+                    mainDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+                    checkDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+                    filterDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+                    uiDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+                    uiDbConnection.Open();
+                    checkDbConnection.Open();
+                    mainDbConnection.Open();
+                    new SQLiteCommand("CREATE TABLE Column (Position INT, Name VARCHAR(20))", mainDbConnection).ExecuteNonQuery();
+                    new SQLiteCommand("CREATE TABLE Content (Line INT, Column INT, Content VARCHAR(100))", mainDbConnection).ExecuteNonQuery();
+                    new SQLiteCommand("CREATE INDEX AccessIndexContent ON Content (Column,Line)", mainDbConnection).ExecuteNonQuery();
+                    SQLiteFunction.RegisterFunction(typeof(IsStrictlySuperiorSQLiteFunction));
+                    SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
+                    SQLiteFunction.RegisterFunction(typeof(IsEqualSQLiteFunction));
+                    FilterNumber = 0;
+                    mainDbConnection.Close();
                 }
             }
             else
             {
                 SQLiteConnection.CreateFile(fileName);
+                mainDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+                checkDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+                filterDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+                uiDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+                uiDbConnection.Open();
+                checkDbConnection.Open();
+                mainDbConnection.Open();
+                new SQLiteCommand("CREATE TABLE Column (Position INT, Name VARCHAR(20))", mainDbConnection).ExecuteNonQuery();
+                new SQLiteCommand("CREATE TABLE Content (Line INT, Column INT, Content VARCHAR(100))", mainDbConnection).ExecuteNonQuery();
+                new SQLiteCommand("CREATE INDEX AccessIndexContent ON Content (Column,Line)", mainDbConnection).ExecuteNonQuery();
+                SQLiteFunction.RegisterFunction(typeof(IsStrictlySuperiorSQLiteFunction));
+                SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
+                SQLiteFunction.RegisterFunction(typeof(IsEqualSQLiteFunction));
+                FilterNumber = 0;
+                mainDbConnection.Close();
             }
-            mainDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
-            checkDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
-            filterDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
-            uiDbConnection= new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
-            uiDbConnection.Open();
-            checkDbConnection.Open();
-            mainDbConnection.Open();
-            new SQLiteCommand("CREATE TABLE Column (Position INT, Name VARCHAR(20))", mainDbConnection).ExecuteNonQuery();
-            new SQLiteCommand("CREATE TABLE Content (Line INT, Column INT, Content VARCHAR(100))", mainDbConnection).ExecuteNonQuery();
-            new SQLiteCommand("CREATE INDEX AccessIndexContent ON Content (Column,Line)", mainDbConnection).ExecuteNonQuery();
-            SQLiteFunction.RegisterFunction(typeof(IsStrictlySuperiorSQLiteFunction));
-            SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
-            SQLiteFunction.RegisterFunction(typeof(IsEqualSQLiteFunction));
-            FilterNumber = 0;
-            mainDbConnection.Close();
         }
 
         internal object getContentFromFilter(int column, int line, int filterNumber)
@@ -407,13 +406,22 @@ namespace AnalyseEtControleFEC.Controller
         /// <summary>
         /// Delete all filters created with the AddFilter function
         /// </summary>
-        public void DeleteAllFilters()
+        public void DeleteAll()
         {
             filterDbConnection.Open();
+            SQLiteCommand command;
             for(;FilterNumber > 0; FilterNumber--)
             {
-                new SQLiteCommand("DROP Table Filter"+(FilterNumber-1), filterDbConnection).ExecuteNonQuery();
+                command = new SQLiteCommand("DROP Table Filter"+(FilterNumber-1), filterDbConnection);
+                command.ExecuteNonQuery();
+                command.Reset();
             }
+            command = new SQLiteCommand("DELETE FROM Column", filterDbConnection);
+            command.ExecuteNonQuery();
+            command.Reset();
+            command = new SQLiteCommand("DELETE FROM Content", filterDbConnection);
+            command.ExecuteNonQuery();
+            command.Reset();
             filterDbConnection.Close();
         }
 

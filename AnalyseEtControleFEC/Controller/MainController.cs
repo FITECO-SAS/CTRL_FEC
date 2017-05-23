@@ -13,8 +13,7 @@ namespace AnalyseEtControleFEC.Controller
 {
     public class MainController
     {
-        Thread filterCreator;
-        Thread openFileThread;
+        public bool areControlsTerminated;
 
         //Static Thread stuff
         static String threadPath;
@@ -103,6 +102,7 @@ namespace AnalyseEtControleFEC.Controller
             logger.check_Is_Montant_Sens();
             logger.check_Is_Date_Unique_For_EcritureNum();
             //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+            instance.finalizeControls();
         }
 
         private static void addFilter(int lastTabId, bool isOr, String field, String condition, String value)
@@ -135,6 +135,7 @@ namespace AnalyseEtControleFEC.Controller
                     Tuple<bool, String, String, String>,
                     Start> data)
         {
+            Thread filterCreator = new Thread(threadedFilterCreation);
             filterCreator.Start(data);
         }
 
@@ -161,8 +162,6 @@ namespace AnalyseEtControleFEC.Controller
             dataBaseController = new DataBaseController(dataBaseFile,this);
             simpleFilterController = new SimpleFilterController(dataBaseController);
             config = new Configuration(configuration);
-            filterCreator = new Thread(threadedFilterCreation);
-            openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
         }
 
         public DataBaseController getDataBaseController()
@@ -288,12 +287,20 @@ namespace AnalyseEtControleFEC.Controller
             return false;
         }
 
+        public void finalizeControls()
+        {
+            areControlsTerminated = true;
+        }
+
         internal void openFile(string filePath, string fileName)
         {
             dataBaseController.init();
             threadPath = filePath;
             threadFileName = fileName;
+            mainWindow.reinitializeTabs();
+            Thread openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
             openFileThread.Start();
+            areControlsTerminated = false;
         }
         public void finalizeOpenFileFromThread()
         {
@@ -324,11 +331,6 @@ namespace AnalyseEtControleFEC.Controller
             }
             size++;
             gridView.RowCount = size;
-        }
-
-        public void stopFilterThread()
-        {
-            filterCreator.Interrupt();
         }
     }
 }
