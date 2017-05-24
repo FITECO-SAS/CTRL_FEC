@@ -13,12 +13,84 @@ namespace AnalyseEtControleFEC.Controller
 {
     public class MainController
     {
+        /// <summary>
+        /// boolean intialised to true that is false when a file loading thread is running
+        /// </summary>
         public bool areControlsTerminated;
 
-        //Static Thread stuff
+        /// <summary>
+        /// file path for file loading
+        /// </summary>
         static String threadPath;
+
+        /// <summary>
+        /// file name for file loading
+        /// </summary>
         static String threadFileName;
 
+        /// <summary>
+        /// name of the dataBase file
+        /// </summary>
+        static String dataBaseFile = "data.SQLite";
+
+        /// <summary>
+        /// name of the configuation file
+        /// </summary>
+        static String configuration = "Configuration.json";
+
+        /// <summary>
+        /// associated instance of COnfiguration class
+        /// </summary>
+        static Configuration config;
+
+        /// <summary>
+        /// singleton instance of the MainController
+        /// </summary>
+        static MainController instance;
+
+        /// <summary>
+        /// associated instance of dataBaseController
+        /// </summary>
+        public DataBaseController dataBaseController { get; set; }
+
+        /// <summary>
+        /// associated instance of simpleFilterController
+        /// </summary>
+        public SimpleFilterController simpleFilterController { get; set; }
+
+        /// <summary>
+        /// Main window for this program
+        /// </summary>
+        Start mainWindow;
+
+        /// <summary>
+        /// Getter for singleton instance
+        /// </summary>
+        /// <returns>the singleton instance of MainController</returns>
+        static public MainController Get()
+        {
+            if (instance == null)
+            {
+                instance = new MainController();
+            }
+            return instance;
+        }
+
+        /// <summary>
+        /// Default constructor for MainControler (private because of Singleton pattern)
+        /// </summary>
+        private MainController()
+        {
+            dataBaseController = new DataBaseController(dataBaseFile, this);
+            simpleFilterController = new SimpleFilterController(dataBaseController);
+            config = new Configuration(configuration);
+            areControlsTerminated = true;
+        }
+
+        /// <summary>
+        /// Main code of the filter creation thread
+        /// </summary>
+        /// <param name="o"> an object of type tuple as casted in begin of function</param>
         static public void threadedFilterCreation(object o)
         {
             MainController controller = MainController.Get();
@@ -140,6 +212,9 @@ namespace AnalyseEtControleFEC.Controller
             controller.GetDataBaseController().resumeCheck();
         }
 
+        /// <summary>
+        /// Main function for the file loader thread
+        /// </summary>
         static public void threadedLoadFromFile()
         {
 
@@ -166,6 +241,14 @@ namespace AnalyseEtControleFEC.Controller
             instance.finalizeControls();
         }
 
+        /// <summary>
+        /// Ask the database to create a new filter with given parameters
+        /// </summary>
+        /// <param name="lastTabId">ID of the currently open tab</param>
+        /// <param name="isOr">Have the filter to be created a Or link to the last one</param>
+        /// <param name="field">The column name on wich the filter will be created</param>
+        /// <param name="condition">The condition for the filter</param>
+        /// <param name="value">The value to compare with the Column content</param>
         private static void addFilter(int lastTabId, bool isOr, String field, String condition, String value)
         {
             MainController controller = MainController.Get();
@@ -189,6 +272,10 @@ namespace AnalyseEtControleFEC.Controller
             }
         }
 
+        /// <summary>
+        /// Code that launch the filter creation thread
+        /// </summary>
+        /// <param name="data"></param>
         public void addFilters(Tuple<int, int,
                     Tuple<String, String, String>,
                     Tuple<Tuple<bool, String, String, String>,
@@ -204,40 +291,13 @@ namespace AnalyseEtControleFEC.Controller
             filterCreator.Start(data);
         }
 
-        //Constants
-        static String dataBaseFile = "data.SQLite";
-        static String configuration = "Configuration.json";
-        static Configuration config;
-        static MainController instance;
-
-        public DataBaseController dataBaseController { get; set; }
-        public SimpleFilterController simpleFilterController { get; set; }
-        Start mainWindow;
-
-        static public MainController Get()
-        {
-            if(instance == null)
-            {
-                instance = new MainController();
-            }
-            return instance;
-        }
-        private MainController()
-        {
-            dataBaseController = new DataBaseController(dataBaseFile,this);
-            simpleFilterController = new SimpleFilterController(dataBaseController);
-            config = new Configuration(configuration);
-            areControlsTerminated = true;
-        }
-
+        /// <summary>
+        /// getter for DataBaseCOntroller instance related to this
+        /// </summary>
+        /// <returns>the DataBaseCOntroller instance</returns>
         public DataBaseController GetDataBaseController()
         {
             return dataBaseController;
-        }
-
-        public SimpleFilterController GetSimpleFilterController()
-        {
-            return simpleFilterController;
         }
 
         public void Start()
@@ -353,11 +413,19 @@ namespace AnalyseEtControleFEC.Controller
             return false;
         }
 
+        /// <summary>
+        /// function called when file loader thread has terminated
+        /// </summary>
         public void finalizeControls()
         {
             areControlsTerminated = true;
         }
 
+        /// <summary>
+        /// function that launch the file creation thread
+        /// </summary>
+        /// <param name="filePath">the path of the file to open</param>
+        /// <param name="fileName">the name of the file to open</param>
         internal void openFile(string filePath, string fileName)
         {
             if (areControlsTerminated)
@@ -375,11 +443,19 @@ namespace AnalyseEtControleFEC.Controller
                 MessageBox.Show("Vous ne pouvez pas ouvrir un nouveau fichier tant que les contrôles complémentaires ne sont pas terminés !", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        /// <summary>
+        /// function called from file opening thread when his job is finished
+        /// </summary>
         public void FinalizeOpenFileFromThread()
         {
             DataGridView gridView = mainWindow.getDataGridView();
             gridView.Invoke((Action)FinalizeOpenFile);
         }
+
+        /// <summary>
+        /// function called for refreshing the view when a new file is loaded
+        /// </summary>
         public void FinalizeOpenFile()
         {
             DataGridView gridView = mainWindow.getDataGridView();
@@ -392,7 +468,11 @@ namespace AnalyseEtControleFEC.Controller
             }
             gridView.RowCount = size;
         }
-
+        /// <summary>
+        /// function for refreshing given dataGridView with specified filterNumber
+        /// </summary>
+        /// <param name="gridView"></param>
+        /// <param name="filterNumber"></param>
         internal void OpenFilter(DataGridView gridView, int filterNumber)
         {
             String[] Columns = dataBaseController.GetColumnNames();
