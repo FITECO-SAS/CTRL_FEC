@@ -16,18 +16,22 @@ namespace AnalyseEtControleFEC
         {
             DateTime nowDate = DateTime.Now;
             string shortDate = String.Format("{0:yyyy-MM-dd-HH-mm}", nowDate);
-            string filename = "Rapport_"+file.Split('.')[0]+"_"+string.Format("{0}.log", shortDate);
+            string filename = "Rapport_" + file.Split('.')[0] + "_" + string.Format("{0}.log", shortDate);
+            
             //création du nom de fichier .log
             filename = filename.Replace("/", "-");
+            
             //récupérer le path complet, application PC
             string rootPath = Path.GetFullPath("./Data/Log/");
             string fullFilename = string.Format(@"{0}{1}", rootPath, filename);
+            
             //vérifier les dossiers Data & Log
             if (!Directory.Exists(rootPath))
             {
                 //création du dossier
                 Directory.CreateDirectory(rootPath);
             }
+            
             //vérifier le fichier
             if (!System.IO.File.Exists(fullFilename))
             {
@@ -45,7 +49,6 @@ namespace AnalyseEtControleFEC
                                        className,
                                        errorMessage));
             }
-
         }
     }
 }

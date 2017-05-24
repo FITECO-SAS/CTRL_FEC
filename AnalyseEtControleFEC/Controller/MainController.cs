@@ -73,6 +73,7 @@ namespace AnalyseEtControleFEC.Controller
             {
                 instance = new MainController();
             }
+
             return instance;
         }
 
@@ -94,7 +95,8 @@ namespace AnalyseEtControleFEC.Controller
         static public void threadedFilterCreation(object o)
         {
             MainController controller = MainController.Get();
-            controller.GetDataBaseController().requestCheckPause();
+            controller.GetDataBaseController().RequestCheckPause();
+
             Tuple<int, int,
                    Tuple<String, String, String>,
                    Tuple<Tuple<bool, String, String, String>,
@@ -115,8 +117,10 @@ namespace AnalyseEtControleFEC.Controller
                     Tuple<bool, String, String, String>,
                     Tuple<bool, String, String, String>>,
                     Start>)o;
+
             int filterIdOfLastTab = data.Item1;
             int numberOfFilters = data.Item2;
+
             Tuple<String, String, String> filter1 = data.Item3;
             Tuple<bool, String, String, String> filter2 = data.Item4.Item1;
             Tuple<bool, String, String, String> filter3 = data.Item4.Item2;
@@ -125,11 +129,14 @@ namespace AnalyseEtControleFEC.Controller
             Tuple<bool, String, String, String> filter6 = data.Item4.Item5;
             Tuple<bool, String, String, String> filter7 = data.Item4.Item6;
             Tuple<bool, String, String, String> filter8 = data.Item4.Item7;
+
             Start start = data.Item5;
-            if(numberOfFilters >= 1)
+
+            if (numberOfFilters >= 1)
             {
                 addFilter(filterIdOfLastTab, false, filter1.Item1, filter1.Item2, filter1.Item3);
             }
+
             if (numberOfFilters >= 2)
             {
                 if (!filter2.Item1)
@@ -141,6 +148,7 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter2.Item2, filter2.Item3, filter2.Item4);
                 }
             }
+
             if (numberOfFilters >= 3)
             {
                 if (!filter3.Item1)
@@ -152,6 +160,7 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter3.Item2, filter3.Item3, filter3.Item4);
                 }
             }
+
             if (numberOfFilters >= 4)
             {
                 if (!filter4.Item1)
@@ -163,6 +172,7 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter4.Item2, filter4.Item3, filter4.Item4);
                 }
             }
+
             if (numberOfFilters >= 5)
             {
                 if (!filter5.Item1)
@@ -174,6 +184,7 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter6.Item2, filter6.Item3, filter6.Item4);
                 }
             }
+
             if (numberOfFilters >= 6)
             {
                 if (!filter6.Item1)
@@ -185,6 +196,7 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter6.Item2, filter6.Item3, filter6.Item4);
                 }
             }
+
             if (numberOfFilters >= 7)
             {
                 if (!filter7.Item1)
@@ -196,6 +208,7 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter7.Item2, filter7.Item3, filter7.Item4);
                 }
             }
+
             if (numberOfFilters >= 8)
             {
                 if (!filter8.Item1)
@@ -207,23 +220,23 @@ namespace AnalyseEtControleFEC.Controller
                     addFilter(filterIdOfLastTab, true, filter8.Item2, filter8.Item3, filter8.Item4);
                 }
             }
+
             controller.GetDataBaseController().CleanTempTables(numberOfFilters);
             start.Invoke((Action)start.FinalizeFilterCreation);
-            controller.GetDataBaseController().resumeCheck();
+            controller.GetDataBaseController().ResumeCheck();
         }
 
-        public void threadedLoadFromFile()
         /// <summary>
         /// Main function for the file loader thread
         /// </summary>
+        public void ThreadedLoadFromFile()
         {
-
             ErrorLogger logger = new ErrorLogger(config, instance.GetDataBaseController(), "BIC", "PCG");
+
             instance.GetDataBaseController().FillDatabaseFromFile(threadPath);
             logger.CheckName(threadFileName);
             instance.FinalizeOpenFileFromThread();
-            //logger.check_Dates();
-            //Console.WriteLine(logger.check_CompAuxNum_CompAuxLib());
+
             if (logger.CheckColumns())
             {
                 if (logger.CheckLinesInDatabase())
@@ -249,7 +262,6 @@ namespace AnalyseEtControleFEC.Controller
                     mainWindow.ControlsUpdate(9);
                     logger.CheckIsDateUniqueForEcritureNum();
                     mainWindow.ControlsUpdate(10);
-                    //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
                 }
                 else
                 {
@@ -257,7 +269,8 @@ namespace AnalyseEtControleFEC.Controller
                     mainWindow.ControlsUpdate(10);
                 }
             }
-            instance.finalizeControls();
+
+            instance.FinalizeControls();
         }
 
         /// <summary>
@@ -272,6 +285,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             MainController controller = MainController.Get();
             string finalWhereClause = "";
+
             if (field.ToUpper().Contains("DATE") || field.ToUpper().Contains("MONTANT") ||
                 field.ToUpper().Contains("DEBIT") || field.ToUpper().Contains("CREDIT"))
             {
@@ -281,6 +295,7 @@ namespace AnalyseEtControleFEC.Controller
             {
                 finalWhereClause = controller.simpleFilterController.TextSimpleFilter(field, condition, value);
             }
+
             if (isOr)
             {
                 controller.dataBaseController.AddFilterOr(finalWhereClause, lastTabId);
@@ -323,30 +338,11 @@ namespace AnalyseEtControleFEC.Controller
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Configuration config = new Configuration(configuration);
             mainWindow = new Start();
-            Application.Run(mainWindow);
-        }
 
-        /// <summary>
-        /// Analyser les données (controles élémentaires)
-       /// </summary>
-        public void AnalyzeData()
-        {
-            for(int i = 0; i<mainWindow.getDataGridView().RowCount; i++)
-            {
-                for(int j = 0; j<mainWindow.getDataGridView().ColumnCount; j++)
-                {
-                    if(!IsCellValid(j, (String)mainWindow.getDataGridView().Rows[i].Cells[j].Value))
-                    {
-                        mainWindow.getDataGridView().Rows[i].Cells[j].Style.ForeColor = Color.Red;
-                    }
-                    else
-                    {
-                        mainWindow.getDataGridView().Rows[i].Cells[j].Style.ForeColor = Color.Green;
-                    }
-                }
-            }
+            Application.Run(mainWindow);
         }
 
         /// <summary>
@@ -357,10 +353,11 @@ namespace AnalyseEtControleFEC.Controller
         /// <returns> boolean </returns>
         private bool IsCellValid(int columnNumber, String columnContent)
         {
-            if(columnContent==null)
+            if (columnContent == null)
             {
                 return false;
             }
+
             switch (columnNumber)
             {
                 case 0:
@@ -410,7 +407,6 @@ namespace AnalyseEtControleFEC.Controller
                     return regx15.IsMatch(columnContent);
                 case 15:
                     Regex regx16 = new Regex("^(19|20)\\d\\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$");
-
                     return regx16.IsMatch(columnContent);
                 case 16:
                     Regex regx17 = new Regex("^\\d+\\,+\\d{2}$");
@@ -424,18 +420,15 @@ namespace AnalyseEtControleFEC.Controller
                 case 19:
                     Regex regx20 = new Regex("^\\d*\\,*\\d{2}$");
                     return regx20.IsMatch(columnContent);
-
-
             }
 
-            
             return false;
         }
 
         /// <summary>
         /// function called when file loader thread has terminated
         /// </summary>
-        public void finalizeControls()
+        public void FinalizeControls()
         {
             areControlsTerminated = true;
         }
@@ -445,7 +438,7 @@ namespace AnalyseEtControleFEC.Controller
         /// </summary>
         /// <param name="filePath">the path of the file to open</param>
         /// <param name="fileName">the name of the file to open</param>
-        internal void openFile(string filePath, string fileName)
+        internal void OpenFile(string filePath, string fileName)
         {
             if (areControlsTerminated)
             {
@@ -455,7 +448,7 @@ namespace AnalyseEtControleFEC.Controller
                 threadPath = filePath;
                 threadFileName = fileName;
                 mainWindow.reinitializeTabs();
-                Thread openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
+                Thread openFileThread = new Thread(new ThreadStart(ThreadedLoadFromFile));
                 openFileThread.Start();
             }
             else
@@ -481,13 +474,17 @@ namespace AnalyseEtControleFEC.Controller
             DataGridView gridView = mainWindow.getDataGridView();
             String[] Columns = dataBaseController.GetColumnNames();
             int size = dataBaseController.GetNumberOfLines();
+
             gridView.ColumnCount = Columns.Length;
+
             for (int i = 0; i < Columns.Length; i++)
             {
                 gridView.Columns[i].Name = Columns[i];
             }
+
             gridView.RowCount = size;
         }
+
         /// <summary>
         /// function for refreshing given dataGridView with specified filterNumber
         /// </summary>
@@ -497,11 +494,14 @@ namespace AnalyseEtControleFEC.Controller
         {
             String[] Columns = dataBaseController.GetColumnNames();
             int size = dataBaseController.GetNumberOfLinesInFilter(filterNumber);
+
             gridView.ColumnCount = Columns.Length;
+
             for (int i = 0; i < Columns.Length; i++)
             {
                 gridView.Columns[i].Name = Columns[i];
             }
+
             size++;
             gridView.RowCount = size;
         }

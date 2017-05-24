@@ -61,29 +61,18 @@ namespace AnalyseEtControleFEC
 
         }
 
-        private void fichierToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void analyserToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            MainController.Get().AnalyzeData();
-        }
-
         private void ouvrirFECToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFile openFile = new OpenFile();
             openFile.ShowDialog();
+
             /*if the user has't chosen any file or the table is empty, he can't click other button*/
             if (openFile.DialogResult == DialogResult.OK)
             {
                 fileLoaded = true;
                 button1.Enabled = true;
                 button7.Enabled = true;
-
             }
-            //this.Hide();
         }
 
         /*After click the item, this application will be closed*/
@@ -92,23 +81,13 @@ namespace AnalyseEtControleFEC
             Application.Exit();
         }
 
-        private void sauvegarderLeFiltreSimpleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SauFormFiltreSimple formFiltreSimple = new SauFormFiltreSimple();
-            formFiltreSimple.ShowDialog();
-        }
-
-        private void sauvegarderLeFiltreÉlaboréToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void dataGridView1_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
             MainController controller = MainController.Get();
+
             if (sender is DataGridViewBDD)
             {
-                e.Value = controller.dataBaseController.getContentFromFilter(e.ColumnIndex, e.RowIndex + 1, ((DataGridViewBDD)sender).numGridView);
+                e.Value = controller.dataBaseController.GetContentFromFilter(e.ColumnIndex, e.RowIndex + 1, ((DataGridViewBDD)sender).numGridView);
             }
             else
             {
@@ -120,6 +99,7 @@ namespace AnalyseEtControleFEC
         {
             return dataGridView1;
         }
+
         /*after double click the tab, this tabpages will be closed*/
         private void tabControl1_DoubleClick(object sender, EventArgs e)
         {
@@ -137,6 +117,7 @@ namespace AnalyseEtControleFEC
             field6ComboBox.Items.Clear();
             field7ComboBox.Items.Clear();
             field8ComboBox.Items.Clear();
+
             for (int i = 0; i < dataGridView1.ColumnCount; i++)
             {
                 field1ComboBox.Items.Add(dataGridView1.Columns[i].Name);
@@ -149,6 +130,7 @@ namespace AnalyseEtControleFEC
                 field8ComboBox.Items.Add(dataGridView1.Columns[i].Name);
             }
         }
+
         /*this is used to update the selected node*/
         private void treeView1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -157,6 +139,7 @@ namespace AnalyseEtControleFEC
                 treeView1.SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
             }
         }
+
         /*after select different node, different panel will show*/
         private void treeView1_Click(object sender, EventArgs e)
         {
@@ -164,14 +147,17 @@ namespace AnalyseEtControleFEC
             {
                 panel1.Visible = true;
             }
+
             if (treeView1.SelectedNode.Text == "Par Ligne")
             {
                 panel2.Visible = true;
             }
+
             if (treeView1.SelectedNode.Text == "Par Colonne")
             {
                 panel23.Visible = true;
             }
+
             if (treeView1.SelectedNode.Text == "Élaboré")
             {
                 panel6.Visible = true;
@@ -181,8 +167,6 @@ namespace AnalyseEtControleFEC
         private void button3_Click(object sender, EventArgs e)
         {
             ExportFile exportFile = new ExportFile();
-            //exportFile.ExportDataGridviewToWord(dataGridView1, true);
-            //exportFile.ExportDataGridviewToExcel(dataGridView1, true);
             exportFile.ExportToCsv(dataGridView1);
         }
 
@@ -365,6 +349,7 @@ namespace AnalyseEtControleFEC
             MainController controller = MainController.Get();
             DataGridView lastTabView = (DataGridView)tabControl1.SelectedTab.Controls[0];
             int filterIdOfLastTab;
+
             if (lastTabView is DataGridViewBDD)
             {
                 filterIdOfLastTab = ((DataGridViewBDD)tabControl1.SelectedTab.Controls[0]).numGridView;
@@ -373,7 +358,9 @@ namespace AnalyseEtControleFEC
             {
                 filterIdOfLastTab = -1;
             }
+
             int numberOfFilters = ShowValidLineSimpleFilter();
+
             Tuple<String, String, String> filter1 = new Tuple<string, string, string>(field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
             Tuple<bool, String, String, String> filter2 = null;
             Tuple<bool, String, String, String> filter3 = null;
@@ -382,6 +369,7 @@ namespace AnalyseEtControleFEC
             Tuple<bool, String, String, String> filter6 = null;
             Tuple<bool, String, String, String> filter7 = null;
             Tuple<bool, String, String, String> filter8 = null;
+
             if (andRadioButton1.Checked)
             {
                 filter2 = new Tuple<bool, string, string, string>(false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
@@ -390,7 +378,8 @@ namespace AnalyseEtControleFEC
             {
                 filter2 = new Tuple<bool, string, string, string>(true, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
             }
-            if(andRadioButton1.Checked || orRadioButton1.Checked)
+
+            if (andRadioButton1.Checked || orRadioButton1.Checked)
             {
                 if (andRadioButton2.Checked)
                 {
@@ -400,6 +389,7 @@ namespace AnalyseEtControleFEC
                 {
                     filter3 = new Tuple<bool, string, string, string>(true, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
                 }
+
                 if (andRadioButton2.Checked || orRadioButton2.Checked)
                 {
                     if (andRadioButton3.Checked)
@@ -410,6 +400,7 @@ namespace AnalyseEtControleFEC
                     {
                         filter4 = new Tuple<bool, string, string, string>(true, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
                     }
+
                     if (andRadioButton3.Checked || orRadioButton3.Checked)
                     {
                         if (andRadioButton4.Checked)
@@ -420,6 +411,7 @@ namespace AnalyseEtControleFEC
                         {
                             filter5 = new Tuple<bool, string, string, string>(true, field5ComboBox.SelectedItem.ToString(), condition5ComboBox.SelectedItem.ToString(), value5TextBox.Text);
                         }
+
                         if (andRadioButton4.Checked || orRadioButton4.Checked)
                         {
                             if (andRadioButton5.Checked)
@@ -430,6 +422,7 @@ namespace AnalyseEtControleFEC
                             {
                                 filter6 = new Tuple<bool, string, string, string>(true, field6ComboBox.SelectedItem.ToString(), condition6ComboBox.SelectedItem.ToString(), value6TextBox.Text);
                             }
+
                             if (andRadioButton5.Checked || orRadioButton5.Checked)
                             {
                                 if (andRadioButton6.Checked)
@@ -440,6 +433,7 @@ namespace AnalyseEtControleFEC
                                 {
                                     filter7 = new Tuple<bool, string, string, string>(true, field7ComboBox.SelectedItem.ToString(), condition7ComboBox.SelectedItem.ToString(), value7TextBox.Text);
                                 }
+
                                 if (andRadioButton6.Checked || orRadioButton6.Checked)
                                 {
                                     if (andRadioButton7.Checked)
@@ -456,6 +450,7 @@ namespace AnalyseEtControleFEC
                     }
                 }
             }
+
             andRadioButton1.Checked = false;
             orRadioButton1.Checked = false;
             andRadioButton2.Checked = false;
@@ -499,26 +494,31 @@ namespace AnalyseEtControleFEC
         {
             panel1.Visible = false;
         }
+
         /*hide the panel2*/
         private void button5_Click(object sender, EventArgs e)
         {
             panel2.Visible = false;
         }
+
         /*to show the line number of the table*/
         private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);
         }
+
         /*show the panel7*/
         private void button7_Click(object sender, EventArgs e)
         {
             panel7.Visible = true;
         }
+
         /*hide the panel23*/
         private void button18_Click(object sender, EventArgs e)
         {
             panel23.Visible = false;
         }
+
         /*display the corresponding item in comboBox2*/
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -528,6 +528,7 @@ namespace AnalyseEtControleFEC
                 comboBox2.Items.Add("Dans le Journal");
                 comboBox2.Items.Add("Dans un Journal différent de");
             }
+
             if (comboBox1.Text == "CompteNum")
             {
                 comboBox2.Items.Clear();
@@ -536,6 +537,7 @@ namespace AnalyseEtControleFEC
                 comboBox2.Items.Add("Contenant au moins une ligne avec un montant non nul au débit dont le numéro de compte commence par");
                 comboBox2.Items.Add("Contenant au moins une ligne avec un montant non nul au crédit dont le numéro de compte commence par");
             }
+
             if (comboBox1.Text == "Montant")
             {
                 comboBox2.Items.Clear();
@@ -546,6 +548,7 @@ namespace AnalyseEtControleFEC
                 comboBox2.Items.Add("Contenant une ligne de TVA collectée dont le montant est inférieur à");
                 comboBox2.Items.Add("Contenant une ligne de TVA déductible dont le montant est inférieur à");
             }
+
             if (comboBox1.Text == "EcritureDate")
             {
                 comboBox2.Items.Clear();
@@ -554,6 +557,7 @@ namespace AnalyseEtControleFEC
                 comboBox2.Items.Add("Toutes les écritures en date du mois de");
 
             }
+
             if (comboBox1.Text == "PieceDate")
             {
                 comboBox2.Items.Clear();
@@ -562,6 +566,7 @@ namespace AnalyseEtControleFEC
                 comboBox2.Items.Add("Toutes les pièces en date du mois de");
             }
         }
+
         /*this function is used to determine the condition will show in which textBox*/
         private void button8_Click(object sender, EventArgs e)
         {
@@ -570,36 +575,43 @@ namespace AnalyseEtControleFEC
                 panel21.Visible = true;
                 textBox10.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
+
             if (panel17.Visible == true && panel19.Visible == false)
             {
                 panel19.Visible = true;
                 textBox9.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
+
             if (panel15.Visible == true && panel17.Visible == false)
             {
                 panel17.Visible = true;
                 textBox8.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
+
             if (panel13.Visible == true && panel15.Visible == false)
             {
                 panel15.Visible = true;
                 textBox7.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
+
             if (panel11.Visible == true && panel13.Visible == false)
             {
                 panel13.Visible = true;
                 textBox6.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
+
             if (panel9.Visible == true && panel11.Visible == false)
             {
                 panel11.Visible = true;
                 textBox5.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
+
             if (panel8.Visible == true && panel9.Visible == false)
             {
                 panel9.Visible = true;
                 textBox4.Text = comboBox1.Text + " " + comboBox2.Text + " " + textBox2.Text;
             }
+
             if (panel8.Visible == false)
             {
                 panel8.Visible = true;
@@ -607,11 +619,13 @@ namespace AnalyseEtControleFEC
             }
 
         }
+
         /*this fuction is used to delete a condition*/
         private void button16_Click(object sender, EventArgs e)
         {
             panel21.Visible = false;
         }
+
         /*this fuction is used to delete a condition*/
         private void button15_Click(object sender, EventArgs e)
         {
@@ -625,6 +639,7 @@ namespace AnalyseEtControleFEC
                 panel19.Visible = false;
             }
         }
+
         /*this fuction is used to delete a condition*/
         private void button14_Click(object sender, EventArgs e)
         {
@@ -644,6 +659,7 @@ namespace AnalyseEtControleFEC
                 panel17.Visible = false;
             }
         }
+
         /*this fuction is used to delete a condition*/
         private void button13_Click(object sender, EventArgs e)
         {
@@ -670,6 +686,7 @@ namespace AnalyseEtControleFEC
                 panel15.Visible = false;
             }
         }
+
         /*this fuction is used to delete a condition*/
         private void button12_Click(object sender, EventArgs e)
         {
@@ -704,6 +721,7 @@ namespace AnalyseEtControleFEC
                 panel13.Visible = false;
             }
         }
+
         /*this fuction is used to delete a condition*/
         private void button11_Click(object sender, EventArgs e)
         {
@@ -747,6 +765,7 @@ namespace AnalyseEtControleFEC
                 panel11.Visible = false;
             }
         }
+
         /*this fuction is used to delete a condition*/
         private void button10_Click(object sender, EventArgs e)
         {
@@ -800,6 +819,7 @@ namespace AnalyseEtControleFEC
                 panel9.Visible = false;
             }
         }
+
         /*this fuction is used to delete a condition*/
         private void button9_Click(object sender, EventArgs e)
         {
@@ -864,6 +884,7 @@ namespace AnalyseEtControleFEC
                 panel8.Visible = false;
             }
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button20_Click(object sender, EventArgs e)
         {
@@ -872,6 +893,7 @@ namespace AnalyseEtControleFEC
             textBox10.Text = textBox9.Text;
             textBox9.Text = text;
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button27_Click(object sender, EventArgs e)
         {
@@ -880,6 +902,7 @@ namespace AnalyseEtControleFEC
             textBox9.Text = textBox8.Text;
             textBox8.Text = text;
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button26_Click(object sender, EventArgs e)
         {
@@ -888,6 +911,7 @@ namespace AnalyseEtControleFEC
             textBox8.Text = textBox7.Text;
             textBox7.Text = text;
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button25_Click(object sender, EventArgs e)
         {
@@ -896,6 +920,7 @@ namespace AnalyseEtControleFEC
             textBox7.Text = textBox6.Text;
             textBox6.Text = text;
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button24_Click(object sender, EventArgs e)
         {
@@ -904,6 +929,7 @@ namespace AnalyseEtControleFEC
             textBox6.Text = textBox5.Text;
             textBox5.Text = text;
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button23_Click(object sender, EventArgs e)
         {
@@ -912,6 +938,7 @@ namespace AnalyseEtControleFEC
             textBox5.Text = textBox4.Text;
             textBox4.Text = text;
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button22_Click(object sender, EventArgs e)
         {
@@ -920,6 +947,7 @@ namespace AnalyseEtControleFEC
             textBox4.Text = textBox3.Text;
             textBox3.Text = text;
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button19_Click(object sender, EventArgs e)
         {
@@ -931,6 +959,7 @@ namespace AnalyseEtControleFEC
                 textBox4.Text = text;
             }
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button21_Click(object sender, EventArgs e)
         {
@@ -942,6 +971,7 @@ namespace AnalyseEtControleFEC
                 textBox5.Text = text;
             }
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button28_Click(object sender, EventArgs e)
         {
@@ -953,6 +983,7 @@ namespace AnalyseEtControleFEC
                 textBox6.Text = text;
             }
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button29_Click(object sender, EventArgs e)
         {
@@ -964,6 +995,7 @@ namespace AnalyseEtControleFEC
                 textBox7.Text = text;
             }
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button30_Click(object sender, EventArgs e)
         {
@@ -975,6 +1007,7 @@ namespace AnalyseEtControleFEC
                 textBox8.Text = text;
             }
         }
+
         /*this function is used to exchange the positions of two conditions*/
         private void button31_Click(object sender, EventArgs e)
         {
@@ -991,6 +1024,7 @@ namespace AnalyseEtControleFEC
         {
             panel6.Visible = false;
         }
+
         /*this function is used to determine the selected line number*/
         private void dataGridView1_MouseUp(object sender, MouseEventArgs e)
         {
@@ -998,25 +1032,31 @@ namespace AnalyseEtControleFEC
             {
                 List<int> list = new List<int>();
                 string result = null;
+
                 for (int i = 0; i < dataGridView1.SelectedRows.Count; i++)
                 {
                     result += dataGridView1.SelectedRows[i].Index + 1;
+
                     if (i < dataGridView1.SelectedRows.Count)
                     {
                         result += ",";
                     }
                 }
+
                 if (result != null)
                 {
                     string[] array = result.Split(',');
+
                     for (int i = 0; i < array.Length - 1; i++)
                     {
                         list.Add(int.Parse(array[i]));
                     }
+
                     list.Sort();
                     string text = null;
                     text += Convert.ToString(list[0]);
                     int count = list.Count;
+
                     if (count > 1)
                     {
                         for (int i = 1; i < count; i++)
@@ -1027,6 +1067,7 @@ namespace AnalyseEtControleFEC
                                 {
                                     text += list[i - 1];
                                 }
+
                                 text += "," + list[i];
                             }
                             else if (list[i - 1] + 1 == list[i])
@@ -1037,25 +1078,30 @@ namespace AnalyseEtControleFEC
                                 }
                             }
                         }
+
                         if (text.EndsWith("-"))
                         {
                             text += list[list.Count - 1];
                         }
                     }
+
                     textBox1.Text = text;
                 }
             }
         }
+
         /*this function is used to create a new table by the line number*/
         private void button4_Click(object sender, EventArgs e)
         {
             List<int> list = new List<int>();
             string text = textBox1.Text;
+
             if (text != "")
             {
                 if (text.Contains(",") || text.Contains("-"))
                 {
                     string[] arrayComma = text.Split(',');
+
                     for (int i = 0; i < arrayComma.Length; i++)
                     {
                         if (!arrayComma[i].Contains("-"))
@@ -1063,6 +1109,7 @@ namespace AnalyseEtControleFEC
                             list.Add(int.Parse(arrayComma[i]) - 1);
                         }
                     }
+
                     for (int i = 0; i < arrayComma.Length; i++)
                     {
                         if (arrayComma[i].Contains("-"))
@@ -1081,6 +1128,7 @@ namespace AnalyseEtControleFEC
                 {
                     list.Add(int.Parse(text) - 1);
                 }
+
                 list.Sort();
                 int count = list.Count;
                 DataGridView newDataGridView = new DataGridView();
@@ -1096,28 +1144,32 @@ namespace AnalyseEtControleFEC
                         newDataGridView.Rows[j].Cells[i].Value = dataGridView1.Rows[list[j]].Cells[i].Value;
                     }
                 }
+
                 for (int i = 0; i < newDataGridView.RowCount; i++)
                 {
                     newDataGridView.Rows[i].HeaderCell.Value = String.Format("{0}", i + 1);
                 }
+
                 string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
                 TabPage myTabPage = new TabPage(title);
                 myTabPage.Controls.Add(newDataGridView);
                 tabControl1.TabPages.Add(myTabPage);
                 tabControl1.SelectedTab = myTabPage;
             }
-
         }
+
         /*this function is used to create a new table by the column number*/
         private void button17_Click(object sender, EventArgs e)
         {
             List<int> list = new List<int>();
             string text = textBox11.Text;
+
             if (text != "")
             {
                 if (text.Contains(",") || text.Contains("-"))
                 {
                     string[] arrayComma = text.Split(',');
+
                     for (int i = 0; i < arrayComma.Length; i++)
                     {
                         if (!arrayComma[i].Contains("-"))
@@ -1125,6 +1177,7 @@ namespace AnalyseEtControleFEC
                             list.Add(int.Parse(arrayComma[i]) - 1);
                         }
                     }
+
                     for (int i = 0; (i < arrayComma.Length); i++)
                     {
                         if (arrayComma[i].Contains("-"))
@@ -1132,6 +1185,7 @@ namespace AnalyseEtControleFEC
                             string[] arrayHyphen = arrayComma[i].Split('-');
                             int first = int.Parse(arrayHyphen[0]);
                             int last = int.Parse(arrayHyphen[1]);
+
                             for (int j = first; j <= last && j <= dataGridView1.ColumnCount; j++)
                             {
                                 list.Add(j - 1);
@@ -1143,23 +1197,28 @@ namespace AnalyseEtControleFEC
                 {
                     list.Add(int.Parse(text) - 1);
                 }
+
                 list.Sort();
                 DataGridView newDataGridView = new DataGridView();
                 newDataGridView.Size = dataGridView1.Size;
                 newDataGridView.RowCount = dataGridView1.RowCount;
                 newDataGridView.ColumnCount = list.Count;
+
                 for (int i = 0; i < list.Count; i++)
                 {
                     newDataGridView.Columns[i].HeaderText = dataGridView1.Columns[list[i]].HeaderText;
+
                     for (int j = 0; j < newDataGridView.RowCount; j++)
                     {
                         newDataGridView.Rows[j].Cells[i].Value = dataGridView1.Rows[j].Cells[list[i]].Value;
                     }
                 }
+
                 for (int i = 0; i < newDataGridView.RowCount; i++)
                 {
                     newDataGridView.Rows[i].HeaderCell.Value = String.Format("{0}", i + 1);
                 }
+
                 string title = "tabPage" + (tabControl1.TabCount + 1).ToString();
                 TabPage myTabPage = new TabPage(title);
                 myTabPage.Controls.Add(newDataGridView);
@@ -1167,6 +1226,7 @@ namespace AnalyseEtControleFEC
                 tabControl1.SelectedTab = myTabPage;
             }
         }
+
         /*this function is ussed to add [x] at the tab*/
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -1174,14 +1234,17 @@ namespace AnalyseEtControleFEC
             e.Graphics.DrawString(this.tabControl1.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
             e.DrawFocusRectangle();
         }
+
         /*this function is used to add an action when the user click the [x]*/
         private void tabControl1_MouseDown(object sender, MouseEventArgs e)
         {
             for (int i = 0; i < this.tabControl1.TabPages.Count; i++)
             {
                 Rectangle r = tabControl1.GetTabRect(i);
+                
                 //Getting the position of the "x" mark.
                 Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 9, 7);
+
                 if (closeButton.Contains(e.Location))
                 {
                     this.tabControl1.TabPages.RemoveAt(i);
@@ -1196,7 +1259,9 @@ namespace AnalyseEtControleFEC
                 button4.Enabled = true;
             }
             else
+            {
                 button4.Enabled = false;
+            }
         }
 
         private void textBox11_TextChanged(object sender, EventArgs e)
@@ -1206,29 +1271,23 @@ namespace AnalyseEtControleFEC
                 button17.Enabled = true;
             }
             else
+            {
                 button17.Enabled = false;
-
+            } 
         }
 
         private void value1TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value1TextBox.Text != "" && field1ComboBox.Text != "" && condition1ComboBox.Text != "")
             {
-                //panelLine2.Visible = true;
                 isLine1OK = true;
 
             }
             else
             {
                 isLine1OK = false;
-                //panelLine2.Visible = false;
-                //panelLine3.Visible = false;
-                //panelLine4.Visible = false;
-                //panelLine5.Visible = false;
-                //panelLine6.Visible = false;
-                //panelLine7.Visible = false;
-                //panelLine8.Visible = false;
             }
+
             ShowValidLineSimpleFilter();
         }
 
@@ -1236,19 +1295,13 @@ namespace AnalyseEtControleFEC
         {
             if (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true))
             {
-                //panelLine3.Visible = true;
                 isLine2OK = true;
             }
             else
             {
                 isLine2OK = false;
-                //panelLine3.Visible = false;
-                //panelLine4.Visible = false;
-                //panelLine5.Visible = false;
-                //panelLine6.Visible = false;
-                //panelLine7.Visible = false;
-                //panelLine8.Visible = false;
             }
+
             ShowValidLineSimpleFilter();
         }
 
@@ -1256,18 +1309,13 @@ namespace AnalyseEtControleFEC
         {
             if (value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true))
             {
-                //panelLine4.Visible = true;
                 isLine3OK = true;
             }
             else
             {
                 isLine3OK = false;
-                //panelLine4.Visible = false;
-                //panelLine5.Visible = false;
-                //panelLine6.Visible = false;
-                //panelLine7.Visible = false;
-                //panelLine8.Visible = false;
             }
+
             ShowValidLineSimpleFilter();
         }
 
@@ -1275,17 +1323,13 @@ namespace AnalyseEtControleFEC
         {
             if (value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true))
             {
-                //panelLine5.Visible = true;
                 isLine4OK = true;
             }
             else
             {
                 isLine4OK = false;
-                //panelLine5.Visible = false;
-                //panelLine6.Visible = false;
-                //panelLine7.Visible = false;
-                //panelLine8.Visible = false;
             }
+
             ShowValidLineSimpleFilter();
         }
 
@@ -1293,16 +1337,13 @@ namespace AnalyseEtControleFEC
         {
             if (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true))
             {
-                //panelLine6.Visible = true;
                 isLine5OK = true;
             }
             else
             {
                 isLine5OK = false;
-                //panelLine6.Visible = false;
-                //panelLine7.Visible = false;
-                //panelLine8.Visible = false;
             }
+
             ShowValidLineSimpleFilter();
         }
 
@@ -1310,15 +1351,13 @@ namespace AnalyseEtControleFEC
         {
             if (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true))
             {
-                //panelLine7.Visible = true;
                 isLine6OK = true;
             }
             else
             {
                 isLine6OK = false;
-                //panelLine7.Visible = false;
-                //panelLine8.Visible = false;
             }
+
             ShowValidLineSimpleFilter();
         }
 
@@ -1327,22 +1366,26 @@ namespace AnalyseEtControleFEC
             if (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true))
             {
                 isLine7OK = true;
-                //panelLine8.Visible = true;
             }
             else
             {
                 isLine7OK = false;
-                //panelLine8.Visible = false;
             }
+
             ShowValidLineSimpleFilter();
         }
 
         private void value8TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value8TextBox.Text != "" && field8ComboBox.Text != "" && condition8ComboBox.Text != "" && (andRadioButton7.Checked == true || orRadioButton7.Checked == true))
+            {
                 isLine8OK = true;
+            }
             else
+            {
                 isLine8OK = false;
+            }
+
             ShowValidLineSimpleFilter();
         }
 
@@ -1414,6 +1457,7 @@ namespace AnalyseEtControleFEC
                 field4ComboBox.Text = text;
                 condition3ComboBox.Text = text2;
                 condition4ComboBox.Text = text1;
+
                 if (andRadioButton2.Checked == true && orRadioButton3.Checked == true)
                 {
                     andRadioButton3.Checked = true;
@@ -1442,6 +1486,7 @@ namespace AnalyseEtControleFEC
                 field5ComboBox.Text = text;
                 condition4ComboBox.Text = text2;
                 condition5ComboBox.Text = text1;
+
                 if (andRadioButton3.Checked == true && orRadioButton4.Checked == true)
                 {
                     andRadioButton4.Checked = true;
@@ -1470,6 +1515,7 @@ namespace AnalyseEtControleFEC
                 field6ComboBox.Text = text;
                 condition5ComboBox.Text = text2;
                 condition6ComboBox.Text = text1;
+
                 if (andRadioButton4.Checked == true && orRadioButton5.Checked == true)
                 {
                     andRadioButton5.Checked = true;
@@ -1498,6 +1544,7 @@ namespace AnalyseEtControleFEC
                 field7ComboBox.Text = text;
                 condition6ComboBox.Text = text2;
                 condition7ComboBox.Text = text1;
+
                 if (andRadioButton5.Checked == true && orRadioButton6.Checked == true)
                 {
                     andRadioButton6.Checked = true;
@@ -1527,6 +1574,7 @@ namespace AnalyseEtControleFEC
                 field8ComboBox.Text = text;
                 condition7ComboBox.Text = text2;
                 condition8ComboBox.Text = text1;
+
                 if (andRadioButton6.Checked == true && orRadioButton7.Checked == true)
                 {
                     andRadioButton7.Checked = true;
@@ -1579,6 +1627,7 @@ namespace AnalyseEtControleFEC
 
                 condition2ComboBox.Text = text2;
                 condition3ComboBox.Text = text1;
+
                 if (andRadioButton1.Checked == true && orRadioButton2.Checked == true)
                 {
                     andRadioButton2.Checked = true;
@@ -1607,6 +1656,7 @@ namespace AnalyseEtControleFEC
                 field4ComboBox.Text = text;
                 condition3ComboBox.Text = text2;
                 condition4ComboBox.Text = text1;
+
                 if (andRadioButton2.Checked == true && orRadioButton3.Checked == true)
                 {
                     andRadioButton3.Checked = true;
@@ -1635,6 +1685,7 @@ namespace AnalyseEtControleFEC
                 field5ComboBox.Text = text;
                 condition4ComboBox.Text = text2;
                 condition5ComboBox.Text = text1;
+
                 if (andRadioButton3.Checked == true && orRadioButton4.Checked == true)
                 {
                     andRadioButton4.Checked = true;
@@ -1664,6 +1715,7 @@ namespace AnalyseEtControleFEC
                 field6ComboBox.Text = text;
                 condition5ComboBox.Text = text2;
                 condition6ComboBox.Text = text1;
+
                 if (andRadioButton4.Checked == true && orRadioButton5.Checked == true)
                 {
                     andRadioButton5.Checked = true;
@@ -1693,6 +1745,7 @@ namespace AnalyseEtControleFEC
                 field7ComboBox.Text = text;
                 condition6ComboBox.Text = text2;
                 condition7ComboBox.Text = text1;
+
                 if (andRadioButton5.Checked == true && orRadioButton6.Checked == true)
                 {
                     andRadioButton6.Checked = true;
@@ -1722,6 +1775,7 @@ namespace AnalyseEtControleFEC
                 field8ComboBox.Text = text;
                 condition7ComboBox.Text = text2;
                 condition8ComboBox.Text = text1;
+
                 if (andRadioButton6.Checked == true && orRadioButton7.Checked == true)
                 {
                     andRadioButton7.Checked = true;
@@ -1760,6 +1814,7 @@ namespace AnalyseEtControleFEC
                                     if (isLine7OK)
                                     {
                                         panelLine8.Visible = true;
+
                                         if (isLine8OK)
                                             nb = 8;
                                         else
@@ -1831,6 +1886,7 @@ namespace AnalyseEtControleFEC
                 panelLine8.Visible = false;
                 nb = 0;
             }
+
             return nb;
         }
 
@@ -1839,7 +1895,9 @@ namespace AnalyseEtControleFEC
             foreach (TabPage page in tabControl1.TabPages)
             {
                 if (!page.Equals(tabControl1.TabPages[0]))
+                {
                     page.Dispose();
+                }
             }
         }
 
@@ -1866,7 +1924,8 @@ namespace AnalyseEtControleFEC
         public void ControlsUpdate(int value)
         {
             progressBar1.Invoke(new Action(() => progressBar1.Value = value));
-            if(progressBar1.Value == progressBar1.Maximum)
+
+            if (progressBar1.Value == progressBar1.Maximum)
             {
                 label6.Invoke(new Action(() => label6.Text = "Les contrôles sont terminés"));
             }

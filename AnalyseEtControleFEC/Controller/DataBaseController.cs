@@ -24,6 +24,7 @@ namespace AnalyseEtControleFEC.Controller
         public override object Invoke(object[] args)
         {
             bool result;
+
             if (Convert.ToString(args[0]).Equals("") && Convert.ToString(args[1]).Equals(""))
             {
                 return false;
@@ -38,6 +39,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     return true;
                 }
+
                 try
                 {
                     result = Double.Parse(Convert.ToString(args[0])) > Double.Parse(Convert.ToString(args[1]));
@@ -46,6 +48,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     return false;
                 }
+
                 return result;
             }
         }
@@ -57,6 +60,7 @@ namespace AnalyseEtControleFEC.Controller
         public override object Invoke(object[] args)
         {
             bool result;
+
             if (Convert.ToString(args[0]).Equals("") && Convert.ToString(args[1]).Equals(""))
             {
                 return true;
@@ -71,6 +75,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     return true;
                 }
+
                 try
                 {
                     result = Double.Parse(Convert.ToString(args[0])) >= Double.Parse(Convert.ToString(args[1]));
@@ -79,6 +84,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     return false;
                 }
+
                 return result;
             }
         }
@@ -90,6 +96,7 @@ namespace AnalyseEtControleFEC.Controller
         public override object Invoke(object[] args)
         {
             bool result;
+
             if(Convert.ToString(args[0]).Equals("") && Convert.ToString(args[1]).Equals(""))
             {
                 return true;
@@ -100,6 +107,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     return false;
                 }
+
                 try
                 {
                     result = Double.Parse(Convert.ToString(args[0])) == Double.Parse(Convert.ToString(args[1]));
@@ -108,6 +116,7 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     return false;
                 }
+
                 return result;
             }
         }
@@ -122,28 +131,31 @@ namespace AnalyseEtControleFEC.Controller
         SQLiteConnection checkDbConnection;
         SQLiteConnection filterDbConnection;
         SQLiteConnection uiDbConnection;
-        MainController mainController;
+
         String fileName;
-        private int FilterNumber;
+
+        private int filterNumber;
         private bool requestedCheckPause;
 
-        public void requestCheckPause()
+        public void RequestCheckPause()
         {
             requestedCheckPause = true;
         }
 
-        public void resumeCheck()
+        public void ResumeCheck()
         {
             requestedCheckPause = false;
         }
 
-        private void pauseCheckIfAsked()
+        private void PauseCheckIfAsked()
         {
             checkDbConnection.Close();
+
             while (requestedCheckPause)
             {
                 Thread.Sleep(2000);
             }
+
             checkDbConnection.Open();
         }
 
@@ -179,49 +191,63 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     File.Delete(fileName);
                     SQLiteConnection.CreateFile(fileName);
+
                     mainDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
                     checkDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
                     filterDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
                     uiDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+
                     uiDbConnection.Open();
                     checkDbConnection.Open();
                     mainDbConnection.Open();
+
                     new SQLiteCommand("CREATE TABLE Column (Position INT, Name VARCHAR(20))", mainDbConnection).ExecuteNonQuery();
                     new SQLiteCommand("CREATE TABLE Content (Line INT, Column INT, Content VARCHAR(100))", mainDbConnection).ExecuteNonQuery();
                     new SQLiteCommand("CREATE INDEX AccessIndexContent ON Content (Column,Line)", mainDbConnection).ExecuteNonQuery();
+
                     SQLiteFunction.RegisterFunction(typeof(IsStrictlySuperiorSQLiteFunction));
                     SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
                     SQLiteFunction.RegisterFunction(typeof(IsEqualSQLiteFunction));
-                    FilterNumber = 0;
+
+                    filterNumber = 0;
+
                     mainDbConnection.Close();
                 }
             }
             else
             {
                 SQLiteConnection.CreateFile(fileName);
+
                 mainDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
                 checkDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
                 filterDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
                 uiDbConnection = new SQLiteConnection("Data Source=" + fileName + ";Version=3;");
+
                 uiDbConnection.Open();
                 checkDbConnection.Open();
                 mainDbConnection.Open();
+
                 new SQLiteCommand("CREATE TABLE Column (Position INT, Name VARCHAR(20))", mainDbConnection).ExecuteNonQuery();
                 new SQLiteCommand("CREATE TABLE Content (Line INT, Column INT, Content VARCHAR(100))", mainDbConnection).ExecuteNonQuery();
                 new SQLiteCommand("CREATE INDEX AccessIndexContent ON Content (Column,Line)", mainDbConnection).ExecuteNonQuery();
+
                 SQLiteFunction.RegisterFunction(typeof(IsStrictlySuperiorSQLiteFunction));
                 SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
                 SQLiteFunction.RegisterFunction(typeof(IsEqualSQLiteFunction));
-                FilterNumber = 0;
+
+                filterNumber = 0;
+
                 mainDbConnection.Close();
             }
         }
 
-        internal object getContentFromFilter(int column, int line, int filterNumber)
+        internal object GetContentFromFilter(int column, int line, int filterNumber)
         {
             SQLiteCommand command = new SQLiteCommand("SELECT Content FROM Filter"+filterNumber+" WHERE Column = @column AND Line = @line", uiDbConnection);
+
             command.Parameters.Add(new SQLiteParameter("@line", line));
             command.Parameters.Add(new SQLiteParameter("@column", column));
+
             return (String)command.ExecuteScalar();
         }
 
@@ -234,30 +260,38 @@ namespace AnalyseEtControleFEC.Controller
         {
             Char[] separators = { '|', '\t' };
             List<int> errors = new List<int>();
+
             FileStream fs = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             BufferedStream bs = new BufferedStream(fs);
             StreamReader reader = new StreamReader(bs);
-            //File.OpenText(filePath);
+
             String readLine = reader.ReadLine();
             String[] splitLine = readLine.Split(separators);
+
+            int line = 1;
             int nbColumns = splitLine.Length;
+
             filterDbConnection.Open();
+
             for (int i = 0; i < splitLine.Length; i++)
             {
                 new SQLiteCommand("INSERT INTO Column (Position, Name) VALUES (" + i + ",'" + splitLine[i] + "')", filterDbConnection).ExecuteNonQuery();
             }
-            int line = 1;
+
             SQLiteCommand beginTrans = new SQLiteCommand("BEGIN TRANSACTION", filterDbConnection);
             SQLiteCommand commitTrans = new SQLiteCommand("COMMIT TRANSACTION", filterDbConnection);
             SQLiteCommand insertCmd = new SQLiteCommand("INSERT INTO Content (Line, Column, Content) VALUES (@line,@column,@content)", filterDbConnection);
+
             while (!reader.EndOfStream)
             {
                 beginTrans.ExecuteNonQuery();
                 int curCount = 0;
+
                 while (!reader.EndOfStream && curCount < 10000)
                 {
                     readLine = reader.ReadLine();
                     splitLine = readLine.Split(separators);
+
                     for (int column = 0; column < Math.Min(splitLine.Length, nbColumns); column++)
                     {
                         insertCmd.Parameters.Add(new SQLiteParameter("@line", line));
@@ -265,17 +299,22 @@ namespace AnalyseEtControleFEC.Controller
                         insertCmd.Parameters.Add(new SQLiteParameter("@content", splitLine[column]));
                         insertCmd.ExecuteNonQuery();
                     }
+
                     if (splitLine.Length != nbColumns)
                     {
                         errors.Add(line);
                     }
+
                     line++;
                     curCount++;
                 }
+
                 commitTrans.ExecuteNonQuery();
             }
+
             fs.Close();
             filterDbConnection.Close();
+
             return errors;
         }
 
@@ -286,13 +325,17 @@ namespace AnalyseEtControleFEC.Controller
         public String[] GetColumnNames()
         {
             mainDbConnection.Open();
+
             SQLiteDataReader reader = new SQLiteCommand("SELECT Name FROM Column ORDER BY Position ASC",mainDbConnection).ExecuteReader();
             List<String> result = new List<String>();
-            while(reader.Read())
+
+            while (reader.Read())
             {
                 result.Add((String)reader["Name"]);
             }
+
             mainDbConnection.Close();
+
             return result.ToArray();
         }
 
@@ -305,9 +348,12 @@ namespace AnalyseEtControleFEC.Controller
         public String GetContent(int column, int line)
         {
             SQLiteCommand command = new SQLiteCommand("SELECT Content FROM Content WHERE Column = @column AND Line = @line", uiDbConnection);
+
             command.Parameters.Add(new SQLiteParameter("@line", line));
             command.Parameters.Add(new SQLiteParameter("@column", column));
+
             String result = (String)command.ExecuteScalar();
+
             return result;
         }
 
@@ -319,12 +365,15 @@ namespace AnalyseEtControleFEC.Controller
         {
             SQLiteCommand filter;
             SQLiteCommand columnNum;
-            filterDbConnection.Open();
             bool success = false;
+
+            filterDbConnection.Open();
+                        
             if (lastFilterId == -1)
             {
-                columnNum = new SQLiteCommand("CREATE TABLE ColumnNum" + FilterNumber + " AS SELECT DISTINCT Line FROM Content base " + restriction, filterDbConnection);
+                columnNum = new SQLiteCommand("CREATE TABLE ColumnNum" + filterNumber + " AS SELECT DISTINCT Line FROM Content base " + restriction, filterDbConnection);
                 success = false;
+
                 while (!success)
                 {
                     try
@@ -340,12 +389,14 @@ namespace AnalyseEtControleFEC.Controller
                         filterDbConnection.Open();
                     }
                 }
-                filter = new SQLiteCommand("CREATE TABLE Filter" + FilterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM Content base INNER JOIN ColumnNum" + FilterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
+
+                filter = new SQLiteCommand("CREATE TABLE Filter" + filterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM Content base INNER JOIN ColumnNum" + filterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
             }
             else
             {
-                columnNum = new SQLiteCommand("CREATE TABLE ColumnNum" + FilterNumber + " AS SELECT DISTINCT Line FROM Filter"+(lastFilterId)+" base " + restriction, filterDbConnection);
+                columnNum = new SQLiteCommand("CREATE TABLE ColumnNum" + filterNumber + " AS SELECT DISTINCT Line FROM Filter"+(lastFilterId)+" base " + restriction, filterDbConnection);
                 success = false;
+
                 while (!success)
                 {
                     try
@@ -361,15 +412,18 @@ namespace AnalyseEtControleFEC.Controller
                         filterDbConnection.Open();
                     }
                 }
-                filter = new SQLiteCommand("CREATE TABLE Filter" + FilterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM Filter" + lastFilterId + " base INNER JOIN ColumnNum" + FilterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
+
+                filter = new SQLiteCommand("CREATE TABLE Filter" + filterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM Filter" + lastFilterId + " base INNER JOIN ColumnNum" + filterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
             }
+
             success = false;
+
             while (!success)
             {
                 try
                 {
                     filter.ExecuteNonQuery();
-                    new SQLiteCommand("CREATE INDEX AccessIndexFilter" + FilterNumber + " ON Filter" + FilterNumber + " (Column,Line)", filterDbConnection).ExecuteNonQuery();
+                    new SQLiteCommand("CREATE INDEX AccessIndexFilter" + filterNumber + " ON Filter" + filterNumber + " (Column,Line)", filterDbConnection).ExecuteNonQuery();
                     success = true;
                 }
                 catch(SQLiteException e)
@@ -380,7 +434,9 @@ namespace AnalyseEtControleFEC.Controller
                     filterDbConnection.Open();
                 }
             }
-            FilterNumber++;
+
+            filterNumber++;
+
             filterDbConnection.Close();
         }
 
@@ -393,8 +449,10 @@ namespace AnalyseEtControleFEC.Controller
             SQLiteCommand filter;
             SQLiteCommand columnNum;
             String lastTab;
-            filterDbConnection.Open();
             bool success;
+
+            filterDbConnection.Open();
+
             if (lastTabId == -1)
             {
                 lastTab = "Content";
@@ -403,8 +461,10 @@ namespace AnalyseEtControleFEC.Controller
             {
                 lastTab = "Filter" + lastTabId;
             }
-            columnNum = new SQLiteCommand("CREATE TEMP TABLE ColumnNum" + FilterNumber + " AS SELECT DISTINCT Line FROM "+ lastTab +" base " + restriction + " OR Line IN (SELECT Line FROM ColumnNum" + (FilterNumber-1) + ")", filterDbConnection);
+
+            columnNum = new SQLiteCommand("CREATE TEMP TABLE ColumnNum" + filterNumber + " AS SELECT DISTINCT Line FROM "+ lastTab +" base " + restriction + " OR Line IN (SELECT Line FROM ColumnNum" + (filterNumber-1) + ")", filterDbConnection);
             success = false;
+
             while (!success)
             {
                 try
@@ -420,8 +480,10 @@ namespace AnalyseEtControleFEC.Controller
                     filterDbConnection.Open();
                 }
             }
-            filter = new SQLiteCommand("CREATE TEMP TABLE Filter" + FilterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM " + lastTab + " base INNER JOIN ColumnNum" + FilterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
+
+            filter = new SQLiteCommand("CREATE TEMP TABLE Filter" + filterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM " + lastTab + " base INNER JOIN ColumnNum" + filterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
             success = false;
+
             while (!success)
             {
                 try
@@ -437,8 +499,11 @@ namespace AnalyseEtControleFEC.Controller
                     filterDbConnection.Open();
                 }
             }
-            new SQLiteCommand("CREATE INDEX AccessIndexFilter" + FilterNumber + " ON Filter" + FilterNumber + " (Column,Line)", filterDbConnection).ExecuteNonQuery();
-            FilterNumber++;
+
+            new SQLiteCommand("CREATE INDEX AccessIndexFilter" + filterNumber + " ON Filter" + filterNumber + " (Column,Line)", filterDbConnection).ExecuteNonQuery();
+
+            filterNumber++;
+
             filterDbConnection.Close();
         }
 
@@ -449,11 +514,13 @@ namespace AnalyseEtControleFEC.Controller
         public void CleanTempTables(int numberOfTables)
         {
             filterDbConnection.Open();
+
             SQLiteCommand dropColumnNumCommand = new SQLiteCommand(filterDbConnection);
             SQLiteCommand dropFilterCommand = new SQLiteCommand(filterDbConnection);
+
             if (numberOfTables > 2)
             {
-                for (int i = FilterNumber - 2; i >= FilterNumber - numberOfTables; i--)
+                for (int i = filterNumber - 2; i >= filterNumber - numberOfTables; i--)
                 {
                     dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + i;
                     dropFilterCommand.CommandText = "DROP TABLE Filter" + i;
@@ -461,8 +528,10 @@ namespace AnalyseEtControleFEC.Controller
                     dropFilterCommand.ExecuteNonQuery();
                 }
             }
-            dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + (FilterNumber-1);
+
+            dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + (filterNumber-1);
             dropColumnNumCommand.ExecuteNonQuery();
+
             filterDbConnection.Close();
         }
 
@@ -471,20 +540,26 @@ namespace AnalyseEtControleFEC.Controller
         /// </summary>
         public void DeleteAll()
         {
-            filterDbConnection.Open();
             SQLiteCommand command;
-            for(;FilterNumber > 0; FilterNumber--)
+
+            filterDbConnection.Open();
+
+            for (;filterNumber > 0; filterNumber--)
             {
-                command = new SQLiteCommand("DROP Table Filter"+(FilterNumber-1), filterDbConnection);
+                command = new SQLiteCommand("DROP Table Filter"+(filterNumber-1), filterDbConnection);
                 command.ExecuteNonQuery();
                 command.Reset();
             }
+
             command = new SQLiteCommand("DELETE FROM Column", filterDbConnection);
+
             command.ExecuteNonQuery();
             command.Reset();
+
             command = new SQLiteCommand("DELETE FROM Content", filterDbConnection);
             command.ExecuteNonQuery();
             command.Reset();
+
             filterDbConnection.Close();
         }
 
@@ -494,7 +569,7 @@ namespace AnalyseEtControleFEC.Controller
         /// <returns>the last filter id</returns>
         internal int GetLastFilterId()
         {
-            return FilterNumber-1;
+            return filterNumber - 1;
         }
 
         /// <summary>
@@ -504,21 +579,27 @@ namespace AnalyseEtControleFEC.Controller
         public int GetNumberOfLines()
         {
             mainDbConnection.Open();
+
             int result = Convert.ToInt32(new SQLiteCommand("SELECT count(*) FROM Content GROUP BY Column", mainDbConnection).ExecuteScalar());
+
             mainDbConnection.Close();
+
             return result;
         }
 
         /// <summary>
-        /// return the number of line in specified filternumber
+        /// return the number of line in specified filterNumber
         /// </summary>
-        /// <param name="FilterNumber"> the number of the filter we want the number of lines</param>
+        /// <param name="filterNumber"> the number of the filter we want the number of lines</param>
         /// <returns>the number of lines in this filter</returns>
-        public int GetNumberOfLinesInFilter(int FilterNumber)
+        public int GetNumberOfLinesInFilter(int filterNumber)
         {
             mainDbConnection.Open();
-            int result = Convert.ToInt32(new SQLiteCommand("SELECT count(*) FROM Filter"+FilterNumber+" GROUP BY Column", mainDbConnection).ExecuteScalar());
+
+            int result = Convert.ToInt32(new SQLiteCommand("SELECT count(*) FROM Filter"+filterNumber+" GROUP BY Column", mainDbConnection).ExecuteScalar());
+
             mainDbConnection.Close();
+
             return result;
         }
 
@@ -531,14 +612,18 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CheckRegexColumn(int column, String regex)
         {
             List<int> errorLines = new List<int>();
+
             SQLiteCommand command = new SQLiteCommand("SELECT Line FROM Content WHERE Column = @col AND Content NOT REGEXP @regex ORDER BY Line ASC", checkDbConnection);
             command.Parameters.Add(new SQLiteParameter("@col", column));
             command.Parameters.Add(new SQLiteParameter("@regex", regex));
+
             SQLiteDataReader reader = command.ExecuteReader();
+
             while (reader.Read())
             {
                 errorLines.Add((int)reader["Line"]);
             }
+
             return errorLines;
         }
 
@@ -549,8 +634,10 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CompareContentCompAuxNumCompAuxLib()
         {
             bool boolien = false;
-            List<int> Line = new List<int>();
-            pauseCheckIfAsked();
+            List<int> line = new List<int>();
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader reader = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='6' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader reader1 = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='7' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
 
@@ -572,12 +659,14 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     boolien = false;
                 }
+
                 if (!boolien)
                 {
-                    Line.Add(Convert.ToInt32(reader1.GetValue(1)));
+                    line.Add(Convert.ToInt32(reader1.GetValue(1)));
                 }
             }
-            return Line;
+
+            return line;
         }
 
         /// <summary>
@@ -587,8 +676,10 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CompareContentEcritureLetDateLet()
         {
             bool boolien = false;
-            List<int> Line = new List<int>();
-            pauseCheckIfAsked();
+            List<int> line = new List<int>();
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader reader = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='13' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader reader1 = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='14' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
 
@@ -610,12 +701,14 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     boolien = false;
                 }
+
                 if (!boolien)
                 {
-                    Line.Add(Convert.ToInt32(reader1.GetValue(1)));
+                    line.Add(Convert.ToInt32(reader1.GetValue(1)));
                 }
             }
-            return Line;
+
+            return line;
         }
 
         /// <summary>
@@ -625,8 +718,10 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CompareContentMontantdeviseIdevise()
         {
             bool boolien = false;
-            List<int> Line = new List<int>();
-            pauseCheckIfAsked();
+            List<int> line = new List<int>();
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader reader = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='16' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader reader1 = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='17' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
 
@@ -648,12 +743,14 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     boolien = false;
                 }
+
                 if (!boolien)
                 {
-                    Line.Add(Convert.ToInt32(reader1.GetValue(1)));
+                    line.Add(Convert.ToInt32(reader1.GetValue(1)));
                 }
             }
-            return Line;
+
+            return line;
         }
 
         /// <summary>
@@ -663,14 +760,14 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CompareContentPieceDateValidDate()
         {
             bool boolien = false;
-            List<int> Line = new List<int>();
+            List<int> line = new List<int>();
             int pieceDate = 0;
             int validDate = 0;
-            // dbConnection.Open();
-            pauseCheckIfAsked();
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerPieceDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='9' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerValidDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='15' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
-
 
             while (readerPieceDate.Read() && readerValidDate.Read())
             {
@@ -699,12 +796,14 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     boolien = false;
                 }
+
                 if (!boolien)
                 {
-                    Line.Add(Convert.ToInt32(readerPieceDate.GetValue(1)));
+                    line.Add(Convert.ToInt32(readerPieceDate.GetValue(1)));
                 }
             }
-            return Line;
+
+            return line;
         }
 
         /// <summary>
@@ -714,13 +813,15 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CompareContentPieceDateEcritureDate()
         {
             bool boolien = false;
-            List<int> Line = new List<int>();
-            int PieceDate = 0;
+            List<int> line = new List<int>();
+            int pieceDate = 0;
             int ecritureDate = 0;
-            // dbConnection.Open();
-            pauseCheckIfAsked();
+            
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='3' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerPieceDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='9' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerEcritureDate.Read() && readerPieceDate.Read())
             {
                 if (readerEcritureDate.GetValue(0).ToString().Equals(""))
@@ -734,13 +835,13 @@ namespace AnalyseEtControleFEC.Controller
 
                 if (readerPieceDate.GetValue(0).ToString().Equals(""))
                 {
-                    PieceDate = 0;
+                    pieceDate = 0;
                 }
                 else
                 {
-                    PieceDate = Convert.ToInt32(readerPieceDate.GetValue(0));
+                    pieceDate = Convert.ToInt32(readerPieceDate.GetValue(0));
                 }
-                if (PieceDate <= ecritureDate || PieceDate == 0 || ecritureDate == 0)
+                if (pieceDate <= ecritureDate || pieceDate == 0 || ecritureDate == 0)
                 {
                     boolien = true;
                 }
@@ -748,12 +849,14 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     boolien = false;
                 }
+
                 if (!boolien)
                 {
-                    Line.Add(Convert.ToInt32(readerEcritureDate.GetValue(1)));
+                    line.Add(Convert.ToInt32(readerEcritureDate.GetValue(1)));
                 }
             }
-            return Line;
+
+            return line;
         }
 
         /// <summary>
@@ -763,12 +866,15 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CompareContentEcritureDateValidDate()
         {
             bool boolien = false;
-            List<int> Line = new List<int>();
+            List<int> line = new List<int>();
             int ecritureDate = 0;
             int validDate = 0;
-            pauseCheckIfAsked();
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='3' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerValidDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='15' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerEcritureDate.Read() && readerValidDate.Read())
             {
                 if (readerEcritureDate.GetValue(0).ToString().Equals(""))
@@ -795,12 +901,14 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     boolien = false;
                 }
+
                 if (!boolien)
                 {
-                    Line.Add(Convert.ToInt32(readerValidDate.GetValue(1)));
+                    line.Add(Convert.ToInt32(readerValidDate.GetValue(1)));
                 }
             }
-            return Line;
+
+            return line;
         }
 
         /// <summary>
@@ -810,33 +918,36 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CompareContentDateLetPieceDate()
         {
             bool boolien = false;
-            List<int> Line = new List<int>();
-            int PieceDate = 0;
-            int DateLet = 0;
-            pauseCheckIfAsked();
+            List<int> line = new List<int>();
+            int pieceDate = 0;
+            int dateLet = 0;
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerPieceDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='9' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerDateLet = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='14' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerPieceDate.Read() && readerDateLet.Read())
             {
                 if (readerPieceDate.GetValue(0).ToString().Equals(""))
                 {
-                    PieceDate = 0;
+                    pieceDate = 0;
                 }
                 else
                 {
-                    PieceDate = Convert.ToInt32(readerPieceDate.GetValue(0));
+                    pieceDate = Convert.ToInt32(readerPieceDate.GetValue(0));
                 }
 
                 if (readerDateLet.GetValue(0).ToString().Equals(""))
                 {
-                    DateLet = 0;
+                    dateLet = 0;
                 }
                 else
                 {
-                    DateLet = Convert.ToInt32(readerDateLet.GetValue(0));
+                    dateLet = Convert.ToInt32(readerDateLet.GetValue(0));
                 }
 
-                if (DateLet >= PieceDate || PieceDate == 0 || DateLet == 0)
+                if (dateLet >= pieceDate || pieceDate == 0 || dateLet == 0)
                 {
                     boolien = true;
                 }
@@ -844,12 +955,14 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     boolien = false;
                 }
+
                 if (!boolien)
                 {
-                    Line.Add(Convert.ToInt32(readerPieceDate.GetValue(1)));
+                    line.Add(Convert.ToInt32(readerPieceDate.GetValue(1)));
                 }
             }
-            return Line;
+
+            return line;
         }
 
         /// <summary>
@@ -859,11 +972,12 @@ namespace AnalyseEtControleFEC.Controller
         public List<int> CompareContentDateLetEcritureDate()
         {
             bool boolien = false;
-            List<int> Line = new List<int>();
+            List<int> line = new List<int>();
             int ecritureDate = 0;
-            int DateLet = 0;
-            pauseCheckIfAsked();
-            // dbConnection.Open();
+            int dateLet = 0;
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='3' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerDateLet = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='14' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
 
@@ -880,14 +994,14 @@ namespace AnalyseEtControleFEC.Controller
 
                 if (readerDateLet.GetValue(0).ToString().Equals(""))
                 {
-                    DateLet = 0;
+                    dateLet = 0;
                 }
                 else
                 {
-                    DateLet = Convert.ToInt32(readerDateLet.GetValue(0));
+                    dateLet = Convert.ToInt32(readerDateLet.GetValue(0));
                 }
 
-                if (DateLet >= ecritureDate || DateLet == 0 || ecritureDate == 0)
+                if (dateLet >= ecritureDate || dateLet == 0 || ecritureDate == 0)
                 {
                     boolien = true;
                 }
@@ -895,12 +1009,14 @@ namespace AnalyseEtControleFEC.Controller
                 {
                     boolien = false;
                 }
+
                 if (!boolien)
                 {
-                    Line.Add(Convert.ToInt32(readerDateLet.GetValue(1)));
+                    line.Add(Convert.ToInt32(readerDateLet.GetValue(1)));
                 }
             }
-            return Line;
+
+            return line;
         }
 
         /// <summary>
@@ -911,29 +1027,33 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
-            pauseCheckIfAsked();
-            List<String> ListTemp = new List<string>();
+
+            PauseCheckIfAsked();
+
+            List<String> listTemp = new List<string>();
             SQLiteDataReader readerEcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerEcritureNum.Read())
             {
                 SQLiteDataReader readerDebit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='2' and content='" + readerEcritureNum["Content"] + "')", checkDbConnection).ExecuteReader();
                 SQLiteDataReader readerCredit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' and Line in (SELECT Line from Content where column='2' and content='" + readerEcritureNum["Content"] + "')", checkDbConnection).ExecuteReader();
+
                 while (readerDebit.Read() && readerCredit.Read())
                 {
                     debit += Convert.ToDouble(readerDebit.GetValue(0));
-                    // Console.WriteLine(debit);
                     credit += Convert.ToDouble(readerCredit.GetValue(0));
-                    //Console.WriteLine(reader_Credit.GetValue(0));
                 }
+
                 if (Math.Round(debit - credit, 4) != 0)
                 {
-                    //Console.WriteLine(debit - credit);
-                    ListTemp.Add(readerEcritureNum["Content"].ToString());
+                    listTemp.Add(readerEcritureNum["Content"].ToString());
                 }
+
                 debit = 0;
                 credit = 0;
             }
-            return ListTemp;
+
+            return listTemp;
         }
 
         /// <summary>
@@ -944,29 +1064,34 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
-            List<String> ListTemp = new List<string>();
-            pauseCheckIfAsked();
+
+            List<String> listTemp = new List<string>();
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerJournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerJournalCode.Read())
             {
                 SQLiteDataReader readerDebit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + readerJournalCode["Content"] + "')", checkDbConnection).ExecuteReader();
                 SQLiteDataReader readerCredit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' and Line in (SELECT Line from Content where column='0' and content='" + readerJournalCode["Content"] + "')", checkDbConnection).ExecuteReader();
+
                 while (readerDebit.Read() && readerCredit.Read())
                 {
                     debit += Convert.ToDouble(readerDebit.GetValue(0));
-                    // Console.WriteLine(debit);
                     credit += Convert.ToDouble(readerCredit.GetValue(0));
-                    //Console.WriteLine(reader_Credit.GetValue(0));
                 }
+
                 if (Math.Round(debit - credit, 4) != 0)
                 {
-                    //Console.WriteLine(debit - credit);
-                    ListTemp.Add(readerJournalCode["Content"].ToString());
+                    listTemp.Add(readerJournalCode["Content"].ToString());
                 }
+
                 debit = 0;
                 credit = 0;
             }
-            return ListTemp;
+
+            return listTemp;
         }
 
         /// <summary>
@@ -978,21 +1103,22 @@ namespace AnalyseEtControleFEC.Controller
             double debit = 0.0;
             double credit = 0.0;
             bool check = false;
-            pauseCheckIfAsked();
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerDebit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' ", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerCredit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' ", checkDbConnection).ExecuteReader();
+
             while (readerDebit.Read() && readerCredit.Read())
             {
                 debit += Convert.ToDouble(readerDebit.GetValue(0));
-                // Console.WriteLine(debit);
                 credit += Convert.ToDouble(readerCredit.GetValue(0));
-                //Console.WriteLine(reader_Credit.GetValue(0));
             }
             if (Math.Round(debit - credit, 4) != 0)
             {
-                //Console.WriteLine(debit - credit);
                 check = true;
             }
+
             return check;
         }
 
@@ -1005,9 +1131,12 @@ namespace AnalyseEtControleFEC.Controller
             double debit = 0.0;
             double credit = 0.0;
             bool check = false;
-            pauseCheckIfAsked();
+
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerMontant = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='11' ", checkDbConnection).ExecuteReader();
             SQLiteDataReader readerSens = new SQLiteCommand("SELECT Content,Line FROM Content WHERE Column='12' ", checkDbConnection).ExecuteReader();
+
             while (readerMontant.Read() && readerSens.Read())
             {
                 if (readerSens.GetValue(0).ToString().Equals("D"))
@@ -1027,10 +1156,12 @@ namespace AnalyseEtControleFEC.Controller
                     credit += Convert.ToDouble(readerMontant.GetValue(0));
                 }
             }
+
             if (Math.Round(debit - credit, 4) != 0)
             {
                 check = true;
             }
+
             return check;
         }
 
@@ -1042,13 +1173,17 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
-            pauseCheckIfAsked();
-            List<String> ListTemp = new List<string>();
+
+            PauseCheckIfAsked();
+
+            List<String> listTemp = new List<string>();
             SQLiteDataReader readerJournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerJournalCode.Read())
             {
                 SQLiteDataReader readerMontant = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + readerJournalCode["Content"] + "')", checkDbConnection).ExecuteReader();
                 SQLiteDataReader readerSens = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' ", checkDbConnection).ExecuteReader();
+
                 while (readerMontant.Read() && readerSens.Read())
                 {
                     if (readerSens.GetValue(0).ToString().Equals("D"))
@@ -1071,12 +1206,14 @@ namespace AnalyseEtControleFEC.Controller
 
                 if (Math.Round(debit - credit, 4) != 0)
                 {
-                    ListTemp.Add(readerJournalCode["Content"].ToString());
+                    listTemp.Add(readerJournalCode["Content"].ToString());
                 }
+
                 debit = 0;
                 credit = 0;
             }
-            return ListTemp;
+
+            return listTemp;
         }
 
         /// <summary>
@@ -1087,13 +1224,17 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
-            pauseCheckIfAsked();
-            List<String> ListTemp = new List<string>();
+
+            PauseCheckIfAsked();
+
+            List<String> listTemp = new List<string>();
             SQLiteDataReader readerEcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerEcritureNum.Read())
             {
                 SQLiteDataReader readerMontant = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='2' and content='" + readerEcritureNum["Content"] + "')", checkDbConnection).ExecuteReader();
                 SQLiteDataReader readerSens = new SQLiteCommand("SELECT Content FROM Content WHERE Column='12' ", checkDbConnection).ExecuteReader();
+
                 while (readerMontant.Read() && readerSens.Read())
                 {
                     if (readerSens.GetValue(0).ToString().Equals("D"))
@@ -1112,18 +1253,18 @@ namespace AnalyseEtControleFEC.Controller
                     {
                         credit += Convert.ToDouble(readerMontant.GetValue(0));
                     }
-
                 }
 
                 if (Math.Round(debit - credit, 4) != 0)
                 {
-                    //Console.WriteLine(debit - credit);
-                    ListTemp.Add(readerEcritureNum["Content"].ToString());
+                    listTemp.Add(readerEcritureNum["Content"].ToString());
                 }
+
                 debit = 0;
                 credit = 0;
             }
-            return ListTemp;
+
+            return listTemp;
         }
 
         /// <summary>
@@ -1132,8 +1273,10 @@ namespace AnalyseEtControleFEC.Controller
         /// <returns>True if the file is a Montant-Sens file</returns>
         public bool IsMontantSens()
         {
-            pauseCheckIfAsked();
+            PauseCheckIfAsked();
+
             SQLiteDataReader readerColumnName = new SQLiteCommand("SELECT DISTINCT Name FROM Column", checkDbConnection).ExecuteReader();
+
             while (readerColumnName.Read())
             {
                 if (readerColumnName.GetValue(0).ToString().Equals("Montant"))
@@ -1141,6 +1284,7 @@ namespace AnalyseEtControleFEC.Controller
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -1152,13 +1296,17 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
-            pauseCheckIfAsked();
-            List<String> ListTemp = new List<string>();
+
+            PauseCheckIfAsked();
+
+            List<String> listTemp = new List<string>();
             SQLiteDataReader readerJournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerJournalCode.Read())
             {
                 SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='3' and Line in (SELECT Line from Content where column='0' and content='" + readerJournalCode["Content"] + "')", checkDbConnection).ExecuteReader();
                 String month = "";
+
                 while (readerEcritureDate.Read())
                 {
                     if (readerEcritureDate.GetValue(0).ToString().Substring(0, 6).Equals(month))
@@ -1191,8 +1339,9 @@ namespace AnalyseEtControleFEC.Controller
                     {
                         if (Math.Round(debit - credit, 4) != 0)
                         {
-                            ListTemp.Add(readerJournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
+                            listTemp.Add(readerJournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
                         }
+
                         debit = 0.0;
                         credit = 0.0;
                         month = readerEcritureDate.GetValue(0).ToString().Substring(0, 6);
@@ -1221,14 +1370,17 @@ namespace AnalyseEtControleFEC.Controller
                         }
                     }    
                 }
+
                 if (Math.Round(debit - credit, 4) != 0)
-                    {
-                    ListTemp.Add(readerJournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
+                {
+                    listTemp.Add(readerJournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
                 }
+
                 debit = 0.0;
                 credit = 0.0;
             }
-            return ListTemp;
+
+            return listTemp;
         }
 
         /// <summary>
@@ -1239,17 +1391,19 @@ namespace AnalyseEtControleFEC.Controller
         {
             double debit = 0.0;
             double credit = 0.0;
-            pauseCheckIfAsked();
-            List<String> ListTemp = new List<string>();
+
+            PauseCheckIfAsked();
+
+            List<String> listTemp = new List<string>();
             SQLiteDataReader readerJournalCode = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='0' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerJournalCode.Read())
             {
                 SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='3' and Line in (SELECT Line from Content where column='0' and content='" + readerJournalCode["Content"] + "')", checkDbConnection).ExecuteReader();
                 String month = "";
+
                 while (readerEcritureDate.Read())
                 {
-                    //Console.WriteLine("Reader : "+ reader_Ecriture_Date.GetValue(0).ToString());
-                    //Console.WriteLine("Month : " + month);
                     if (readerEcritureDate.GetValue(0).ToString().Substring(0, 6).Equals(month))
                     {
                         SQLiteDataReader readerDebit = new SQLiteCommand("SELECT Content FROM Content WHERE Column='11' and Line in (SELECT Line from Content where column='0' and content='" + readerJournalCode["Content"] + "' and Line in (SELECT Line from Content where column='3' and content='" + readerEcritureDate["Content"] + "'))", checkDbConnection).ExecuteReader();
@@ -1258,19 +1412,16 @@ namespace AnalyseEtControleFEC.Controller
                         while (readerDebit.Read() && readerCredit.Read())
                         {
                             debit += Convert.ToDouble(readerDebit.GetValue(0));
-                            //Console.WriteLine("Debit : "+debit);
                             credit += Convert.ToDouble(readerCredit.GetValue(0));
-                            //Console.WriteLine("Credit : "+credit);
-
                         }
                     }
                     else
                     {
-                        //Console.WriteLine("Debit - Credit : " + Math.Round(debit - credit, 4));
                         if (Math.Round(debit - credit, 4) != 0 && !readerJournalCode["Content"].ToString().Equals(null))
                         {
-                            ListTemp.Add(readerJournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
+                            listTemp.Add(readerJournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4, "/"));
                         }
+
                         debit = 0.0;
                         credit = 0.0;
                         month = readerEcritureDate.GetValue(0).ToString().Substring(0, 6);
@@ -1281,21 +1432,21 @@ namespace AnalyseEtControleFEC.Controller
                         while (readerDebit.Read() && readerCredit.Read())
                         {
                             debit += Convert.ToDouble(readerDebit.GetValue(0));
-                            // Console.WriteLine(debit);
                             credit += Convert.ToDouble(readerCredit.GetValue(0));
-                            //Console.WriteLine(reader_Credit.GetValue(0));
-
                         }
                     }
                 }
+
                 if (Math.Round(debit - credit, 4) != 0)
                 {
-                    ListTemp.Add(readerJournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4,"/"));
+                    listTemp.Add(readerJournalCode["Content"].ToString() + "\t Mois : " + month.Insert(4,"/"));
                 }
+
                 debit = 0.0;
                 credit = 0.0;
             }
-            return ListTemp;
+
+            return listTemp;
         }
 
         /// <summary>
@@ -1304,22 +1455,28 @@ namespace AnalyseEtControleFEC.Controller
         /// <returns>The list of JournalCode and Month where there are errors</returns>
         public List<String> IsDateUniqueForEcritureNum()
         {
-            pauseCheckIfAsked();
+            PauseCheckIfAsked();
+
             List<String> listTemp = new List<string>();
             SQLiteDataReader readerEcritureNum = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='2' ORDER BY Column ASC", checkDbConnection).ExecuteReader();
+
             while (readerEcritureNum.Read())
             {
                 int count = 0;
+
                 SQLiteDataReader readerEcritureDate = new SQLiteCommand("SELECT DISTINCT Content FROM Content WHERE Column='3' and Line in (SELECT Line from Content where column='2' and content='" + readerEcritureNum["Content"] + "')", checkDbConnection).ExecuteReader();
+
                 while (readerEcritureDate.Read())
                 {
                     count++;
                 }
+
                 if (count > 1)
                 {
                     listTemp.Add(readerEcritureNum["Content"].ToString());
                 }
             }
+
             return listTemp;
         }
     }

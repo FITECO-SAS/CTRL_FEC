@@ -299,7 +299,6 @@ namespace AnalyseEtControleFEC
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.fichierToolStripMenuItem.Text = "Fichier";
-            this.fichierToolStripMenuItem.Click += new System.EventHandler(this.fichierToolStripMenuItem_Click);
             // 
             // ouvrirFECToolStripMenuItem
             // 
@@ -356,14 +355,12 @@ namespace AnalyseEtControleFEC
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Name = "sauvegarderLeFiltreSimpleToolStripMenuItem";
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Text = "Sauvegarder le filtre simple";
-            this.sauvegarderLeFiltreSimpleToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderLeFiltreSimpleToolStripMenuItem_Click);
             // 
             // sauvegarderLeFiltreÉlaboréToolStripMenuItem
             // 
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Name = "sauvegarderLeFiltreÉlaboréToolStripMenuItem";
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Text = "Sauvegarder le filtre élaboré";
-            this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderLeFiltreÉlaboréToolStripMenuItem_Click);
             // 
             // analyseToolStripMenuItem
             // 
@@ -414,7 +411,6 @@ namespace AnalyseEtControleFEC
             this.analyserToolStripMenuItem.Name = "analyserToolStripMenuItem";
             this.analyserToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.analyserToolStripMenuItem.Text = "Analyser";
-            this.analyserToolStripMenuItem.Click += new System.EventHandler(this.analyserToolStripMenuItem_Click_1);
             // 
             // declarationsToolStripMenuItem
             // 

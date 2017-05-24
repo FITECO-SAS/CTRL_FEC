@@ -20,14 +20,17 @@ namespace AnalyseEtControleFEC.Model
         /// the configuration that this logger must use
         /// </summary>
         private Configuration configuration;
+        
         /// <summary>
         /// the dataBase access for the Accounting Entry File informations
         /// </summary>
         private DataBaseController dataBaseAccess;
+        
         /// <summary>
         /// the regime of the Accounting Entry File
         /// </summary>
         private String regime;
+        
         /// <summary>
         /// the plan of the Accounting Entry File
         /// </summary>
@@ -37,15 +40,17 @@ namespace AnalyseEtControleFEC.Model
         /// boolean that must become false if an error is detected
         /// </summary>
         private bool isFileCorrect;
+        
         /// <summary>
         /// boolean that must become false if a name error is detected
         /// </summary>
         private bool isNameCorrect;
+        
         /// <summary>
         /// boolean that must become false if the columns are not one of the possible columns sets
         /// </summary>
-        private bool AreColumnsCorrect;
-        // private bool CompAuxNum_CompAuxLib;
+        private bool areColumnsCorrect;
+        
         /// <summary>
         /// a list of Tuple each containing a column name, the associated error message and a list of line number where an error has been found for it
         /// </summary>
@@ -66,8 +71,7 @@ namespace AnalyseEtControleFEC.Model
             this.plan = plan;
             isFileCorrect = true;
             isNameCorrect = true;
-            AreColumnsCorrect = true;
-            // CompAuxNum_CompAuxLib = true;
+            areColumnsCorrect = true;
             lineRegexErrors = new List<Tuple<String, String, List<int>>>();
         }
 
@@ -77,9 +81,11 @@ namespace AnalyseEtControleFEC.Model
         public void CheckCompAuxNumCompAuxLib()
         {
             List<int> list = dataBaseAccess.CompareContentCompAuxNumCompAuxLib();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("L'un des champs CompAuxNum ou CompAuxLib est vide :\n", "Class ErrorLogger");
+
                 foreach (int i in list)
                 {
                     LogHelper.WriteToFile("\t\t" + i, "Ligne numero");
@@ -94,10 +100,12 @@ namespace AnalyseEtControleFEC.Model
         public void CheckEcritureLetDateLet()
         {
             List<int> list = dataBaseAccess.CompareContentEcritureLetDateLet();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("L'un des champs EcritureLet ou DateLet est vide :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs EcritureLet et DateLet sont pas conforment ligne :");
+
                 foreach (int i in list)
                 {
                     LogHelper.WriteToFile("\t\t" + i, "Ligne numero");
@@ -112,10 +120,12 @@ namespace AnalyseEtControleFEC.Model
         public void CheckMontantdeviseIdevise()
         {
             List<int> list = dataBaseAccess.CompareContentMontantdeviseIdevise();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("L'un des champs Montantdevise ou Idevise est vide :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs Montantdevise et Idevise sont pas conforment ligne :");
+
                 foreach (int i in list)
                 {
                     LogHelper.WriteToFile("\t\t" + i, "Ligne numero");
@@ -130,10 +140,12 @@ namespace AnalyseEtControleFEC.Model
         public void CheckDateLetEcritureDate()
         {
             List<int> list = dataBaseAccess.CompareContentDateLetEcritureDate();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champs DateLet < EcritureDate :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs DateLet et EcritureDate sont pas conforment ligne :");
+
                 foreach (int i in list)
                 {
                     LogHelper.WriteToFile("\t\t" + i, "Ligne numero");
@@ -148,10 +160,12 @@ namespace AnalyseEtControleFEC.Model
         public void CheckPieceDateEcritureDate()
         {
             List<int> list = dataBaseAccess.CompareContentPieceDateEcritureDate();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champ PieceDate > EcritureDate :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs PieceDate et EcritureDate sont pas conforment ligne :");
+
                 foreach (int i in list)
                 {
                     LogHelper.WriteToFile("\t\t" + i, "Ligne numero");
@@ -166,10 +180,12 @@ namespace AnalyseEtControleFEC.Model
         public void CheckPieceDateValidDate()
         {
             List<int> list = dataBaseAccess.CompareContentPieceDateValidDate();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champ PieceDate > ValidDate :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs PieceDate et ValidDate sont pas conforment ligne :");
+
                 foreach (int i in list)
                 {
                     LogHelper.WriteToFile("\t\t" + i, "Ligne numero");
@@ -184,10 +200,12 @@ namespace AnalyseEtControleFEC.Model
         public void CheckEcritureDateValidDate()
         {
             List<int> list = dataBaseAccess.CompareContentEcritureDateValidDate();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champ EcritureDate > ValidDate :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs EcritureDate et ValidDate sont pas conforment ligne :");
+
                 foreach (int i in list)
                 {
                     LogHelper.WriteToFile("\t\t" + i, "Ligne numero");
@@ -202,10 +220,12 @@ namespace AnalyseEtControleFEC.Model
         public void CheckDateLetPieceDate()
         {
             List<int> list = dataBaseAccess.CompareContentDateLetPieceDate();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("Le champs DateLet < PieceDate :\n", "Class ErrorLogger");
                 Console.WriteLine("\t\t -Les champs DateLet et PieceDate sont pas conforment ligne :");
+
                 foreach (int i in list)
                 {
                     LogHelper.WriteToFile("\t\t" + i, "Ligne numero");
@@ -220,9 +240,11 @@ namespace AnalyseEtControleFEC.Model
         public void CheckDebitCreditEcritureNum()
         {
             List<String> list = dataBaseAccess.EcritureNumDebitCredit();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits :", "Class ErrorLogger");
+
                 foreach (String str in list)
                 {
                     LogHelper.WriteToFile("\t\t\t"+str,"EcritureNum");
@@ -236,12 +258,13 @@ namespace AnalyseEtControleFEC.Model
         public void CheckDebitCreditJournalCode()
         {
             List<String> list = dataBaseAccess.JournalCodeDebitCredit();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits :", "Class ErrorLogger");
+
                 foreach (String str in list)
                 {
-                    //Console.WriteLine("\t\t JournalCode :" + str);
                     LogHelper.WriteToFile("\t\t\t" + str, "JournalCode");
                 }
             }
@@ -253,6 +276,7 @@ namespace AnalyseEtControleFEC.Model
         public void CheckDebitCreditAllLines()
         {
             bool list = dataBaseAccess.AllLinesDebitCredit();
+
             if (list == true)
             {
                 Console.WriteLine("Erreur Debit Credit\n");
@@ -266,9 +290,9 @@ namespace AnalyseEtControleFEC.Model
         public void CheckMontantSensAllLines()
         {
             bool list = dataBaseAccess.AllLinesMontantSens();
+
             if (list == true)
             {
-                //Console.WriteLine("Erreur Montant Sens \n");
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur l'ensemble du fichier\n", "Class ErrorLogger");
             }
         }
@@ -279,12 +303,13 @@ namespace AnalyseEtControleFEC.Model
         public void CheckMontantSensJournalCode()
         {
             List<String> list = dataBaseAccess.JournalCodeMontantSens();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur les JournalCode :", "Class ErrorLogger");
+
                 foreach (String str in list)
                 {
-                    //Console.WriteLine("\t\t JournalCode :" + str);
                     LogHelper.WriteToFile("\t\t\t" + str, "JournalCode");
                 }
             }
@@ -296,12 +321,13 @@ namespace AnalyseEtControleFEC.Model
         public void CheckMontantSensEcritureNum()
         {
             List<String> list = dataBaseAccess.EcritureNumMontantSens();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur les EcritureNum :", "Class ErrorLogger");
+
                 foreach (String str in list)
                 {
-                    //Console.WriteLine("\t\t EcritureNum :" + str);
                      LogHelper.WriteToFile("\t\t\t" + str,"EcritureNum ");
                 }
             }
@@ -313,9 +339,11 @@ namespace AnalyseEtControleFEC.Model
         public void CheckCompareMontantSensByMonth()
         {
             List<String> list = dataBaseAccess.CompareMontantSensByMonth();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur un mois d'un journal :", "Class ErrorLogger");
+
                 foreach (String str in list)
                 {
                     LogHelper.WriteToFile("\t\t\t" + str, "JournalCode");
@@ -329,9 +357,11 @@ namespace AnalyseEtControleFEC.Model
         public void CheckCompareDebitCreditByMonth()
         {
             List<String> list = dataBaseAccess.CompareDebitCreditByMonth();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La somme des débits est differente de la somme des crédits sur un mois d'un journal :", "Class ErrorLogger");
+
                 foreach (String str in list)
                 {
                     LogHelper.WriteToFile("\t\t\t" + str, "JournalCode");
@@ -367,12 +397,13 @@ namespace AnalyseEtControleFEC.Model
         public void CheckIsDateUniqueForEcritureNum()
         {
             List<String> list = dataBaseAccess.IsDateUniqueForEcritureNum();
+
             if (list.Count != 0)
             {
                 LogHelper.WriteToFile("La date sur l'ecritureNum n'est pas unique :", "Class ErrorLogger");
+
                 foreach (String str in list)
                 {
-                    //Console.WriteLine("\t\t EcritureNum :" + str);
                     LogHelper.WriteToFile("\t\t\t" + str, "EcritureNum");
                 }
             }
@@ -387,12 +418,14 @@ namespace AnalyseEtControleFEC.Model
         public bool CheckName(String name)
         {
             Regex nameRegex = new Regex(configuration.nameRegex);
+
             if (!nameRegex.IsMatch(name))
             {
                 isFileCorrect = false;
                 isNameCorrect = false;
                 return false;
             }
+
             return true;
         }
 
@@ -403,10 +436,11 @@ namespace AnalyseEtControleFEC.Model
         public bool CheckColumns()
         {
             String[] columns = dataBaseAccess.GetColumnNames();
-            bool check = false;
+
             foreach (List<String> set in configuration.GetColumnSets(regime, plan))
             {
                 bool found = true;
+
                 for (int i = 0; i < columns.Length; i++)
                 {
                     if (!set[i].Equals(columns[i]))
@@ -414,14 +448,17 @@ namespace AnalyseEtControleFEC.Model
                         found = false;
                     }
                 }
+
                 if (found)
                 {
-                    AreColumnsCorrect = true;
+                    areColumnsCorrect = true;
                     return true;
                 }
             }
+
             isFileCorrect = false;
-            AreColumnsCorrect = false;
+            areColumnsCorrect = false;
+
             return false;
         }
 
@@ -433,11 +470,12 @@ namespace AnalyseEtControleFEC.Model
         {
             String[] columns = dataBaseAccess.GetColumnNames();
             String listErrorColumns = "";
+
             bool checkColumns = true;
             int line = 0;
+
             foreach (List<String> set in configuration.GetColumnSets(regime, plan))
             {
-                bool found = true;
                 for (int i = 0; i < columns.Length; i++)
                 {
                     if (!set[i].Equals(columns[i]))
@@ -446,16 +484,24 @@ namespace AnalyseEtControleFEC.Model
                         listErrorColumns += " " + set[i];
                     }
                 }
+
                 if (checkColumns)
                 {
-                    AreColumnsCorrect = true;
+                    areColumnsCorrect = true;
                     return "";
                 }
-                if (line == 0) listErrorColumns += " OU ";
+
+                if (line == 0)
+                {
+                    listErrorColumns += " OU ";
+                }
+
                 line++;
             }
+
             isFileCorrect = false;
-            AreColumnsCorrect = false;
+            areColumnsCorrect = false;
+
             return listErrorColumns;
         }
 
@@ -468,10 +514,13 @@ namespace AnalyseEtControleFEC.Model
         {
             bool valid = true;
             String[] columns = dataBaseAccess.GetColumnNames();
+
             Tuple<String, String>[] columnsRegex = configuration.GetColumnsRegex(columns);
+
             for (int i = 0; i < columns.Length; i++)
             {
                 List<int> errors = dataBaseAccess.CheckRegexColumn(i, columnsRegex[i].Item1);
+
                 if (errors.Count > 0)
                 {
                     valid = false;
@@ -479,6 +528,7 @@ namespace AnalyseEtControleFEC.Model
                     lineRegexErrors.Add(new Tuple<String, String, List<int>>(columns[i], columnsRegex[i].Item2, errors));
                 }
             }
+
             return valid;
         }
 
@@ -501,12 +551,14 @@ namespace AnalyseEtControleFEC.Model
             {
                 log += "Une ou plusieurs erreur(s) a/ont été détéctée(s) :\n";
                 LogHelper.WriteToFile("\n Une ou plusieurs erreur(s) a/ont été détéctée(s) :", "Class ErrorLogger");
+
                 if (!isNameCorrect)
                 {
                     log += "\t - Le nom du fichier n'est pas conforme\n";
                     LogHelper.WriteToFile("\n Le nom du fichier n'est pas conforme", "Class ErrorLogger");
                 }
-                if (!AreColumnsCorrect)
+
+                if (!areColumnsCorrect)
                 {
                     log += "\t- Les entêtes de colonnes ne correspondent à aucun ensemble possible pour le régime et le plan indiqués. Voici les ensembles possibles :\n";
                     log += "\t\t-" + GetErrorColumns() + "\n";
@@ -518,16 +570,16 @@ namespace AnalyseEtControleFEC.Model
 
             foreach (Tuple<String, String, List<int>> col in lineRegexErrors)
             {
-
                 log += "\n Le champs : " + col.Item1 + " n'est pas valide : " + col.Item2;
-
                 LogHelper.WriteToFile("\n"+ col.Item2, "Class ErrorLogger");
+
                 foreach (int i in col.Item3)
                 {
                     log += "\n erreur en ligne : " + i;
                     LogHelper.WriteToFile("\n\t\t" + i, "Ligne numero");
                 }
             }
+
             return log;
         }
     }

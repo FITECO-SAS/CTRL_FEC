@@ -14,47 +14,32 @@ namespace AnalyseEtControleFEC.Controller
         {
             this.dataBaseController = dataBaseController;
         }
-        /*
-        La liste des opérateurs à prévoir pour les champs de type Numérique et Date est la suivante :
-            - Est supérieur à
-            - Est supérieur ou égal à
-            - Est inférieur à
-            - Est inférieur ou égal à
-            - Est égal à
-            - Est différent de
-        La liste des opérateurs à prévoir pour les champs de type Chaîne de caractères est la suivante :
-            - Contient
-            - Ne contient pas
-            - Commence par
-            - Ne commence pas par
-            - Se termine par
-            - Ne se termine pas par
-            - Est égal à
-            - Est différent de
-         */
 
-        /*public void SimpleFilterStatementController(string[] colums, string[] whereClause, bool[] isOr)
-        {
-            string finalWhereClause = " WHERE ";
-            for (int i = 0; i < whereClause.Length; i++)
-            {
-                finalWhereClause += whereClause[i] + " ";
-                if (i < isOr.Length)
-                {
-                    if (isOr[i])
-                        finalWhereClause += "OR ";
-                    else
-                        finalWhereClause += "AND ";
-                }
-            }
-            dataBaseController.AddFilterAdd(finalWhereClause);
-        }*/
+        /*
+            La liste des opérateurs à prévoir pour les champs de type Numérique et Date est la suivante :
+                - Est supérieur à
+                - Est supérieur ou égal à
+                - Est inférieur à
+                - Est inférieur ou égal à
+                - Est égal à
+                - Est différent de
+            La liste des opérateurs à prévoir pour les champs de type Chaîne de caractères est la suivante :
+                - Contient
+                - Ne contient pas
+                - Commence par
+                - Ne commence pas par
+                - Se termine par
+                - Ne se termine pas par
+                - Est égal à
+                - Est différent de
+         */
 
         public string NumericOrDateSimpleFilter(string column, string typeFilter, string value)
         {
             
             string[] columnNames = dataBaseController.GetColumnNames();
             string columnNameInDb = "";
+
             for (int i = 0; i < columnNames.Length; i++)
             {
                 if (columnNames[i].Equals(column))
@@ -62,6 +47,7 @@ namespace AnalyseEtControleFEC.Controller
             }
 
             string result = " WHERE Column = " + columnNameInDb;
+
             switch (typeFilter)
             {
                 case "Est supérieur à":
@@ -78,7 +64,6 @@ namespace AnalyseEtControleFEC.Controller
                     return result + " AND NOT ISEQUAL(Content, '" + value + "')";
                 default:
                     return result + "";
-
             }
         }
 
@@ -86,6 +71,7 @@ namespace AnalyseEtControleFEC.Controller
         {
             string[] columnNames = dataBaseController.GetColumnNames();
             string columnNameInDb = "";
+
             for (int i = 0; i < columnNames.Length; i++)
             {
                 if (columnNames[i].Equals(column))
@@ -93,6 +79,7 @@ namespace AnalyseEtControleFEC.Controller
             }
 
             string result = " WHERE Column = " + columnNameInDb;
+
             switch (typeFilter)
             {
                 case "Contient":
@@ -115,6 +102,5 @@ namespace AnalyseEtControleFEC.Controller
                     return result ;
             }
         }
-
     }
 }
