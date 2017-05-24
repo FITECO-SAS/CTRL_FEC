@@ -373,7 +373,7 @@ namespace AnalyseEtControleFEC
             {
                 filterIdOfLastTab = -1;
             }
-            int numberOfFilters = 1;
+            int numberOfFilters = ShowValidLineSimpleFilter();
             Tuple<String, String, String> filter1 = new Tuple<string, string, string>(field1ComboBox.SelectedItem.ToString(), condition1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
             Tuple<bool, String, String, String> filter2 = null;
             Tuple<bool, String, String, String> filter3 = null;
@@ -384,84 +384,70 @@ namespace AnalyseEtControleFEC
             Tuple<bool, String, String, String> filter8 = null;
             if (andRadioButton1.Checked)
             {
-                numberOfFilters++;
                 filter2 = new Tuple<bool, string, string, string>(false, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
             }
             else if (orRadioButton1.Checked)
             {
-                numberOfFilters++;
                 filter2 = new Tuple<bool, string, string, string>(true, field2ComboBox.SelectedItem.ToString(), condition2ComboBox.SelectedItem.ToString(), value2TextBox.Text);
             }
             if(andRadioButton1.Checked || orRadioButton1.Checked)
             {
                 if (andRadioButton2.Checked)
                 {
-                    numberOfFilters++;
                     filter3 = new Tuple<bool, string, string, string>(false, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
                 }
                 else if (orRadioButton2.Checked)
                 {
-                    numberOfFilters++;
                     filter3 = new Tuple<bool, string, string, string>(true, field3ComboBox.SelectedItem.ToString(), condition3ComboBox.SelectedItem.ToString(), value3TextBox.Text);
                 }
                 if (andRadioButton2.Checked || orRadioButton2.Checked)
                 {
                     if (andRadioButton3.Checked)
                     {
-                        numberOfFilters++;
                         filter4 = new Tuple<bool, string, string, string>(false, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
                     }
                     else if (orRadioButton3.Checked)
                     {
-                        numberOfFilters++;
                         filter4 = new Tuple<bool, string, string, string>(true, field4ComboBox.SelectedItem.ToString(), condition4ComboBox.SelectedItem.ToString(), value4TextBox.Text);
                     }
                     if (andRadioButton3.Checked || orRadioButton3.Checked)
                     {
                         if (andRadioButton4.Checked)
                         {
-                            numberOfFilters++;
                             filter5 = new Tuple<bool, string, string, string>(false, field5ComboBox.SelectedItem.ToString(), condition5ComboBox.SelectedItem.ToString(), value5TextBox.Text);
                         }
                         else if (orRadioButton4.Checked)
                         {
-                            numberOfFilters++;
                             filter5 = new Tuple<bool, string, string, string>(true, field5ComboBox.SelectedItem.ToString(), condition5ComboBox.SelectedItem.ToString(), value5TextBox.Text);
                         }
                         if (andRadioButton4.Checked || orRadioButton4.Checked)
                         {
                             if (andRadioButton5.Checked)
                             {
-                                numberOfFilters++;
                                 filter6 = new Tuple<bool, string, string, string>(false, field6ComboBox.SelectedItem.ToString(), condition6ComboBox.SelectedItem.ToString(), value6TextBox.Text);
                             }
                             else if (orRadioButton5.Checked)
                             {
-                                numberOfFilters++;
                                 filter6 = new Tuple<bool, string, string, string>(true, field6ComboBox.SelectedItem.ToString(), condition6ComboBox.SelectedItem.ToString(), value6TextBox.Text);
                             }
                             if (andRadioButton5.Checked || orRadioButton5.Checked)
                             {
                                 if (andRadioButton6.Checked)
                                 {
-                                    numberOfFilters++;
                                     filter7 = new Tuple<bool, string, string, string>(false, field7ComboBox.SelectedItem.ToString(), condition7ComboBox.SelectedItem.ToString(), value7TextBox.Text);
                                 }
                                 else if (orRadioButton6.Checked)
                                 {
-                                    numberOfFilters++;
                                     filter7 = new Tuple<bool, string, string, string>(true, field7ComboBox.SelectedItem.ToString(), condition7ComboBox.SelectedItem.ToString(), value7TextBox.Text);
                                 }
                                 if (andRadioButton6.Checked || orRadioButton6.Checked)
                                 {
                                     if (andRadioButton7.Checked)
                                     {
-                                        numberOfFilters++;
                                         filter8 = new Tuple<bool, string, string, string>(false, field8ComboBox.SelectedItem.ToString(), condition8ComboBox.SelectedItem.ToString(), value8TextBox.Text);
                                     }
                                     else if (orRadioButton7.Checked)
                                     {
-                                        numberOfFilters++;
                                         filter8 = new Tuple<bool, string, string, string>(true, field8ComboBox.SelectedItem.ToString(), condition8ComboBox.SelectedItem.ToString(), value8TextBox.Text);
                                     }
                                 }
