@@ -54,7 +54,10 @@ namespace AnalyseEtControleFEC.Controller
             Tuple<bool, String, String, String> filter7 = data.Item4.Item6;
             Tuple<bool, String, String, String> filter8 = data.Item4.Item7;
             Start start = data.Item5;
-            addFilter(filterIdOfLastTab, false, filter1.Item1, filter1.Item2, filter1.Item3);
+            if(numberOfFilters >= 1)
+            {
+                addFilter(filterIdOfLastTab, false, filter1.Item1, filter1.Item2, filter1.Item3);
+            }
             if (numberOfFilters >= 2)
             {
                 if (!filter2.Item1)
