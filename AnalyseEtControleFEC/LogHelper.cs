@@ -7,42 +7,49 @@ using System.Threading.Tasks;
 
 namespace AnalyseEtControleFEC
 {
+    /// <summary>
+    /// Manage the creation and the filling of the structural
+    /// report file.
+    /// </summary>
     class LogHelper
     {
         public static string file { get; set; } = "";
 
-
+        /// <summary>
+        /// Write the information about controls in the file
+        /// </summary>
+        /// <param name="errorMessage">The error message</param>
+        /// <param name="className"></param>
         public static void WriteToFile(string errorMessage, string className)
         {
             DateTime nowDate = DateTime.Now;
             string shortDate = String.Format("{0:yyyy-MM-dd-HH-mm}", nowDate);
             string filename = "Rapport_" + file.Split('.')[0] + "_" + string.Format("{0}.log", shortDate);
             
-            //création du nom de fichier .log
+            // Creation of the log file
             filename = filename.Replace("/", "-");
             
-            //récupérer le path complet, application PC
+            // Get complete file path
             string rootPath = Path.GetFullPath("./Data/Log/");
             string fullFilename = string.Format(@"{0}{1}", rootPath, filename);
             
-            //vérifier les dossiers Data & Log
+            // Check Data & Log folders
             if (!Directory.Exists(rootPath))
             {
-                //création du dossier
+                // Folder creation
                 Directory.CreateDirectory(rootPath);
             }
             
-            //vérifier le fichier
+            // Check file
             if (!System.IO.File.Exists(fullFilename))
             {
-                //création du fichier log du jour
                 System.IO.FileStream f = System.IO.File.Create(fullFilename);
                 f.Close();
             }
 
             using (StreamWriter writer = new StreamWriter(fullFilename, true))
             {
-                //écriture dans le fichier log du jour
+                // Writting in the file
                 writer.WriteLine(string.Format(
                                        "[{0} ON {1}] : {2}",
                                        DateTime.Now,

@@ -8,6 +8,9 @@ namespace AnalyseEtControleFEC.Controller
 {
     public class SimpleFilterController
     {
+        /// <summary>
+        /// Reference to DataBaseController
+        /// </summary>
         private DataBaseController dataBaseController;
 
         public SimpleFilterController(DataBaseController dataBaseController)
@@ -15,25 +18,33 @@ namespace AnalyseEtControleFEC.Controller
             this.dataBaseController = dataBaseController;
         }
 
+
         /*
-            La liste des opérateurs à prévoir pour les champs de type Numérique et Date est la suivante :
-                - Est supérieur à
-                - Est supérieur ou égal à
-                - Est inférieur à
-                - Est inférieur ou égal à
-                - Est égal à
-                - Est différent de
-            La liste des opérateurs à prévoir pour les champs de type Chaîne de caractères est la suivante :
-                - Contient
-                - Ne contient pas
-                - Commence par
-                - Ne commence pas par
-                - Se termine par
-                - Ne se termine pas par
-                - Est égal à
-                - Est différent de
+            The list of operators to be provided for the fields of type Numeric and Date is :
+                 - Is greater than
+                 - Is greater than or equal to
+                 - Is inferior to
+                 - Is less than or equal to
+                 - Is equal to
+                 - Is different from
+            The list of operators to be provided for the String type fields is :
+                 - Contains
+                 - Does not contain
+                 - Starts with
+                 - Do not start with
+                 - To end by
+                 - Does not end with
+                 - Is equal to
+                 - Is different from
          */
 
+        /// <summary>
+        /// Filter if value is a numeric or a date
+        /// </summary>
+        /// <param name="column">The associate column</param>
+        /// <param name="typeFilter">The sort of the filter</param>
+        /// <param name="value">The value</param>
+        /// <returns>The value filtered</returns>
         public string NumericOrDateSimpleFilter(string column, string typeFilter, string value)
         {
             
@@ -67,6 +78,13 @@ namespace AnalyseEtControleFEC.Controller
             }
         }
 
+        /// <summary>
+        /// Filter if value is a text
+        /// </summary>
+        /// <param name="column">The associate column</param>
+        /// <param name="typeFilter">The sort of the filter</param>
+        /// <param name="value">The value</param>
+        /// <returns>The value filtered</returns>
         public string TextSimpleFilter(string column, string typeFilter, string value)
         {
             string[] columnNames = dataBaseController.GetColumnNames();

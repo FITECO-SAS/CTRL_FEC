@@ -24,9 +24,11 @@ namespace AnalyseEtControleFEC
         bool isLine7OK = false;
         bool isLine8OK = false;
 
+        /// <summary>
+        /// Start.cs Constructor
+        /// </summary>
         public Start()
         {
-            /*init*/
             InitializeComponent();
             panel1.Visible = false;
             panel2.Visible = false;
@@ -56,17 +58,17 @@ namespace AnalyseEtControleFEC
             label6.Text = "";
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Open the OpenFile form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ouvrirFECToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFile openFile = new OpenFile();
             openFile.ShowDialog();
 
-            /*if the user has't chosen any file or the table is empty, he can't click other button*/
+            // If the user has't chosen any file or the table is empty, he can't click other button
             if (openFile.DialogResult == DialogResult.OK)
             {
                 fileLoaded = true;
@@ -75,12 +77,21 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*After click the item, this application will be closed*/
+        /// <summary>
+        /// Close the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void quitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// Return in e.value the value which will be show in the cellule
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
             MainController controller = MainController.Get();
@@ -95,17 +106,31 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Getter for the DataGridView
+        /// </summary>
+        /// <returns>The datagridview</returns>
         internal DataGridView getDataGridView()
         {
             return dataGridView1;
         }
 
-        /*after double click the tab, this tabpages will be closed*/
+        /// <summary>
+        /// Close the tabpages after double click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tabControl1_DoubleClick(object sender, EventArgs e)
         {
             tabControl1.TabPages.RemoveAt(tabControl1.SelectedIndex);
         }
 
+        /// <summary>
+        /// Fill and reinitialize combobox after selection of "Et" or "Ou"
+        /// in the treeview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             panel1.Visible = false;
@@ -131,7 +156,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this is used to update the selected node*/
+        /// <summary>
+        /// Update treeview selected node
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView1_MouseDown(object sender, MouseEventArgs e)
         {
             if ((sender as TreeView) != null)
@@ -140,7 +169,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*after select different node, different panel will show*/
+        /// <summary>
+        /// Show different panel after selection of a node
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView1_Click(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode.Text == "Simple")
@@ -164,12 +197,24 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Start the File exportation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
             ExportFile exportFile = new ExportFile();
             exportFile.ExportToCsv(dataGridView1);
         }
 
+        // The following methods concern filling Condition column combobox
+
+        /// <summary>
+        /// Fill 1st combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (field1ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field1ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
@@ -189,6 +234,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Fill 2nd combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void field2ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (field2ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field2ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
@@ -208,6 +258,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Fill 3rd combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void field3ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (field3ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field3ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
@@ -227,6 +282,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Fill 4th combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void field4ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (field4ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field4ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
@@ -246,6 +306,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Fill 5th combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void field5ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (field5ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field5ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
@@ -265,6 +330,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Fill 6th combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void field6ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (field6ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field6ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
@@ -284,6 +354,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Fill 7th combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void field7ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (field7ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field7ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
@@ -303,6 +378,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Fill 8th combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void field8ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (field8ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field8ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
@@ -322,6 +402,9 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Reinitialize the filter form
+        /// </summary>
         private void reinitializeFilterForm()
         {
             andRadioButton1.Checked = false;
@@ -344,6 +427,11 @@ namespace AnalyseEtControleFEC
             value4TextBox.Text = "";
         }
 
+        /// <summary>
+        /// Start Filter Procedure
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             MainController controller = MainController.Get();
@@ -489,37 +577,61 @@ namespace AnalyseEtControleFEC
                         Tuple<bool, String, String, String>>(filter2, filter3, filter4, filter5, filter6, filter7, filter8), this));
         }
 
-        /*hide the panel1*/
+        /// <summary>
+        /// Hide Simple Filter form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click_1(object sender, EventArgs e)
         {
             panel1.Visible = false;
         }
 
-        /*hide the panel2*/
+        /// <summary>
+        /// Hide Line Selection Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button5_Click(object sender, EventArgs e)
         {
             panel2.Visible = false;
         }
 
-        /*to show the line number of the table*/
+        /// <summary>
+        /// Show the line number of the table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);
         }
 
-        /*show the panel7*/
+        /// <summary>
+        /// Show Panel 7...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button7_Click(object sender, EventArgs e)
         {
             panel7.Visible = true;
         }
 
-        /*hide the panel23*/
+        /// <summary>
+        /// Hide Colomn Selection Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button18_Click(object sender, EventArgs e)
         {
             panel23.Visible = false;
         }
 
-        /*display the corresponding item in comboBox2*/
+        /// <summary>
+        /// Display corresponding item in combobox2
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox1.Text == "Journal")
@@ -566,8 +678,12 @@ namespace AnalyseEtControleFEC
                 comboBox2.Items.Add("Toutes les pièces en date du mois de");
             }
         }
-
-        /*this function is used to determine the condition will show in which textBox*/
+        
+        /// <summary>
+        /// Determine the wondition will show in which textBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button8_Click(object sender, EventArgs e)
         {
             if (panel19.Visible == true && panel21.Visible == false)
@@ -620,13 +736,23 @@ namespace AnalyseEtControleFEC
 
         }
 
-        /*this fuction is used to delete a condition*/
+        // The following methods delete condition for simplefilter form
+
+        /// <summary>
+        /// Delete a condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button16_Click(object sender, EventArgs e)
         {
             panel21.Visible = false;
         }
 
-        /*this fuction is used to delete a condition*/
+        /// <summary>
+        /// Delete a condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button15_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -640,7 +766,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this fuction is used to delete a condition*/
+        /// <summary>
+        /// Delete a condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button14_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -660,7 +790,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this fuction is used to delete a condition*/
+        /// <summary>
+        /// Delete a condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button13_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -687,7 +821,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this fuction is used to delete a condition*/
+        /// <summary>
+        /// Delete a condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button12_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -722,7 +860,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this fuction is used to delete a condition*/
+        /// <summary>
+        /// Delete a condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button11_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -766,7 +908,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this fuction is used to delete a condition*/
+        /// <summary>
+        /// Delete a condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button10_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -820,7 +966,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this fuction is used to delete a condition*/
+        /// <summary>
+        /// Delete a condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button9_Click(object sender, EventArgs e)
         {
             if (panel21.Visible == true)
@@ -885,7 +1035,14 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        // Following methods exchange position of two condition
+        // in the simple filter form
+
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button20_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -894,7 +1051,11 @@ namespace AnalyseEtControleFEC
             textBox9.Text = text;
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button27_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -903,7 +1064,11 @@ namespace AnalyseEtControleFEC
             textBox8.Text = text;
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button26_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -912,7 +1077,11 @@ namespace AnalyseEtControleFEC
             textBox7.Text = text;
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button25_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -921,7 +1090,11 @@ namespace AnalyseEtControleFEC
             textBox6.Text = text;
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button24_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -930,7 +1103,11 @@ namespace AnalyseEtControleFEC
             textBox5.Text = text;
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button23_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -939,7 +1116,11 @@ namespace AnalyseEtControleFEC
             textBox4.Text = text;
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button22_Click(object sender, EventArgs e)
         {
             string text = null;
@@ -948,7 +1129,11 @@ namespace AnalyseEtControleFEC
             textBox3.Text = text;
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button19_Click(object sender, EventArgs e)
         {
             if (panel9.Visible == true)
@@ -960,7 +1145,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button21_Click(object sender, EventArgs e)
         {
             if (panel11.Visible == true)
@@ -972,7 +1161,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button28_Click(object sender, EventArgs e)
         {
             if (panel13.Visible == true)
@@ -984,7 +1177,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button29_Click(object sender, EventArgs e)
         {
             if (panel15.Visible == true)
@@ -996,7 +1193,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button30_Click(object sender, EventArgs e)
         {
             if (panel17.Visible == true)
@@ -1008,7 +1209,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is used to exchange the positions of two conditions*/
+        /// <summary>
+        /// Exchange the positions of two conditions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button31_Click(object sender, EventArgs e)
         {
             if (panel19.Visible == true)
@@ -1020,12 +1225,21 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Hide Panel 6...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button33_Click(object sender, EventArgs e)
         {
             panel6.Visible = false;
         }
 
-        /*this function is used to determine the selected line number*/
+        /// <summary>
+        /// Determine the selected line number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_MouseUp(object sender, MouseEventArgs e)
         {
             if (dataGridView1.SelectedRows.Count >= 0)
@@ -1090,7 +1304,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is used to create a new table by the line number*/
+        /// <summary>
+        /// Create a new table from the line number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button4_Click(object sender, EventArgs e)
         {
             List<int> list = new List<int>();
@@ -1158,7 +1376,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is used to create a new table by the column number*/
+        /// <summary>
+        /// Create new table from the column number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button17_Click(object sender, EventArgs e)
         {
             List<int> list = new List<int>();
@@ -1227,7 +1449,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
-        /*this function is ussed to add [x] at the tab*/
+        /// <summary>
+        /// Add [x] to the tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
             e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
@@ -1235,7 +1461,11 @@ namespace AnalyseEtControleFEC
             e.DrawFocusRectangle();
         }
 
-        /*this function is used to add an action when the user click the [x]*/
+        /// <summary>
+        /// Add an action when the user click the [x]
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tabControl1_MouseDown(object sender, MouseEventArgs e)
         {
             for (int i = 0; i < this.tabControl1.TabPages.Count; i++)
@@ -1252,6 +1482,13 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        // Following methods enable control button if associated textbot is empty or not
+
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (textBox1.Text != "" && fileLoaded == true)
@@ -1264,6 +1501,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBox11_TextChanged(object sender, EventArgs e)
         {
             if (textBox11.Text != "" && fileLoaded == true)
@@ -1276,6 +1518,11 @@ namespace AnalyseEtControleFEC
             } 
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void value1TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value1TextBox.Text != "" && field1ComboBox.Text != "" && condition1ComboBox.Text != "")
@@ -1291,6 +1538,11 @@ namespace AnalyseEtControleFEC
             ShowValidLineSimpleFilter();
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void value2TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true))
@@ -1305,6 +1557,11 @@ namespace AnalyseEtControleFEC
             ShowValidLineSimpleFilter();
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void value3TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true))
@@ -1319,6 +1576,11 @@ namespace AnalyseEtControleFEC
             ShowValidLineSimpleFilter();
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void value4TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true))
@@ -1333,6 +1595,11 @@ namespace AnalyseEtControleFEC
             ShowValidLineSimpleFilter();
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void value5TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true))
@@ -1347,6 +1614,11 @@ namespace AnalyseEtControleFEC
             ShowValidLineSimpleFilter();
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void value6TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true))
@@ -1361,6 +1633,11 @@ namespace AnalyseEtControleFEC
             ShowValidLineSimpleFilter();
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void value7TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true))
@@ -1375,6 +1652,11 @@ namespace AnalyseEtControleFEC
             ShowValidLineSimpleFilter();
         }
 
+        /// <summary>
+        /// Enable associated button if the textBox is empty or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void value8TextBox_TextChanged(object sender, EventArgs e)
         {
             if (value8TextBox.Text != "" && field8ComboBox.Text != "" && condition8ComboBox.Text != "" && (andRadioButton7.Checked == true || orRadioButton7.Checked == true))
@@ -1389,6 +1671,14 @@ namespace AnalyseEtControleFEC
             ShowValidLineSimpleFilter();
         }
 
+        // Following methods concern buttonDown and buttonUp and the exchange of two condition
+        // in the FilterSimple Form
+
+        /// <summary>
+        /// Down the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonDown1_Click(object sender, EventArgs e)
         {
             if (panelLine2.Visible == true && (value1TextBox.Text != "" && field1ComboBox.Text != "" && condition1ComboBox.Text != "") && (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)))
@@ -1410,6 +1700,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Down the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonDown2_Click(object sender, EventArgs e)
         {
             if (panelLine3.Visible == true && (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)) && (value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true)))
@@ -1442,6 +1737,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Down the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonDown3_Click(object sender, EventArgs e)
         {
             if (panelLine4.Visible == true && (value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true)) && (value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)))
@@ -1471,6 +1771,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Down the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonDown4_Click(object sender, EventArgs e)
         {
             if (panelLine5.Visible == true && (value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)) && (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)))
@@ -1500,6 +1805,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Down the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonDown5_Click(object sender, EventArgs e)
         {
             if (panelLine6.Visible == true && (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)) && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)))
@@ -1529,6 +1839,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Down the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonDown6_Click(object sender, EventArgs e)
         {
             if (panelLine7.Visible == true && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)) && (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)))
@@ -1559,6 +1874,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Down the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonDown7_Click(object sender, EventArgs e)
         {
             if (panelLine8.Visible == true && (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)) && (value8TextBox.Text != "" && field8ComboBox.Text != "" && condition8ComboBox.Text != "" && (andRadioButton7.Checked == true || orRadioButton7.Checked == true)))
@@ -1588,6 +1908,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Up the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonUp2_Click(object sender, EventArgs e)
         {
             if ((value1TextBox.Text != "" && field1ComboBox.Text != "" && condition1ComboBox.Text != "") && (value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)))
@@ -1609,6 +1934,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Up the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonUp3_Click(object sender, EventArgs e)
         {
             if ((value2TextBox.Text != "" && field2ComboBox.Text != "" && condition2ComboBox.Text != "" && (andRadioButton1.Checked == true || orRadioButton1.Checked == true)) && (value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true)))
@@ -1641,6 +1971,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Up the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonUp4_Click(object sender, EventArgs e)
         {
             if ((value3TextBox.Text != "" && field3ComboBox.Text != "" && condition3ComboBox.Text != "" && (andRadioButton2.Checked == true || orRadioButton2.Checked == true)) && (value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)))
@@ -1670,6 +2005,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Up the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonUp5_Click(object sender, EventArgs e)
         {
             if ((value4TextBox.Text != "" && field4ComboBox.Text != "" && condition4ComboBox.Text != "" && (andRadioButton3.Checked == true || orRadioButton3.Checked == true)) && (value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)))
@@ -1700,6 +2040,11 @@ namespace AnalyseEtControleFEC
 
         }
 
+        /// <summary>
+        /// Up the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonUp6_Click(object sender, EventArgs e)
         {
             if ((value5TextBox.Text != "" && field5ComboBox.Text != "" && condition5ComboBox.Text != "" && (andRadioButton4.Checked == true || orRadioButton4.Checked == true)) && (value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)))
@@ -1730,6 +2075,11 @@ namespace AnalyseEtControleFEC
 
         }
 
+        /// <summary>
+        /// Up the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonUp7_Click(object sender, EventArgs e)
         {
             if ((value6TextBox.Text != "" && field6ComboBox.Text != "" && condition6ComboBox.Text != "" && (andRadioButton5.Checked == true || orRadioButton5.Checked == true)) && (value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)))
@@ -1760,6 +2110,11 @@ namespace AnalyseEtControleFEC
 
         }
 
+        /// <summary>
+        /// Up the condition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonUp8_Click(object sender, EventArgs e)
         {
             if ((value7TextBox.Text != "" && field7ComboBox.Text != "" && condition7ComboBox.Text != "" && (andRadioButton6.Checked == true || orRadioButton6.Checked == true)) && (value8TextBox.Text != "" && field8ComboBox.Text != "" && condition8ComboBox.Text != "" && (andRadioButton7.Checked == true || orRadioButton7.Checked == true)))
@@ -1790,6 +2145,10 @@ namespace AnalyseEtControleFEC
 
         }
 
+        /// <summary>
+        /// Show the valid line
+        /// </summary>
+        /// <returns></returns>
         private int ShowValidLineSimpleFilter()
         {
             int nb = 0;
@@ -1890,6 +2249,9 @@ namespace AnalyseEtControleFEC
             return nb;
         }
 
+        /// <summary>
+        /// Reinitialize the tab
+        /// </summary>
         public void reinitializeTabs()
         {
             foreach (TabPage page in tabControl1.TabPages)
@@ -1901,6 +2263,9 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Finalization of the creation of filters
+        /// </summary>
         public void FinalizeFilterCreation()
         {
             MainController controller = MainController.Get();
@@ -1915,12 +2280,20 @@ namespace AnalyseEtControleFEC
             tabControl1.SelectedTab = myTabPage;
         }
 
+        /// <summary>
+        /// Init progress bar
+        /// </summary>
         public void ControlsStart()
         {
             progressBar1.Value = 0;
+            button3.Invoke(new Action(() => button3.Enabled = false));
             label6.Text = "Les contrôles sont en cours";
         }
 
+        /// <summary>
+        /// Manage progress bar
+        /// </summary>
+        /// <param name="value"></param>
         public void ControlsUpdate(int value)
         {
             progressBar1.Invoke(new Action(() => progressBar1.Value = value));
@@ -1928,9 +2301,10 @@ namespace AnalyseEtControleFEC
             if (progressBar1.Value == progressBar1.Maximum)
             {
                 label6.Invoke(new Action(() => label6.Text = "Les contrôles sont terminés"));
+
+                // Autorize Export CSV
+                button3.Invoke(new Action(() => button3.Enabled = true));
             }
         }
     }
 }
-
-

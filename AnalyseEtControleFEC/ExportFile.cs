@@ -4,10 +4,13 @@ using System.IO;
 
 namespace AnalyseEtControleFEC
 {
+    /// <summary>
+    /// Manage csv exportation
+    /// </summary>
     class ExportFile
     {
         /// <summary>
-        /// this function is used to export the table as a .csv file
+        /// This function is used to export the table as a .csv file
         /// </summary>
         /// <param name="dgv"></param>
         public void ExportToCsv(DataGridView dgv)
@@ -15,12 +18,12 @@ namespace AnalyseEtControleFEC
             string delimiter = ",";
             string filename = "csv.csv";
 
-            /*the position of the file*/
-            string fullFilename = Path.Combine(@"G:\", filename);
+            // The position of the file
+            string fullFilename = Path.Combine(@".\CSV", filename);
 
             StreamWriter csvStreamWriter = new StreamWriter(fullFilename, false, System.Text.Encoding.UTF8);
 
-            //output header data
+            // Output header data
             string strHeader = "";
 
             for (int i = 0; i < dgv.Columns.Count; i++)
@@ -29,7 +32,7 @@ namespace AnalyseEtControleFEC
             }
             csvStreamWriter.WriteLine(strHeader);
 
-            //output rows data
+            // Output rows data
             for (int j = 0; j < dgv.Rows.Count; j++)
             {
                 string strRowValue = "";

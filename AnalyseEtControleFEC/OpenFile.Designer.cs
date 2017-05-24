@@ -82,7 +82,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "OpenFile";
             this.Text = "OpenFile";
-            this.Load += new System.EventHandler(this.OpenFile_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

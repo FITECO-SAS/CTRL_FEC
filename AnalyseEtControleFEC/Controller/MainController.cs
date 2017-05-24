@@ -334,6 +334,9 @@ namespace AnalyseEtControleFEC.Controller
             return dataBaseController;
         }
 
+        /// <summary>
+        /// Start the configuration and the mainWindow
+        /// </summary>
         public void Start()
         {
             Application.EnableVisualStyles();

@@ -9,6 +9,9 @@ using System.Diagnostics;
 
 namespace AnalyseEtControleFEC.Controller
 {
+    /// <summary>
+    /// Add SQLite function for REGEX
+    /// </summary>
     [SQLiteFunction(Name = "REGEXP", Arguments = 2, FuncType = FunctionType.Scalar)]
     public class RegExSQLiteFunction : SQLiteFunction
     {
@@ -18,6 +21,9 @@ namespace AnalyseEtControleFEC.Controller
         }
     }
 
+    /// <summary>
+    /// Add SQLite function for REGEX
+    /// </summary>
     [SQLiteFunction(Name = "ISSTRICTLYSUPERIOR", Arguments = 2, FuncType = FunctionType.Scalar)]
     public class IsStrictlySuperiorSQLiteFunction : SQLiteFunction
     {
@@ -54,6 +60,9 @@ namespace AnalyseEtControleFEC.Controller
         }
     }
 
+    /// <summary>
+    /// Add SQLite function for REGEX
+    /// </summary>
     [SQLiteFunction(Name = "ISSUPERIOR", Arguments = 2, FuncType = FunctionType.Scalar)]
     public class IsSuperiorSQLiteFunction : SQLiteFunction
     {
@@ -90,6 +99,9 @@ namespace AnalyseEtControleFEC.Controller
         }
     }
 
+    /// <summary>
+    /// Add SQLite function for REGEX
+    /// </summary>
     [SQLiteFunction(Name = "ISEQUAL", Arguments = 2, FuncType = FunctionType.Scalar)]
     public class IsEqualSQLiteFunction : SQLiteFunction
     {
@@ -127,14 +139,39 @@ namespace AnalyseEtControleFEC.Controller
     /// </summary>
     public class DataBaseController
     {
+        /// <summary>
+        /// Main Database Connection
+        /// </summary>
         SQLiteConnection mainDbConnection;
+
+        /// <summary>
+        /// Database Connection for check methods
+        /// </summary>
         SQLiteConnection checkDbConnection;
+
+        /// <summary>
+        /// Database Connection for filter methods
+        /// </summary>
         SQLiteConnection filterDbConnection;
+
+        /// <summary>
+        /// Database Connection for ui
+        /// </summary>
         SQLiteConnection uiDbConnection;
 
+        /// <summary>
+        /// The file name
+        /// </summary>
         String fileName;
 
+        /// <summary>
+        /// The sort of the filter
+        /// </summary>
         private int filterNumber;
+
+        /// <summary>
+        /// Check if a pause is needed 
+        /// </summary>
         private bool requestedCheckPause;
 
         public void RequestCheckPause()
@@ -168,6 +205,8 @@ namespace AnalyseEtControleFEC.Controller
         {
             this.fileName = fileName;
             requestedCheckPause = false;
+
+            filterNumber = 0;
         }
 
         /// <summary>
@@ -209,8 +248,6 @@ namespace AnalyseEtControleFEC.Controller
                     SQLiteFunction.RegisterFunction(typeof(IsSuperiorSQLiteFunction));
                     SQLiteFunction.RegisterFunction(typeof(IsEqualSQLiteFunction));
 
-                    filterNumber = 0;
-
                     mainDbConnection.Close();
                 }
             }
@@ -241,6 +278,13 @@ namespace AnalyseEtControleFEC.Controller
             }
         }
 
+        /// <summary>
+        /// Get the content from a filter
+        /// </summary>
+        /// <param name="column">The associate column</param>
+        /// <param name="line">The associate line</param>
+        /// <param name="filterNumber">The sort of the filter</param>
+        /// <returns></returns>
         internal object GetContentFromFilter(int column, int line, int filterNumber)
         {
             SQLiteCommand command = new SQLiteCommand("SELECT Content FROM Filter"+filterNumber+" WHERE Column = @column AND Line = @line", uiDbConnection);
@@ -250,7 +294,6 @@ namespace AnalyseEtControleFEC.Controller
 
             return (String)command.ExecuteScalar();
         }
-
 
         /// <summary>
         /// Fill the dataBase by reading an Accounting Entry File
@@ -462,7 +505,7 @@ namespace AnalyseEtControleFEC.Controller
                 lastTab = "Filter" + lastTabId;
             }
 
-            columnNum = new SQLiteCommand("CREATE TEMP TABLE ColumnNum" + filterNumber + " AS SELECT DISTINCT Line FROM "+ lastTab +" base " + restriction + " OR Line IN (SELECT Line FROM ColumnNum" + (filterNumber-1) + ")", filterDbConnection);
+            columnNum = new SQLiteCommand("CREATE TABLE ColumnNum" + filterNumber + " AS SELECT DISTINCT Line FROM "+ lastTab +" base " + restriction + " OR Line IN (SELECT Line FROM ColumnNum" + (filterNumber-1) + ")", filterDbConnection);
             success = false;
 
             while (!success)
@@ -481,7 +524,7 @@ namespace AnalyseEtControleFEC.Controller
                 }
             }
 
-            filter = new SQLiteCommand("CREATE TEMP TABLE Filter" + filterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM " + lastTab + " base INNER JOIN ColumnNum" + filterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
+            filter = new SQLiteCommand("CREATE TABLE Filter" + filterNumber + " AS SELECT base.Line AS 'BaseLine', Column, Content, colNum.rowid AS 'Line' FROM " + lastTab + " base INNER JOIN ColumnNum" + filterNumber + " colNum ON base.Line = colNum.Line", filterDbConnection);
             success = false;
 
             while (!success)
@@ -529,7 +572,7 @@ namespace AnalyseEtControleFEC.Controller
                 }
             }
 
-            dropColumnNumCommand.CommandText = "DROP TABLE ColumnNum" + (filterNumber-1);
+            dropColumnNumCommand.CommandText = "DROP TABLE IF EXISTS ColumnNum" + (filterNumber-1);
             dropColumnNumCommand.ExecuteNonQuery();
 
             filterDbConnection.Close();

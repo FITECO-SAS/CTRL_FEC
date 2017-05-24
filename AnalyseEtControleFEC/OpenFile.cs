@@ -19,6 +19,11 @@ namespace AnalyseEtControleFEC
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Open a txt file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
@@ -28,7 +33,7 @@ namespace AnalyseEtControleFEC
             openFile.FilterIndex = 2;
             openFile.RestoreDirectory = false;
             
-            /*if the user hasn't chosen a file, he can't click other button*/
+            // If the user hasn't chosen a file, he can't click other button
             if (openFile.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = openFile.FileName;
@@ -39,6 +44,11 @@ namespace AnalyseEtControleFEC
             }
         }
 
+        /// <summary>
+        /// Show the file in the DataGridView and start the controls procedure
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
             MainController.Get().OpenFile(filePath,fileName);
@@ -47,15 +57,13 @@ namespace AnalyseEtControleFEC
             this.Dispose();
         }
 
-        //This fonction is used to get the address of the file SQLite 
+        /// <summary>
+        /// Get the address of the SQLite file
+        /// </summary>
+        /// <returns>The address of the SQLite file</returns>
         public string GetConnection()
         {
             return textBox1.Text;
-        }
-
-        private void OpenFile_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

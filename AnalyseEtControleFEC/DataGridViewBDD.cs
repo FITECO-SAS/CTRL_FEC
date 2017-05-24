@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace ProCol
 {
+    /// <summary>
+    /// Add an int field to the datagridview in order to know which filter is associate with it
+    /// </summary>
     class DataGridViewBDD : DataGridView
     {
         public int numGridView { get; set; }
