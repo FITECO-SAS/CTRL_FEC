@@ -129,12 +129,20 @@ namespace AnalyseEtControleFEC
             field2ComboBox.Items.Clear();
             field3ComboBox.Items.Clear();
             field4ComboBox.Items.Clear();
+            field5ComboBox.Items.Clear();
+            field6ComboBox.Items.Clear();
+            field7ComboBox.Items.Clear();
+            field8ComboBox.Items.Clear();
             for (int i = 0; i < dataGridView1.ColumnCount; i++)
             {
                 field1ComboBox.Items.Add(dataGridView1.Columns[i].Name);
                 field2ComboBox.Items.Add(dataGridView1.Columns[i].Name);
                 field3ComboBox.Items.Add(dataGridView1.Columns[i].Name);
                 field4ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field5ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field6ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field7ComboBox.Items.Add(dataGridView1.Columns[i].Name);
+                field8ComboBox.Items.Add(dataGridView1.Columns[i].Name);
             }
         }
         /*this is used to update the selected node*/
@@ -195,7 +203,7 @@ namespace AnalyseEtControleFEC
 
         private void field2ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (field2ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field2ComboBox.SelectedItem.ToString().ToUpper().Contains("NUM") ||
+            if (field2ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field2ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
                 field2ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field2ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
             {
                 condition2ComboBox.Items.Clear();
@@ -214,7 +222,7 @@ namespace AnalyseEtControleFEC
 
         private void field3ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (field3ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field3ComboBox.SelectedItem.ToString().ToUpper().Contains("NUM") ||
+            if (field3ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field3ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
                 field3ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field3ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
             {
                 condition3ComboBox.Items.Clear();
@@ -233,7 +241,7 @@ namespace AnalyseEtControleFEC
 
         private void field4ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (field4ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field4ComboBox.SelectedItem.ToString().ToUpper().Contains("NUM") ||
+            if (field4ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field4ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
                 field4ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field4ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
             {
                 condition4ComboBox.Items.Clear();
@@ -247,6 +255,82 @@ namespace AnalyseEtControleFEC
                 condition4ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
                 "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
                 condition4ComboBox.SelectedItem = condition4ComboBox.Items[0];
+            }
+        }
+
+        private void field5ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (field5ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field5ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
+                field5ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field5ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
+            {
+                condition5ComboBox.Items.Clear();
+                condition5ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
+                    "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
+                condition5ComboBox.SelectedItem = condition5ComboBox.Items[0];
+            }
+            else
+            {
+                condition5ComboBox.Items.Clear();
+                condition5ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
+                "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition5ComboBox.SelectedItem = condition5ComboBox.Items[0];
+            }
+        }
+
+        private void field6ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (field6ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field6ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
+                field6ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field6ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
+            {
+                condition6ComboBox.Items.Clear();
+                condition6ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
+                    "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
+                condition6ComboBox.SelectedItem = condition6ComboBox.Items[0];
+            }
+            else
+            {
+                condition6ComboBox.Items.Clear();
+                condition6ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
+                "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition6ComboBox.SelectedItem = condition6ComboBox.Items[0];
+            }
+        }
+
+        private void field7ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (field7ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field7ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
+                field7ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field7ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
+            {
+                condition7ComboBox.Items.Clear();
+                condition7ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
+                    "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
+                condition7ComboBox.SelectedItem = condition7ComboBox.Items[0];
+            }
+            else
+            {
+                condition7ComboBox.Items.Clear();
+                condition7ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
+                "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition7ComboBox.SelectedItem = condition7ComboBox.Items[0];
+            }
+        }
+
+        private void field8ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (field8ComboBox.SelectedItem.ToString().ToUpper().Contains("DATE") || field8ComboBox.SelectedItem.ToString().ToUpper().Contains("MONTANT") ||
+                field8ComboBox.SelectedItem.ToString().ToUpper().Contains("DEBIT") || field8ComboBox.SelectedItem.ToString().ToUpper().Contains("CREDIT"))
+            {
+                condition8ComboBox.Items.Clear();
+                condition8ComboBox.Items.AddRange(new object[] {"", "Est supérieur à", "Est supérieur ou égal à",
+                    "Est inférieur à","Est inférieur ou égal à","Est égal à","Est différent de" });
+                condition8ComboBox.SelectedItem = condition8ComboBox.Items[0];
+            }
+            else
+            {
+                condition8ComboBox.Items.Clear();
+                condition8ComboBox.Items.AddRange(new object[] {"", "Contient", "Ne contient pas","Commence par",
+                "Ne commence pas par","Se termine par","Ne se termine pas par","Est égal à","Est différent de" });
+                condition8ComboBox.SelectedItem = condition8ComboBox.Items[0];
             }
         }
 

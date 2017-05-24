@@ -295,27 +295,27 @@ namespace AnalyseEtControleFEC
             this.fermerFECToolStripMenuItem,
             this.quitterToolStripMenuItem});
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
-            this.fichierToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
+            this.fichierToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.fichierToolStripMenuItem.Text = "Fichier";
             this.fichierToolStripMenuItem.Click += new System.EventHandler(this.fichierToolStripMenuItem_Click);
             // 
             // ouvrirFECToolStripMenuItem
             // 
             this.ouvrirFECToolStripMenuItem.Name = "ouvrirFECToolStripMenuItem";
-            this.ouvrirFECToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.ouvrirFECToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.ouvrirFECToolStripMenuItem.Text = "Ouvrir FEC";
             this.ouvrirFECToolStripMenuItem.Click += new System.EventHandler(this.ouvrirFECToolStripMenuItem_Click);
             // 
             // fermerFECToolStripMenuItem
             // 
             this.fermerFECToolStripMenuItem.Name = "fermerFECToolStripMenuItem";
-            this.fermerFECToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.fermerFECToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.fermerFECToolStripMenuItem.Text = "Fermer FEC";
             // 
             // quitterToolStripMenuItem
             // 
             this.quitterToolStripMenuItem.Name = "quitterToolStripMenuItem";
-            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.quitterToolStripMenuItem.Text = "Quitter";
             this.quitterToolStripMenuItem.Click += new System.EventHandler(this.quitterToolStripMenuItem_Click);
             // 
@@ -328,38 +328,38 @@ namespace AnalyseEtControleFEC
             this.sauvegarderLeFiltreSimpleToolStripMenuItem,
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem});
             this.outilsToolStripMenuItem.Name = "outilsToolStripMenuItem";
-            this.outilsToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
+            this.outilsToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.outilsToolStripMenuItem.Text = "Outils";
             // 
             // afficherLesÉcrituresToolStripMenuItem
             // 
             this.afficherLesÉcrituresToolStripMenuItem.Name = "afficherLesÉcrituresToolStripMenuItem";
-            this.afficherLesÉcrituresToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
+            this.afficherLesÉcrituresToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
             this.afficherLesÉcrituresToolStripMenuItem.Text = "Afficher les écritures";
             // 
             // copierLaSélectionToolStripMenuItem
             // 
             this.copierLaSélectionToolStripMenuItem.Name = "copierLaSélectionToolStripMenuItem";
-            this.copierLaSélectionToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
+            this.copierLaSélectionToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
             this.copierLaSélectionToolStripMenuItem.Text = "Copier la sélection";
             // 
             // exporterLaSélectionToolStripMenuItem
             // 
             this.exporterLaSélectionToolStripMenuItem.Name = "exporterLaSélectionToolStripMenuItem";
-            this.exporterLaSélectionToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
+            this.exporterLaSélectionToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
             this.exporterLaSélectionToolStripMenuItem.Text = "Exporter la sélection";
             // 
             // sauvegarderLeFiltreSimpleToolStripMenuItem
             // 
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Name = "sauvegarderLeFiltreSimpleToolStripMenuItem";
-            this.sauvegarderLeFiltreSimpleToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
+            this.sauvegarderLeFiltreSimpleToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Text = "Sauvegarder le filtre simple";
             this.sauvegarderLeFiltreSimpleToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderLeFiltreSimpleToolStripMenuItem_Click);
             // 
             // sauvegarderLeFiltreÉlaboréToolStripMenuItem
             // 
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Name = "sauvegarderLeFiltreÉlaboréToolStripMenuItem";
-            this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
+            this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Text = "Sauvegarder le filtre élaboré";
             this.sauvegarderLeFiltreÉlaboréToolStripMenuItem.Click += new System.EventHandler(this.sauvegarderLeFiltreÉlaboréToolStripMenuItem_Click);
             // 
@@ -371,13 +371,13 @@ namespace AnalyseEtControleFEC
             this.sélectionnerToolStripMenuItem,
             this.analyserToolStripMenuItem});
             this.analyseToolStripMenuItem.Name = "analyseToolStripMenuItem";
-            this.analyseToolStripMenuItem.Size = new System.Drawing.Size(77, 24);
+            this.analyseToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
             this.analyseToolStripMenuItem.Text = "Analyse";
             // 
             // filtrerToolStripMenuItem
             // 
             this.filtrerToolStripMenuItem.Name = "filtrerToolStripMenuItem";
-            this.filtrerToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.filtrerToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.filtrerToolStripMenuItem.Text = "Filtrer";
             // 
             // trierToolStripMenuItem
@@ -386,31 +386,31 @@ namespace AnalyseEtControleFEC
             this.mesFiltresSimplesToolStripMenuItem,
             this.mesFiltresÉlaborésToolStripMenuItem});
             this.trierToolStripMenuItem.Name = "trierToolStripMenuItem";
-            this.trierToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.trierToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.trierToolStripMenuItem.Text = "Trier";
             // 
             // mesFiltresSimplesToolStripMenuItem
             // 
             this.mesFiltresSimplesToolStripMenuItem.Name = "mesFiltresSimplesToolStripMenuItem";
-            this.mesFiltresSimplesToolStripMenuItem.Size = new System.Drawing.Size(227, 26);
+            this.mesFiltresSimplesToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
             this.mesFiltresSimplesToolStripMenuItem.Text = "Mes filtres simples";
             // 
             // mesFiltresÉlaborésToolStripMenuItem
             // 
             this.mesFiltresÉlaborésToolStripMenuItem.Name = "mesFiltresÉlaborésToolStripMenuItem";
-            this.mesFiltresÉlaborésToolStripMenuItem.Size = new System.Drawing.Size(227, 26);
+            this.mesFiltresÉlaborésToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
             this.mesFiltresÉlaborésToolStripMenuItem.Text = "Mes filtres élaborés";
             // 
             // sélectionnerToolStripMenuItem
             // 
             this.sélectionnerToolStripMenuItem.Name = "sélectionnerToolStripMenuItem";
-            this.sélectionnerToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.sélectionnerToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.sélectionnerToolStripMenuItem.Text = "Sélectionner";
             // 
             // analyserToolStripMenuItem
             // 
             this.analyserToolStripMenuItem.Name = "analyserToolStripMenuItem";
-            this.analyserToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.analyserToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.analyserToolStripMenuItem.Text = "Analyser";
             this.analyserToolStripMenuItem.Click += new System.EventHandler(this.analyserToolStripMenuItem_Click_1);
             // 
@@ -421,25 +421,25 @@ namespace AnalyseEtControleFEC
             this.compteDeRésultatToolStripMenuItem,
             this.déterminationDeLaValeurAjoutéeToolStripMenuItem});
             this.declarationsToolStripMenuItem.Name = "declarationsToolStripMenuItem";
-            this.declarationsToolStripMenuItem.Size = new System.Drawing.Size(111, 24);
+            this.declarationsToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
             this.declarationsToolStripMenuItem.Text = "Declarations";
             // 
             // bilanToolStripMenuItem
             // 
             this.bilanToolStripMenuItem.Name = "bilanToolStripMenuItem";
-            this.bilanToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
+            this.bilanToolStripMenuItem.Size = new System.Drawing.Size(318, 26);
             this.bilanToolStripMenuItem.Text = "Bilan";
             // 
             // compteDeRésultatToolStripMenuItem
             // 
             this.compteDeRésultatToolStripMenuItem.Name = "compteDeRésultatToolStripMenuItem";
-            this.compteDeRésultatToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
+            this.compteDeRésultatToolStripMenuItem.Size = new System.Drawing.Size(318, 26);
             this.compteDeRésultatToolStripMenuItem.Text = "Compte de résultat";
             // 
             // déterminationDeLaValeurAjoutéeToolStripMenuItem
             // 
             this.déterminationDeLaValeurAjoutéeToolStripMenuItem.Name = "déterminationDeLaValeurAjoutéeToolStripMenuItem";
-            this.déterminationDeLaValeurAjoutéeToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
+            this.déterminationDeLaValeurAjoutéeToolStripMenuItem.Size = new System.Drawing.Size(318, 26);
             this.déterminationDeLaValeurAjoutéeToolStripMenuItem.Text = "Détermination de la Valeur Ajoutée";
             // 
             // parametresToolStripMenuItem
@@ -447,13 +447,13 @@ namespace AnalyseEtControleFEC
             this.parametresToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.affichageToolStripMenuItem});
             this.parametresToolStripMenuItem.Name = "parametresToolStripMenuItem";
-            this.parametresToolStripMenuItem.Size = new System.Drawing.Size(103, 24);
+            this.parametresToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
             this.parametresToolStripMenuItem.Text = "Parametres";
             // 
             // affichageToolStripMenuItem
             // 
             this.affichageToolStripMenuItem.Name = "affichageToolStripMenuItem";
-            this.affichageToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.affichageToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
             this.affichageToolStripMenuItem.Text = "Affichage";
             // 
             // aideToolStripMenuItem
@@ -462,19 +462,19 @@ namespace AnalyseEtControleFEC
             this.documentationUtilisateurToolStripMenuItem,
             this.versionToolStripMenuItem});
             this.aideToolStripMenuItem.Name = "aideToolStripMenuItem";
-            this.aideToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.aideToolStripMenuItem.Size = new System.Drawing.Size(52, 24);
             this.aideToolStripMenuItem.Text = "Aide";
             // 
             // documentationUtilisateurToolStripMenuItem
             // 
             this.documentationUtilisateurToolStripMenuItem.Name = "documentationUtilisateurToolStripMenuItem";
-            this.documentationUtilisateurToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
+            this.documentationUtilisateurToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
             this.documentationUtilisateurToolStripMenuItem.Text = "documentation utilisateur";
             // 
             // versionToolStripMenuItem
             // 
             this.versionToolStripMenuItem.Name = "versionToolStripMenuItem";
-            this.versionToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
+            this.versionToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
             this.versionToolStripMenuItem.Text = "version";
             // 
             // dataGridView1
@@ -618,22 +618,23 @@ namespace AnalyseEtControleFEC
             "Idevise"});
             this.field8ComboBox.Location = new System.Drawing.Point(133, 5);
             this.field8ComboBox.Name = "field8ComboBox";
-            this.field8ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.field8ComboBox.Size = new System.Drawing.Size(138, 24);
             this.field8ComboBox.TabIndex = 10;
+            this.field8ComboBox.SelectedIndexChanged += new System.EventHandler(this.field8ComboBox_SelectedIndexChanged);
             // 
             // condition8ComboBox
             // 
             this.condition8ComboBox.FormattingEnabled = true;
             this.condition8ComboBox.Location = new System.Drawing.Point(316, 5);
             this.condition8ComboBox.Name = "condition8ComboBox";
-            this.condition8ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.condition8ComboBox.Size = new System.Drawing.Size(138, 24);
             this.condition8ComboBox.TabIndex = 6;
             // 
             // value8TextBox
             // 
             this.value8TextBox.Location = new System.Drawing.Point(484, 5);
             this.value8TextBox.Name = "value8TextBox";
-            this.value8TextBox.Size = new System.Drawing.Size(138, 25);
+            this.value8TextBox.Size = new System.Drawing.Size(138, 22);
             this.value8TextBox.TabIndex = 14;
             this.value8TextBox.TextChanged += new System.EventHandler(this.value8TextBox_TextChanged);
             // 
@@ -727,22 +728,23 @@ namespace AnalyseEtControleFEC
             "Idevise"});
             this.field7ComboBox.Location = new System.Drawing.Point(133, 5);
             this.field7ComboBox.Name = "field7ComboBox";
-            this.field7ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.field7ComboBox.Size = new System.Drawing.Size(138, 24);
             this.field7ComboBox.TabIndex = 10;
+            this.field7ComboBox.SelectedIndexChanged += new System.EventHandler(this.field7ComboBox_SelectedIndexChanged);
             // 
             // condition7ComboBox
             // 
             this.condition7ComboBox.FormattingEnabled = true;
             this.condition7ComboBox.Location = new System.Drawing.Point(316, 5);
             this.condition7ComboBox.Name = "condition7ComboBox";
-            this.condition7ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.condition7ComboBox.Size = new System.Drawing.Size(138, 24);
             this.condition7ComboBox.TabIndex = 6;
             // 
             // value7TextBox
             // 
             this.value7TextBox.Location = new System.Drawing.Point(484, 5);
             this.value7TextBox.Name = "value7TextBox";
-            this.value7TextBox.Size = new System.Drawing.Size(138, 25);
+            this.value7TextBox.Size = new System.Drawing.Size(138, 22);
             this.value7TextBox.TabIndex = 14;
             this.value7TextBox.TextChanged += new System.EventHandler(this.value7TextBox_TextChanged);
             // 
@@ -836,22 +838,23 @@ namespace AnalyseEtControleFEC
             "Idevise"});
             this.field6ComboBox.Location = new System.Drawing.Point(133, 5);
             this.field6ComboBox.Name = "field6ComboBox";
-            this.field6ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.field6ComboBox.Size = new System.Drawing.Size(138, 24);
             this.field6ComboBox.TabIndex = 10;
+            this.field6ComboBox.SelectedIndexChanged += new System.EventHandler(this.field6ComboBox_SelectedIndexChanged);
             // 
             // condition6ComboBox
             // 
             this.condition6ComboBox.FormattingEnabled = true;
             this.condition6ComboBox.Location = new System.Drawing.Point(316, 5);
             this.condition6ComboBox.Name = "condition6ComboBox";
-            this.condition6ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.condition6ComboBox.Size = new System.Drawing.Size(138, 24);
             this.condition6ComboBox.TabIndex = 6;
             // 
             // value6TextBox
             // 
             this.value6TextBox.Location = new System.Drawing.Point(484, 5);
             this.value6TextBox.Name = "value6TextBox";
-            this.value6TextBox.Size = new System.Drawing.Size(138, 25);
+            this.value6TextBox.Size = new System.Drawing.Size(138, 22);
             this.value6TextBox.TabIndex = 14;
             this.value6TextBox.TextChanged += new System.EventHandler(this.value6TextBox_TextChanged);
             // 
@@ -945,22 +948,23 @@ namespace AnalyseEtControleFEC
             "Idevise"});
             this.field5ComboBox.Location = new System.Drawing.Point(133, 5);
             this.field5ComboBox.Name = "field5ComboBox";
-            this.field5ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.field5ComboBox.Size = new System.Drawing.Size(138, 24);
             this.field5ComboBox.TabIndex = 10;
+            this.field5ComboBox.SelectedIndexChanged += new System.EventHandler(this.field5ComboBox_SelectedIndexChanged);
             // 
             // condition5ComboBox
             // 
             this.condition5ComboBox.FormattingEnabled = true;
             this.condition5ComboBox.Location = new System.Drawing.Point(316, 5);
             this.condition5ComboBox.Name = "condition5ComboBox";
-            this.condition5ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.condition5ComboBox.Size = new System.Drawing.Size(138, 24);
             this.condition5ComboBox.TabIndex = 6;
             // 
             // value5TextBox
             // 
             this.value5TextBox.Location = new System.Drawing.Point(484, 5);
             this.value5TextBox.Name = "value5TextBox";
-            this.value5TextBox.Size = new System.Drawing.Size(138, 25);
+            this.value5TextBox.Size = new System.Drawing.Size(138, 22);
             this.value5TextBox.TabIndex = 14;
             this.value5TextBox.TextChanged += new System.EventHandler(this.value5TextBox_TextChanged);
             // 
@@ -1054,7 +1058,7 @@ namespace AnalyseEtControleFEC
             "Idevise"});
             this.field4ComboBox.Location = new System.Drawing.Point(133, 5);
             this.field4ComboBox.Name = "field4ComboBox";
-            this.field4ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.field4ComboBox.Size = new System.Drawing.Size(138, 24);
             this.field4ComboBox.TabIndex = 10;
             this.field4ComboBox.SelectedIndexChanged += new System.EventHandler(this.field4ComboBox_SelectedIndexChanged);
             // 
@@ -1063,14 +1067,14 @@ namespace AnalyseEtControleFEC
             this.condition4ComboBox.FormattingEnabled = true;
             this.condition4ComboBox.Location = new System.Drawing.Point(316, 5);
             this.condition4ComboBox.Name = "condition4ComboBox";
-            this.condition4ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.condition4ComboBox.Size = new System.Drawing.Size(138, 24);
             this.condition4ComboBox.TabIndex = 6;
             // 
             // value4TextBox
             // 
             this.value4TextBox.Location = new System.Drawing.Point(484, 5);
             this.value4TextBox.Name = "value4TextBox";
-            this.value4TextBox.Size = new System.Drawing.Size(138, 25);
+            this.value4TextBox.Size = new System.Drawing.Size(138, 22);
             this.value4TextBox.TabIndex = 14;
             this.value4TextBox.TextChanged += new System.EventHandler(this.value4TextBox_TextChanged);
             // 
@@ -1164,7 +1168,7 @@ namespace AnalyseEtControleFEC
             "Idevise"});
             this.field3ComboBox.Location = new System.Drawing.Point(133, 3);
             this.field3ComboBox.Name = "field3ComboBox";
-            this.field3ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.field3ComboBox.Size = new System.Drawing.Size(138, 24);
             this.field3ComboBox.TabIndex = 9;
             this.field3ComboBox.SelectedIndexChanged += new System.EventHandler(this.field3ComboBox_SelectedIndexChanged);
             // 
@@ -1173,14 +1177,14 @@ namespace AnalyseEtControleFEC
             this.condition3ComboBox.FormattingEnabled = true;
             this.condition3ComboBox.Location = new System.Drawing.Point(316, 3);
             this.condition3ComboBox.Name = "condition3ComboBox";
-            this.condition3ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.condition3ComboBox.Size = new System.Drawing.Size(138, 24);
             this.condition3ComboBox.TabIndex = 5;
             // 
             // value3TextBox
             // 
             this.value3TextBox.Location = new System.Drawing.Point(484, 3);
             this.value3TextBox.Name = "value3TextBox";
-            this.value3TextBox.Size = new System.Drawing.Size(138, 25);
+            this.value3TextBox.Size = new System.Drawing.Size(138, 22);
             this.value3TextBox.TabIndex = 13;
             this.value3TextBox.TextChanged += new System.EventHandler(this.value3TextBox_TextChanged);
             // 
@@ -1276,7 +1280,7 @@ namespace AnalyseEtControleFEC
             "Idevise"});
             this.field2ComboBox.Location = new System.Drawing.Point(134, 3);
             this.field2ComboBox.Name = "field2ComboBox";
-            this.field2ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.field2ComboBox.Size = new System.Drawing.Size(138, 24);
             this.field2ComboBox.TabIndex = 8;
             this.field2ComboBox.SelectedIndexChanged += new System.EventHandler(this.field2ComboBox_SelectedIndexChanged);
             // 
@@ -1285,14 +1289,14 @@ namespace AnalyseEtControleFEC
             this.condition2ComboBox.FormattingEnabled = true;
             this.condition2ComboBox.Location = new System.Drawing.Point(318, 2);
             this.condition2ComboBox.Name = "condition2ComboBox";
-            this.condition2ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.condition2ComboBox.Size = new System.Drawing.Size(138, 24);
             this.condition2ComboBox.TabIndex = 4;
             // 
             // value2TextBox
             // 
             this.value2TextBox.Location = new System.Drawing.Point(487, 1);
             this.value2TextBox.Name = "value2TextBox";
-            this.value2TextBox.Size = new System.Drawing.Size(138, 25);
+            this.value2TextBox.Size = new System.Drawing.Size(138, 22);
             this.value2TextBox.TabIndex = 12;
             this.value2TextBox.TextChanged += new System.EventHandler(this.value2TextBox_TextChanged);
             // 
@@ -1322,7 +1326,7 @@ namespace AnalyseEtControleFEC
             this.field1ComboBox.FormattingEnabled = true;
             this.field1ComboBox.Location = new System.Drawing.Point(134, 3);
             this.field1ComboBox.Name = "field1ComboBox";
-            this.field1ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.field1ComboBox.Size = new System.Drawing.Size(138, 24);
             this.field1ComboBox.TabIndex = 7;
             this.field1ComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
@@ -1331,14 +1335,14 @@ namespace AnalyseEtControleFEC
             this.condition1ComboBox.FormattingEnabled = true;
             this.condition1ComboBox.Location = new System.Drawing.Point(317, 2);
             this.condition1ComboBox.Name = "condition1ComboBox";
-            this.condition1ComboBox.Size = new System.Drawing.Size(138, 23);
+            this.condition1ComboBox.Size = new System.Drawing.Size(138, 24);
             this.condition1ComboBox.TabIndex = 3;
             // 
             // value1TextBox
             // 
             this.value1TextBox.Location = new System.Drawing.Point(485, 1);
             this.value1TextBox.Name = "value1TextBox";
-            this.value1TextBox.Size = new System.Drawing.Size(138, 25);
+            this.value1TextBox.Size = new System.Drawing.Size(138, 22);
             this.value1TextBox.TabIndex = 11;
             this.value1TextBox.TextChanged += new System.EventHandler(this.value1TextBox_TextChanged);
             // 
@@ -1370,7 +1374,7 @@ namespace AnalyseEtControleFEC
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(66, 31);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(23, 15);
+            this.label5.Size = new System.Drawing.Size(29, 17);
             this.label5.TabIndex = 20;
             this.label5.Text = "OU";
             // 
@@ -1380,7 +1384,7 @@ namespace AnalyseEtControleFEC
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(23, 31);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(23, 15);
+            this.label4.Size = new System.Drawing.Size(26, 17);
             this.label4.TabIndex = 19;
             this.label4.Text = "ET";
             // 
@@ -1389,7 +1393,7 @@ namespace AnalyseEtControleFEC
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(530, 31);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 15);
+            this.label3.Size = new System.Drawing.Size(56, 17);
             this.label3.TabIndex = 2;
             this.label3.Text = "Valeurs";
             // 
@@ -1398,7 +1402,7 @@ namespace AnalyseEtControleFEC
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(352, 31);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 15);
+            this.label2.Size = new System.Drawing.Size(67, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "Condition";
             // 
@@ -1407,7 +1411,7 @@ namespace AnalyseEtControleFEC
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(187, 31);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 15);
+            this.label1.Size = new System.Drawing.Size(52, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Champ";
             // 
@@ -1447,7 +1451,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox11.Location = new System.Drawing.Point(26, 20);
             this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(208, 25);
+            this.textBox11.Size = new System.Drawing.Size(208, 22);
             this.textBox11.TabIndex = 0;
             this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
             // 
@@ -1487,7 +1491,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox1.Location = new System.Drawing.Point(26, 31);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(208, 25);
+            this.textBox1.Size = new System.Drawing.Size(208, 22);
             this.textBox1.TabIndex = 0;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -1582,7 +1586,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox10.Location = new System.Drawing.Point(125, 8);
             this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(355, 25);
+            this.textBox10.Size = new System.Drawing.Size(355, 22);
             this.textBox10.TabIndex = 19;
             // 
             // panel22
@@ -1659,7 +1663,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox9.Location = new System.Drawing.Point(125, 8);
             this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(355, 25);
+            this.textBox9.Size = new System.Drawing.Size(355, 22);
             this.textBox9.TabIndex = 19;
             // 
             // panel20
@@ -1737,7 +1741,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox8.Location = new System.Drawing.Point(125, 8);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(355, 25);
+            this.textBox8.Size = new System.Drawing.Size(355, 22);
             this.textBox8.TabIndex = 19;
             // 
             // panel18
@@ -1815,7 +1819,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox7.Location = new System.Drawing.Point(125, 8);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(355, 25);
+            this.textBox7.Size = new System.Drawing.Size(355, 22);
             this.textBox7.TabIndex = 19;
             // 
             // panel16
@@ -1893,7 +1897,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox6.Location = new System.Drawing.Point(125, 8);
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(355, 25);
+            this.textBox6.Size = new System.Drawing.Size(355, 22);
             this.textBox6.TabIndex = 19;
             // 
             // panel14
@@ -1971,7 +1975,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox5.Location = new System.Drawing.Point(125, 8);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(355, 25);
+            this.textBox5.Size = new System.Drawing.Size(355, 22);
             this.textBox5.TabIndex = 19;
             // 
             // panel12
@@ -2049,7 +2053,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox4.Location = new System.Drawing.Point(125, 8);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(355, 25);
+            this.textBox4.Size = new System.Drawing.Size(355, 22);
             this.textBox4.TabIndex = 19;
             // 
             // panel10
@@ -2105,7 +2109,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox3.Location = new System.Drawing.Point(125, 3);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(355, 25);
+            this.textBox3.Size = new System.Drawing.Size(355, 22);
             this.textBox3.TabIndex = 2;
             // 
             // button9
@@ -2143,7 +2147,7 @@ namespace AnalyseEtControleFEC
             // 
             this.textBox2.Location = new System.Drawing.Point(325, 5);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(155, 25);
+            this.textBox2.Size = new System.Drawing.Size(155, 22);
             this.textBox2.TabIndex = 2;
             // 
             // comboBox2
@@ -2151,7 +2155,7 @@ namespace AnalyseEtControleFEC
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(164, 5);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(155, 23);
+            this.comboBox2.Size = new System.Drawing.Size(155, 24);
             this.comboBox2.TabIndex = 1;
             // 
             // comboBox1
@@ -2165,7 +2169,7 @@ namespace AnalyseEtControleFEC
             "PieceDate"});
             this.comboBox1.Location = new System.Drawing.Point(3, 5);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(155, 23);
+            this.comboBox1.Size = new System.Drawing.Size(155, 24);
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -2230,12 +2234,12 @@ namespace AnalyseEtControleFEC
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1682, 893);
-            this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel23);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.panel6);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.Red;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
