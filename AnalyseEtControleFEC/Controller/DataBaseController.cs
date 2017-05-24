@@ -24,15 +24,30 @@ namespace AnalyseEtControleFEC.Controller
         public override object Invoke(object[] args)
         {
             bool result;
-            try
-            {
-                result = Double.Parse(Convert.ToString(args[0])) > Double.Parse(Convert.ToString(args[1]));
-            }
-            catch(Exception e)
+            if (Convert.ToString(args[0]).Equals("") && Convert.ToString(args[1]).Equals(""))
             {
                 return false;
             }
-            return result;
+            else
+            {
+                if (Convert.ToString(args[0]).Equals(""))
+                {
+                    return false;
+                }
+                if (Convert.ToString(args[1]).Equals(""))
+                {
+                    return true;
+                }
+                try
+                {
+                    result = Double.Parse(Convert.ToString(args[0])) > Double.Parse(Convert.ToString(args[1]));
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                return result;
+            }
         }
     }
 
@@ -42,15 +57,30 @@ namespace AnalyseEtControleFEC.Controller
         public override object Invoke(object[] args)
         {
             bool result;
-            try
+            if (Convert.ToString(args[0]).Equals("") && Convert.ToString(args[1]).Equals(""))
             {
-                result = Double.Parse(Convert.ToString(args[0])) >= Double.Parse(Convert.ToString(args[1]));
+                return true;
             }
-            catch (Exception e)
+            else
             {
-                return false;
+                if (Convert.ToString(args[0]).Equals(""))
+                {
+                    return false;
+                }
+                if (Convert.ToString(args[1]).Equals(""))
+                {
+                    return true;
+                }
+                try
+                {
+                    result = Double.Parse(Convert.ToString(args[0])) >= Double.Parse(Convert.ToString(args[1]));
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                return result;
             }
-            return result;
         }
     }
 
@@ -60,15 +90,26 @@ namespace AnalyseEtControleFEC.Controller
         public override object Invoke(object[] args)
         {
             bool result;
-            try
+            if(Convert.ToString(args[0]).Equals("") && Convert.ToString(args[1]).Equals(""))
             {
-                result = Double.Parse(Convert.ToString(args[0])) == Double.Parse(Convert.ToString(args[1]));
+                return true;
             }
-            catch (Exception e)
+            else
             {
-                return false;
+                if(Convert.ToString(args[0]).Equals("") || Convert.ToString(args[1]).Equals(""))
+                {
+                    return false;
+                }
+                try
+                {
+                    result = Double.Parse(Convert.ToString(args[0])) == Double.Parse(Convert.ToString(args[1]));
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                return result;
             }
-            return result;
         }
     }
 
