@@ -227,6 +227,7 @@ namespace AnalyseEtControleFEC.Controller
             dataBaseController = new DataBaseController(dataBaseFile,this);
             simpleFilterController = new SimpleFilterController(dataBaseController);
             config = new Configuration(configuration);
+            areControlsTerminated = true;
         }
 
         public DataBaseController GetDataBaseController()
@@ -359,13 +360,20 @@ namespace AnalyseEtControleFEC.Controller
 
         internal void openFile(string filePath, string fileName)
         {
-            dataBaseController.Init();
-            threadPath = filePath;
-            threadFileName = fileName;
-            mainWindow.reinitializeTabs();
-            Thread openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
-            openFileThread.Start();
-            areControlsTerminated = false;
+            if (areControlsTerminated)
+            {
+                areControlsTerminated = false;
+                dataBaseController.Init();
+                threadPath = filePath;
+                threadFileName = fileName;
+                mainWindow.reinitializeTabs();
+                Thread openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
+                openFileThread.Start();
+            }
+            else
+            {
+                MessageBox.Show("Vous ne pouvez pas ouvrir un nouveau fichier tant que les contrôles complémentaires ne sont pas terminés !", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         public void FinalizeOpenFileFromThread()
         {
