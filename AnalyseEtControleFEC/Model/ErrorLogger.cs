@@ -344,8 +344,7 @@ namespace AnalyseEtControleFEC.Model
         /// </summary>
         public void CheckIsMontantSens()
         {
-            bool isMontant = dataBaseAccess.IsMontantSens();
-            if (isMontant)
+            if (dataBaseAccess.IsMontantSens())
             {
 
                 CheckMontantSensAllLines();

@@ -137,29 +137,48 @@ namespace AnalyseEtControleFEC.Controller
             controller.GetDataBaseController().resumeCheck();
         }
 
-        static public void threadedLoadFromFile()
+        public void threadedLoadFromFile()
         {
 
             ErrorLogger logger = new ErrorLogger(config, instance.GetDataBaseController(), "BIC", "PCG");
             instance.GetDataBaseController().FillDatabaseFromFile(threadPath);
             logger.CheckName(threadFileName);
-            logger.CheckColumns();
-            if(logger.CheckColumns()) logger.CheckLinesInDatabase();
             instance.FinalizeOpenFileFromThread();
             //logger.check_Dates();
             //Console.WriteLine(logger.check_CompAuxNum_CompAuxLib());
-            Console.WriteLine(logger.CreateLog());
-            logger.CheckCompAuxNumCompAuxLib();
-            logger.CheckEcritureLetDateLet();
-            logger.CheckMontantdeviseIdevise();
-            logger.CheckPieceDateEcritureDate();
-            logger.CheckPieceDateValidDate();
-            logger.CheckEcritureDateValidDate();
-            logger.CheckDateLetPieceDate();
-            logger.CheckDateLetEcritureDate();
-            logger.CheckIsMontantSens();
-            logger.CheckIsDateUniqueForEcritureNum();
-            //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+            if (logger.CheckColumns())
+            {
+                if (logger.CheckLinesInDatabase())
+                {
+                    logger.CreateLog();
+                    logger.CheckCompAuxNumCompAuxLib();
+                    mainWindow.ControlsUpdate(1);
+                    logger.CheckEcritureLetDateLet();
+                    mainWindow.ControlsUpdate(2);
+                    logger.CheckMontantdeviseIdevise();
+                    mainWindow.ControlsUpdate(3);
+                    logger.CheckPieceDateEcritureDate();
+                    mainWindow.ControlsUpdate(4);
+                    logger.CheckPieceDateValidDate();
+                    mainWindow.ControlsUpdate(5);
+                    logger.CheckEcritureDateValidDate();
+                    mainWindow.ControlsUpdate(6);
+                    logger.CheckDateLetPieceDate();
+                    mainWindow.ControlsUpdate(7);
+                    logger.CheckDateLetEcritureDate();
+                    mainWindow.ControlsUpdate(8);
+                    logger.CheckIsMontantSens();
+                    mainWindow.ControlsUpdate(9);
+                    logger.CheckIsDateUniqueForEcritureNum();
+                    mainWindow.ControlsUpdate(10);
+                    //logger.Ecrirefile(logger.lineRegexErrors, "test1.txt");
+                }
+                else
+                {
+                    logger.CreateLog();
+                    mainWindow.ControlsUpdate(10);
+                }
+            }
             instance.finalizeControls();
         }
 
@@ -363,6 +382,7 @@ namespace AnalyseEtControleFEC.Controller
             Thread openFileThread = new Thread(new ThreadStart(threadedLoadFromFile));
             openFileThread.Start();
             areControlsTerminated = false;
+            mainWindow.ControlsStart();
         }
         public void FinalizeOpenFileFromThread()
         {

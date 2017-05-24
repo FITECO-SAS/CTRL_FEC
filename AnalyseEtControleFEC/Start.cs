@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -50,6 +51,9 @@ namespace AnalyseEtControleFEC
             textBox9.ReadOnly = true;
             textBox10.ReadOnly = true;
             dataGridView1.MultiSelect = true;
+            progressBar1.Minimum = 0;
+            progressBar1.Maximum = 10;
+            label6.Text = "";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -1865,6 +1869,21 @@ namespace AnalyseEtControleFEC
             myTabPage.Controls.Add(newDataGridView);
             tabControl1.TabPages.Add(myTabPage);
             tabControl1.SelectedTab = myTabPage;
+        }
+
+        public void ControlsStart()
+        {
+            progressBar1.Value = 0;
+            label6.Text = "Les contrôles sont en cours";
+        }
+
+        public void ControlsUpdate(int value)
+        {
+            progressBar1.Invoke(new Action(() => progressBar1.Value = value));
+            if(progressBar1.Value == progressBar1.Maximum)
+            {
+                label6.Invoke(new Action(() => label6.Text = "Les contrôles sont terminés"));
+            }
         }
     }
 }
